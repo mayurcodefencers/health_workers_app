@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <g id="vuesax_linear_profile-circle" data-name="vuesax/linear/profile-circle" transform="translate(-492 -252)">
+    <g id="profile-circle" transform="translate(492 252)">
+      <path id="Vector" d="M2.833,5.458a.8.8,0,0,0-.2,0,2.733,2.733,0,1,1,.2,0Z" transform="translate(7.267 5.192)" fill="none" stroke="#6a7a98" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Vector-2" data-name="Vector" d="M11.233,3.287A8.279,8.279,0,0,1,5.617,5.471,8.279,8.279,0,0,1,0,3.287a3.066,3.066,0,0,1,1.475-2.15,8.109,8.109,0,0,1,8.283,0A3.066,3.066,0,0,1,11.233,3.287Z" transform="translate(4.383 12.862)" fill="none" stroke="#6a7a98" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Vector-3" data-name="Vector" d="M16.667,8.333A8.333,8.333,0,1,1,8.333,0,8.333,8.333,0,0,1,16.667,8.333Z" transform="translate(1.667 1.667)" fill="none" stroke="#6a7a98" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Vector-4" data-name="Vector" d="M0,0H20V20H0Z" transform="translate(20 20) rotate(180)" fill="none" opacity="0"/>
+    </g>
+  </g>
+</svg>
