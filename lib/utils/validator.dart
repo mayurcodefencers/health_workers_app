@@ -12,17 +12,19 @@ class Validators {
     }
   }
 
-  static String? validatePassword(String value, String passType) {
-    const String pattern =
-        r'^.*(?=.{8,})((?=.*[!?@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$';
-    final RegExp regExp = RegExp(pattern);
+  static String? validatePassword(String value) {
+    // const String pattern =
+    //     r'^.*(?=.{8,})((?=.*[!?@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$';
+    // final RegExp regExp = RegExp(pattern);
     if (value.isEmpty) {
-      return '$passType is required';
-    } else if (value.length < 8) {
-      return '$passType should be more than 8 characters';
-    } else if (!regExp.hasMatch(value)) {
-      return '''The $passType must be at least 8 characters long and contain a mixture of both uppercase and lowercase letters, at least one number and one special character (e.g.,! @ # ?).''';
-    } else {
+      return 'Password is required';
+    } else if (value.length <= 4) {
+      return 'Password should be more than 5 characters';
+    }
+    // else if (!regExp.hasMatch(value)) {
+    //   return '''The Password must be at least 8 characters long and contain a mixture of both uppercase and lowercase letters, at least one number and one special character (e.g.,! @ # ?).''';
+    // }
+    else {
       return null;
     }
   }

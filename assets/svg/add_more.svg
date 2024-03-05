@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="15.5" height="15.5" viewBox="0 0 15.5 15.5">
-  <g id="Close_Square" data-name="Close Square" transform="translate(0 0)">
-    <path id="Stroke_1" data-name="Stroke 1" d="M3.626,0,0,3.626" transform="translate(5.185 7.743) rotate(-45)" fill="none" stroke="#4166f5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-    <path id="Stroke_2" data-name="Stroke 2" d="M3.629,3.63,0,0" transform="translate(5.183 7.743) rotate(-45)" fill="none" stroke="#4166f5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-    <path id="Stroke_3" data-name="Stroke 3" d="M10.28,0H3.719A3.606,3.606,0,0,0,0,3.909v6.181A3.6,3.6,0,0,0,3.719,14h6.56A3.6,3.6,0,0,0,14,10.091V3.909A3.6,3.6,0,0,0,10.28,0Z" transform="translate(0.751 0.75)" fill="none" stroke="#4166f5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-  </g>
-</svg>

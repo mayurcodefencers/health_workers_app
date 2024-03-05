@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62">
-  <g id="profile-circle" transform="translate(0 0)">
-    <path id="Vector" d="M8.783,16.921a2.487,2.487,0,0,0-.62,0,8.473,8.473,0,1,1,.62,0Z" transform="translate(22.527 16.094)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"/>
-    <path id="Vector-2" data-name="Vector" d="M34.823,10.191A25.663,25.663,0,0,1,17.412,16.96,25.663,25.663,0,0,1,0,10.191C.258,7.763,1.808,5.386,4.573,3.526c7.078-4.7,18.652-4.7,25.678,0C33.015,5.386,34.565,7.763,34.823,10.191Z" transform="translate(13.588 39.874)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"/>
-    <path id="Vector-3" data-name="Vector" d="M51.667,25.833A25.833,25.833,0,1,1,25.833,0,25.833,25.833,0,0,1,51.667,25.833Z" transform="translate(5.167 5.167)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"/>
-    <path id="Vector-4" data-name="Vector" d="M0,0H62V62H0Z" transform="translate(62 62) rotate(180)" fill="none" opacity="0"/>
-  </g>
-</svg>
