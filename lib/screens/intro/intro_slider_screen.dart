@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
+import 'package:health_workers/screens/login/login_screen.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -156,7 +158,7 @@ class _IntroSliderScreenState extends State<IntroSliderScreen> {
               colorIndicator: AppColor.greyColor),
           renderDoneBtn: GestureDetector(
             onTap: () {
-              // Get.to(const LoginWithMobileContainer());
+              Get.to(const LoginScreen());
             },
             child: Text(
               done.toUpperCase(),
@@ -165,7 +167,7 @@ class _IntroSliderScreenState extends State<IntroSliderScreen> {
           ),
           renderSkipBtn: GestureDetector(
             onTap: () {
-              // Get.to(const LoginWithMobileContainer());;
+              Get.to(const LoginScreen());
             },
             child: Text(
               skip.toUpperCase(),
