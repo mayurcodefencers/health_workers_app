@@ -49,6 +49,10 @@
  const String selectDoctor  = "Select Doctor";
  const String bookDoctor  = "Book Doctor";
  const String bookTest  = "Book Test";
+ const String bookings  = "Bookings";
+ const String meetings  = "Meetings";
+ const String profile  = "Profile";
+ const String home  = "Home";
 
 
  final kToday = DateTime.now();

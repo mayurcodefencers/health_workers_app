@@ -3,6 +3,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:health_workers/screens/home/home_screen.dart';
 import 'package:health_workers/screens/intro/intro_slider_screen.dart';
 import 'package:health_workers/screens/login/login_screen.dart';
+import 'package:health_workers/widgets/bottom_nav_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const HomeScreen(),
+        home: const HomePage(),
       );
     });
   }

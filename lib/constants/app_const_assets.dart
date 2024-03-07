@@ -3,6 +3,10 @@ class AppAssets {
   static const String notification = "assets/svg/noti.svg";
   static const String arrow = "assets/svg/arrow.svg";
   static const String fileUpload = "assets/svg/file_upload.svg";
+  static const String booking = "assets/svg/booking.svg";
+  static const String camera = "assets/svg/camera.svg";
+  static const String home = "assets/svg/home_health.svg";
+  static const String profile = "assets/svg/profile_health.svg";
 
   //PNG
   static const String bookAppointment = "assets/svg/book_appo.png";
