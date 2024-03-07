@@ -42,8 +42,8 @@
  const String doctor  = "Doctor";
  const String fileUpload  = "File Upload";
  const String selectDate  = "Select Date";
- const String morningTime  = "Morning Time Slots";
- const String eveningTime  = "Evening Time Slots";
+ const String morningTime  = "Morning Shift";
+ const String eveningTime  = "Evening Shift";
  const String selectGender  = "Select Gender";
  const String selectDepartment  = "Select Department";
  const String selectDoctor  = "Select Doctor";
@@ -60,6 +60,8 @@
  const String upcoming = "Upcoming";
  const String history = "History";
  const String missedAppointment = "Missed";
+ const String reschedule = "Reschedule";
+ const String rescheduleNow = "Reschedule Now";
 
 
  final kToday = DateTime.now();
