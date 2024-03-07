@@ -6,6 +6,7 @@ import 'package:health_workers/controllers/meeting/meeting_controller.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
+import 'package:health_workers/screens/history/history_screen.dart';
 import 'package:health_workers/screens/reschedule/reschedule_screen.dart';
 import 'package:sizer/sizer.dart';
 
@@ -306,7 +307,9 @@ class _MeetingScreenState extends State<MeetingScreen> {
   }
   Widget historyContainer() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Get.to(() => const HistoryScreen());
+      },
       child: Container(
         padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.all(8),
