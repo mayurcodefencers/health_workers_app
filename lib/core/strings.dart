@@ -57,6 +57,9 @@
  const String date = "Date";
  const String time = "Time";
  const String tokenNo = "Token No.";
+ const String upcoming = "Upcoming";
+ const String history = "History";
+ const String missedAppointment = "Missed";
 
 
  final kToday = DateTime.now();

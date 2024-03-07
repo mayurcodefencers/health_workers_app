@@ -6,6 +6,7 @@ import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
 import 'package:health_workers/screens/booking/booking_screen.dart';
 import 'package:health_workers/screens/home/home_screen.dart';
+import 'package:health_workers/screens/meeting/meeting_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   final pages = [
     const HomeScreen(),
     const BookingScreen(),
-    const HomeScreen(),
+    const MeetingScreen(),
     const BookingScreen(),
   ];
 
@@ -90,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                         AppAssets.camera,
                         color: AppColor.greyColor,
                       ),
-                label: profile,
+                label: meetings,
               ),
               BottomNavigationBarItem(
                 icon: pageIndex == 3
