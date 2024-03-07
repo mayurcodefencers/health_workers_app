@@ -60,43 +60,84 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Get.to(() => const ConsultationScreen());
-            },
-            child: Container(
-              padding: const EdgeInsets.all(6),
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: AppColor.pureWhiteColor,
-                  borderRadius: BorderRadius.circular(12)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Image.asset(
-                    AppAssets.bookAppointmentHome,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        bookAppointment,
-                        style: AppTextStyle.mediumText.copyWith(
-                            color: AppColor.primaryColor, fontSize: 16),
-                      ),
-                      Text(
-                        bookAppointmentHere,
-                        style: AppTextStyle.normalText
-                            .copyWith(color: AppColor.greyColor, fontSize: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => const ConsultationScreen());
+                },
+                child: Container(
+                  height: 15.h,
+                  width: 40.w,
+                  decoration: BoxDecoration(
+                      color: AppColor.pureWhiteColor,
+                      borderRadius: BorderRadius.circular(12),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x19101828),
+                        blurRadius: 4,
+                        offset: Offset(0, 2),
+                        spreadRadius: -1,
                       )
                     ],
                   ),
-                  SvgPicture.asset(
-                    AppAssets.arrow,
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        AppAssets.bookAppointmentHome,
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      Text(
+                        bookDoctor,
+                        style: AppTextStyle.mediumText.copyWith(
+                          color: AppColor.navyBlueColor,
+                          fontSize: 14
+                        ),
+                      )
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              Container(
+                height: 15.h,
+                width: 40.w,
+                decoration: BoxDecoration(
+                    color: AppColor.pureWhiteColor,
+                    borderRadius: BorderRadius.circular(12),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x19101828),
+                      blurRadius: 4,
+                      offset: Offset(0, 2),
+                      spreadRadius: -1,
+                    )
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        AppAssets.test,
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      Text(
+                        bookTest,
+                        style: AppTextStyle.mediumText.copyWith(
+                          color: AppColor.navyBlueColor,
+                          fontSize: 14
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: 3.h,
@@ -112,6 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ButtonWidget(
                 text: viewAll,
                 width: 25.w,
+                height: 5.h,
                 textStyle: AppTextStyle.normalText.copyWith(
                   color: AppColor.pureWhiteColor,
                 ),
@@ -138,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget bookingListWidget() {
     return Container(
       padding: const EdgeInsets.all(12),
-      margin: const EdgeInsets.all(14),
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: AppColor.pureWhiteColor,
         borderRadius: BorderRadius.circular(12),

@@ -47,6 +47,8 @@
  const String selectGender  = "Select Gender";
  const String selectDepartment  = "Select Department";
  const String selectDoctor  = "Select Doctor";
+ const String bookDoctor  = "Book Doctor";
+ const String bookTest  = "Book Test";
 
 
  final kToday = DateTime.now();

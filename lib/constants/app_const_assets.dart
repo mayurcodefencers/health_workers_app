@@ -11,6 +11,7 @@ class AppAssets {
   static const String bg = "assets/svg/bg.png";
   static const String profilePic = "assets/svg/profile_pic.png";
   static const String bookAppointmentHome = "assets/svg/book_appo_home.png";
+  static const String test = "assets/svg/test.png";
 
 
 }

@@ -386,36 +386,24 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 fontSize: 14
             ),
           ),
-          GridView.builder(
-            physics: const ScrollPhysics(),
-            shrinkWrap: true,
-            padding: const EdgeInsets.only(top: 10),
-            itemCount: newController.timeListMorning.length,
-            itemBuilder: (ctx, index) {
-              return Obx(() => GestureDetector(
-                onTap: () {
-                  newController.isSelectedMorning?.value = index;
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: newController.isSelectedMorning?.value == index ? AppColor.primaryColor : AppColor.whiteColor,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Center(
-                    child: Text(
-                      newController.timeListMorning[index].toString(),
-                      style: AppTextStyle.normalText.copyWith(
-                        color: newController.isSelectedMorning?.value == index ? AppColor.whiteColor : AppColor.primaryColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ));
-            }, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 8 / 3,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),),
+      SizedBox(
+        height: 1.h,
+      ),
+      Obx(() => Container(
+        height: 6.h,
+        width: 40.w,
+        decoration: BoxDecoration(
+            color: newController.isSelectedMorning?.value != null ? AppColor.primaryColor : AppColor.whiteColor,
+            borderRadius: BorderRadius.circular(8)),
+        child: Center(
+          child: Text(
+            newController.timeListMorning!.value,
+            style: AppTextStyle.normalText.copyWith(
+              color: newController.isSelectedMorning?.value != null ? AppColor.whiteColor : AppColor.primaryColor,
+            ),
+          ),
+        ),
+      )),
           SizedBox(
             height: 2.h,
           ),
@@ -426,36 +414,24 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 fontSize: 14
             ),
           ),
-          GridView.builder(
-            physics: const ScrollPhysics(),
-            shrinkWrap: true,
-            padding: const EdgeInsets.only(top: 10),
-            itemCount: newController.timeListEvening.length,
-            itemBuilder: (ctx, index) {
-              return Obx(() => GestureDetector(
-                onTap: () {
-                  newController.isSelectedEvening?.value = index;
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: newController.isSelectedEvening?.value == index ? AppColor.primaryColor : AppColor.whiteColor,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Center(
-                    child: Text(
-                      newController.timeListEvening[index].toString(),
-                      style: AppTextStyle.normalText.copyWith(
-                        color: newController.isSelectedEvening?.value == index ? AppColor.whiteColor : AppColor.primaryColor,
-                      ),
-                    ),
-                  ),
+          SizedBox(
+            height: 1.h,
+          ),
+          Obx(() => Container(
+            height: 6.h,
+            width: 40.w,
+            decoration: BoxDecoration(
+                color: newController.isSelectedEvening?.value != null ? AppColor.primaryColor : AppColor.whiteColor,
+                borderRadius: BorderRadius.circular(8)),
+            child: Center(
+              child: Text(
+                newController.timeListEvening!.value,
+                style: AppTextStyle.normalText.copyWith(
+                  color: newController.isSelectedEvening?.value != null? AppColor.whiteColor : AppColor.primaryColor,
                 ),
-              ));
-            }, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 8 / 3,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),),
+              ),
+            ),
+          )),
           SizedBox(
             height: 8.h,
           ),
@@ -558,7 +534,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
           SizedBox(
             height: 1.h,
           ),
-          departmentWidgetNew(),
+          departmentWidgetExisting(),
           SizedBox(
             height: 2.h,
           ),
@@ -572,7 +548,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
           SizedBox(
             height: 1.h,
           ),
-          doctorWidgetNew(),
+          doctorWidgetExisting(),
           SizedBox(
             height: 2.h,
           ),
@@ -695,36 +671,24 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 fontSize: 14
             ),
           ),
-          GridView.builder(
-            physics: const ScrollPhysics(),
-            shrinkWrap: true,
-            padding: const EdgeInsets.only(top: 10),
-            itemCount: newController.timeListMorning.length,
-            itemBuilder: (ctx, index) {
-              return Obx(() => GestureDetector(
-                onTap: () {
-                  newController.isSelectedMorning?.value = index;
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: newController.isSelectedMorning?.value == index ? AppColor.primaryColor : AppColor.whiteColor,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Center(
-                    child: Text(
-                      newController.timeListMorning[index].toString(),
-                      style: AppTextStyle.normalText.copyWith(
-                        color: newController.isSelectedMorning?.value == index ? AppColor.whiteColor : AppColor.primaryColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ));
-            }, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 8 / 3,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),),
+      SizedBox(
+        height: 1.h,
+      ),
+      Obx(() => Container(
+        height: 6.h,
+        width: 40.w,
+        decoration: BoxDecoration(
+            color: newController.isSelectedMorningExisting?.value != null ? AppColor.primaryColor : AppColor.whiteColor,
+            borderRadius: BorderRadius.circular(8)),
+        child: Center(
+          child: Text(
+            newController.timeListMorningExisting!.value,
+            style: AppTextStyle.normalText.copyWith(
+              color: newController.isSelectedMorningExisting?.value != null ? AppColor.whiteColor : AppColor.primaryColor,
+            ),
+          ),
+        ),
+      )),
           SizedBox(
             height: 2.h,
           ),
@@ -735,36 +699,24 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 fontSize: 14
             ),
           ),
-          GridView.builder(
-            physics: const ScrollPhysics(),
-            shrinkWrap: true,
-            padding: const EdgeInsets.only(top: 10),
-            itemCount: newController.timeListEvening.length,
-            itemBuilder: (ctx, index) {
-              return Obx(() => GestureDetector(
-                onTap: () {
-                  newController.isSelectedEvening?.value = index;
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: newController.isSelectedEvening?.value == index ? AppColor.primaryColor : AppColor.whiteColor,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Center(
-                    child: Text(
-                      newController.timeListEvening[index].toString(),
-                      style: AppTextStyle.normalText.copyWith(
-                        color: newController.isSelectedEvening?.value == index ? AppColor.whiteColor : AppColor.primaryColor,
-                      ),
-                    ),
-                  ),
+          SizedBox(
+            height: 1.h,
+          ),
+          Container(
+            height: 6.h,
+            width: 40.w,
+            decoration: BoxDecoration(
+                color: newController.isSelectedEveningExisting?.value != null ? AppColor.primaryColor : AppColor.whiteColor,
+                borderRadius: BorderRadius.circular(8)),
+            child: Center(
+              child: Text(
+                newController.timeListEveningExisting!.value,
+                style: AppTextStyle.normalText.copyWith(
+                  color: newController.isSelectedEveningExisting?.value != null ? AppColor.whiteColor : AppColor.primaryColor,
                 ),
-              ));
-            }, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 8 / 3,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),),
+              ),
+            ),
+          ),
           SizedBox(
             height: 8.h,
           ),
@@ -928,6 +880,107 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
         hint: Text(
             selectDoctor,
             style: AppTextStyle.mediumText.copyWith(
+              color: AppColor.navyBlueColor,
+              fontSize: 14
+          ),
+        ),
+        isExpanded: false,
+      ),
+    ));
+  }
+
+  Widget departmentWidgetExisting() {
+    return Obx(() => DropdownButtonHideUnderline(
+      child: DropdownButtonFormField(
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(16),
+          fillColor: AppColor.skyBlueColor,
+          filled: true,
+          enabledBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(
+              color: AppColor.skyBlueColor,
+            ),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(
+              color: AppColor.skyBlueColor,
+            ),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+        validator: (String? value) {
+          return value == null ? "Choose Note from list" : null;
+        },
+        items: newController.dropdownValuesDepartmentExisting
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: newController.onSelectedDepartmentExisting,
+        icon: const Icon(
+          Icons.keyboard_arrow_down_outlined,
+          size: 30,
+          color: AppColor.navyBlueColor,
+        ),
+        value: newController.selectedValueDepartmentExisting!.value.isNotEmpty
+            ? newController.selectedValueDepartmentExisting!.value
+            : null,
+        hint: Text(
+          selectDepartment,
+          style: AppTextStyle.mediumText.copyWith(
+              color: AppColor.navyBlueColor,
+              fontSize: 14
+          ),
+        ),
+        isExpanded: false,
+      ),
+    ));
+  }
+  Widget doctorWidgetExisting() {
+    return Obx(() => DropdownButtonHideUnderline(
+      child: DropdownButtonFormField(
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(16),
+          fillColor: AppColor.skyBlueColor,
+          filled: true,
+          enabledBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(
+              color: AppColor.skyBlueColor,
+            ),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(
+              color: AppColor.skyBlueColor,
+            ),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+        validator: (String? value) {
+          return value == null ? "Choose Note from list" : null;
+        },
+        items: newController.dropdownValuesDoctorExisting
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: newController.onSelectedDoctorExisting,
+        icon: const Icon(
+          Icons.keyboard_arrow_down_outlined,
+          size: 30,
+          color: AppColor.navyBlueColor,
+        ),
+        value: newController.selectedValueDoctorExisting!.value.isNotEmpty
+            ? newController.selectedValueDoctorExisting!.value
+            : null,
+        hint: Text(
+          selectDoctor,
+          style: AppTextStyle.mediumText.copyWith(
               color: AppColor.navyBlueColor,
               fontSize: 14
           ),

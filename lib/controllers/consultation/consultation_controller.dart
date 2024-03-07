@@ -19,12 +19,21 @@ class ConsultationController extends GetxController {
 
   RxString? selectedValueGender = "".obs;
   RxString? selectedValueDepartment = "".obs;
+  RxString? selectedValueDepartmentExisting = "".obs;
   RxString? selectedValueDoctor = "".obs;
+  RxString? selectedValueDoctorExisting = "".obs;
   List<String> dropdownValuesGender = {
     "Male",
     "Female",
   }.toList().obs;
   List<String> dropdownValuesDepartment = {
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+  }.toList().obs;
+  List<String> dropdownValuesDepartmentExisting = {
     "1",
     "2",
     "3",
@@ -38,24 +47,24 @@ class ConsultationController extends GetxController {
     "Doctor 4",
     "Doctor 5",
   }.toList().obs;
+  List<String> dropdownValuesDoctorExisting = {
+    "Doctor 1",
+    "Doctor 2",
+    "Doctor 3",
+    "Doctor 4",
+    "Doctor 5",
+  }.toList().obs;
 
 
   RxInt? isSelectedMorning = 0.obs;
+  RxInt? isSelectedMorningExisting = 0.obs;
   RxInt? isSelectedEvening = 0.obs;
+  RxInt? isSelectedEveningExisting = 0.obs;
 
-  List<String> timeListMorning =
-  [
-    "09:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-  ].toList().obs;
-
-  List<String> timeListEvening =
-      [
-        "04:00 PM",
-        "06:00 PM",
-        "08:00 PM",
-      ].toList().obs;
+  RxString? timeListMorning = "09:00 to 12:00".obs;
+  RxString? timeListMorningExisting = "09:00 to 12:00".obs;
+  RxString? timeListEvening = "04:00 to 07:00".obs;
+  RxString? timeListEveningExisting = "04:00 to 07:00".obs;
 
   void onSelectedGender(String? value) {
     if (value != null) {
@@ -67,9 +76,19 @@ class ConsultationController extends GetxController {
       selectedValueDepartment!.value = value;
     }
   }
+  void onSelectedDepartmentExisting(String? value) {
+    if (value != null) {
+      selectedValueDepartmentExisting!.value = value;
+    }
+  }
   void onSelectedDoctor(String? value) {
     if (value != null) {
       selectedValueDoctor!.value = value;
+    }
+  }
+  void onSelectedDoctorExisting(String? value) {
+    if (value != null) {
+      selectedValueDoctorExisting!.value = value;
     }
   }
 }
