@@ -62,6 +62,10 @@
  const String missedAppointment = "Missed";
  const String reschedule = "Reschedule";
  const String rescheduleNow = "Reschedule Now";
+ const String walletBalance = "Wallet Balance";
+ const String notification = "Notification";
+ const String logOut = "logOut";
+ const String healthWorker = "Health Worker";
 
 
  final kToday = DateTime.now();

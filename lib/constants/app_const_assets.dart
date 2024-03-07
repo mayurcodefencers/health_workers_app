@@ -11,6 +11,7 @@ class AppAssets {
   static const String reschedule = "assets/svg/reschedule.svg";
   static const String doc = "assets/svg/doc.svg";
   static const String download = "assets/svg/download.svg";
+  static const String wallet = "assets/svg/wallet.svg";
 
   //PNG
   static const String bookAppointment = "assets/svg/book_appo.png";
