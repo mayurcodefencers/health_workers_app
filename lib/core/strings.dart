@@ -53,6 +53,10 @@
  const String meetings  = "Meetings";
  const String profile  = "Profile";
  const String home  = "Home";
+ const String bookingDetails  = "Booking Details";
+ const String date = "Date";
+ const String time = "Time";
+ const String tokenNo = "Token No.";
 
 
  final kToday = DateTime.now();
