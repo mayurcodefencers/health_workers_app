@@ -8,6 +8,7 @@ import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
 import 'package:health_workers/screens/consultation/consultation_screen.dart';
+import 'package:health_workers/screens/notification/notification_screen.dart';
 import 'package:health_workers/widgets/button_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -52,10 +53,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 const Spacer(),
-                const Icon(
-                  Icons.notifications_none,
-                  size: 34,
-                  color: AppColor.primaryColor,
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => const NotificationScreen());
+                  },
+                  child: const Icon(
+                    Icons.notifications_none,
+                    size: 34,
+                    color: AppColor.primaryColor,
+                  ),
                 )
               ],
             ),
