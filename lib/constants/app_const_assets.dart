@@ -12,6 +12,8 @@ class AppAssets {
   static const String doc = "assets/svg/doc.svg";
   static const String download = "assets/svg/download.svg";
   static const String wallet = "assets/svg/wallet.svg";
+  static const String credit = "assets/svg/credit.svg";
+  static const String debit = "assets/svg/debit.svg";
 
   //PNG
   static const String bookAppointment = "assets/svg/book_appo.png";

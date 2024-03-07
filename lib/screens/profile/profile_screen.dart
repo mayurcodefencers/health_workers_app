@@ -5,6 +5,7 @@ import 'package:health_workers/constants/app_const_assets.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
+import 'package:health_workers/screens/transaction/transaction_screen.dart';
 import 'package:sizer/sizer.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -136,7 +137,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
   Widget walletContainer() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Get.to(() => const TransactionScreen());
+      },
       child: Container(
         padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.all(15),

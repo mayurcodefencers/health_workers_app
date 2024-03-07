@@ -66,6 +66,8 @@
  const String notification = "Notification";
  const String logOut = "logOut";
  const String healthWorker = "Health Worker";
+ const String transaction = "Transaction";
+ const String transactionId = "Transaction Id";
 
 
  final kToday = DateTime.now();
