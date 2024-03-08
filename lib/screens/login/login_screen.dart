@@ -9,6 +9,7 @@ import 'package:health_workers/core/theme/app_text_style.dart';
 import 'package:health_workers/main.dart';
 import 'package:health_workers/main.dart';
 import 'package:health_workers/screens/forgot_password/forgot_password_screen.dart';
+import 'package:health_workers/utils/validator.dart';
 import 'package:health_workers/widgets/button_widget.dart';
 import 'package:health_workers/widgets/custom_text_field.dart';
 import 'package:sizer/sizer.dart';
@@ -72,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
               CustomTextField(
                 label: emailEnter,
                 controller: controller.emailController,
+                validator: (String? value) => Validators.validateEmail(value!.trim()),
                 borderRadius: 8,
                 keyboardType: null,
               ),
@@ -90,6 +92,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 label: passwordEnter,
                 controller: controller.passwordController,
                 borderRadius: 8,
+                validator: (String? value) => Validators.validatePassword(
+                    value!.trim()),
                 obscureText: !controller.showPassword.value,
                 suFixIcon: Obx(() => GestureDetector(
                   onTap: () {
