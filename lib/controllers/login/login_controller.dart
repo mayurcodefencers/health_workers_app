@@ -7,6 +7,7 @@ import 'package:health_workers/controllers/auth_controller.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/dio_services/api_service.dart';
 import 'package:health_workers/dio_services/api_url_constant.dart';
+import 'package:health_workers/main.dart';
 import 'package:health_workers/model/login_model.dart';
 import 'package:health_workers/widgets/bottom_nav_widget.dart';
 
@@ -40,6 +41,15 @@ class LoginController extends GetxController {
         Map<String, dynamic> jsonMap = jsonDecode(jsonString);
 
         loginModel = LoginModel.fromJson(jsonMap);
+
+        String? userImage = loginModel!.userData!.first.img;
+        String? userName = loginModel!.userData!.first.name;
+        String? loginToken = loginModel!.userData!.first.tokenVal;
+
+        pref?.setString("userImage", userImage!);
+        pref?.setString("userName", userName!);
+        pref?.setString("token", loginToken!);
+
         Get.snackbar(
           'Yehhh...',
           jsonMap['message'],

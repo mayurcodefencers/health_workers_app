@@ -26,15 +26,15 @@ class _BookingScreenState extends State<BookingScreen> {
           style: AppTextStyle.boldText
               .copyWith(color: AppColor.primaryColor, fontSize: 22),
         ),
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: const Icon(
-            Icons.arrow_back_ios_outlined,
-            color: AppColor.navyBlueColor,
-          ),
-        ),
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Get.back();
+        //   },
+        //   child: const Icon(
+        //     Icons.arrow_back_ios_outlined,
+        //     color: AppColor.navyBlueColor,
+        //   ),
+        // ),
       ),
       body: Column(
         children: [

@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
+import 'package:health_workers/controllers/home/home_controller.dart';
+import 'package:health_workers/controllers/login/login_controller.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
@@ -20,65 +22,122 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 6.h),
-            child: Row(
+      body: Obx(()
+    {
+      if (controller.isLoading.value) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: AppColor.primaryColor,
+          ),
+        );
+      }
+      // else if (controller.loginModel == null) {
+      //   return const Center(child: Text('No data available'));
+      // }
+      else {
+        return Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 6.h),
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Image.network(
+                      controller.userImage.toString() ??
+                          "",
+                      fit: BoxFit.fill,
+                      width: 50,
+                      height: 50,
+                      // fit: BoxFit.cover
+                    ),
+                  ),
+                  SizedBox(
+                    width: 3.w,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        welComeBackHome,
+                        style: AppTextStyle.mediumText
+                            .copyWith(
+                            color: AppColor.primaryColor, fontSize: 12),
+                      ),
+                      Text(
+                        controller.userName
+                            .toString() ?? "",
+                        style: AppTextStyle.semiBoldText.copyWith(
+                            color: AppColor.navyBlueColor, fontSize: 14),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => const NotificationScreen());
+                    },
+                    child: const Icon(
+                      Icons.notifications_none,
+                      size: 34,
+                      color: AppColor.primaryColor,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage(AppAssets.profilePic),
-                ),
-                SizedBox(
-                  width: 3.w,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      welComeBackHome,
-                      style: AppTextStyle.mediumText
-                          .copyWith(color: AppColor.primaryColor, fontSize: 12),
-                    ),
-                    Text(
-                      "Hardeep Sodhi",
-                      style: AppTextStyle.semiBoldText.copyWith(
-                          color: AppColor.navyBlueColor, fontSize: 14),
-                    ),
-                  ],
-                ),
-                const Spacer(),
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => const NotificationScreen());
+                    Get.to(() => const ConsultationScreen());
                   },
-                  child: const Icon(
-                    Icons.notifications_none,
-                    size: 34,
-                    color: AppColor.primaryColor,
+                  child: Container(
+                    height: 15.h,
+                    width: 40.w,
+                    decoration: BoxDecoration(
+                      color: AppColor.pureWhiteColor,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x19101828),
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                          spreadRadius: -1,
+                        )
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          AppAssets.bookAppointmentHome,
+                        ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        Text(
+                          bookDoctor,
+                          style: AppTextStyle.mediumText.copyWith(
+                              color: AppColor.navyBlueColor,
+                              fontSize: 14
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                )
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Get.to(() => const ConsultationScreen());
-                },
-                child: Container(
+                ),
+                Container(
                   height: 15.h,
                   width: 40.w,
                   decoration: BoxDecoration(
-                      color: AppColor.pureWhiteColor,
-                      borderRadius: BorderRadius.circular(12),
+                    color: AppColor.pureWhiteColor,
+                    borderRadius: BorderRadius.circular(12),
                     boxShadow: const [
                       BoxShadow(
                         color: Color(0x19101828),
@@ -88,124 +147,92 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                     ],
                   ),
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        AppAssets.bookAppointmentHome,
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      Text(
-                        bookDoctor,
-                        style: AppTextStyle.mediumText.copyWith(
-                          color: AppColor.navyBlueColor,
-                          fontSize: 14
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          AppAssets.test,
                         ),
-                      )
-                    ],
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        Text(
+                          bookTest,
+                          style: AppTextStyle.mediumText.copyWith(
+                              color: AppColor.navyBlueColor,
+                              fontSize: 14
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                height: 15.h,
-                width: 40.w,
-                decoration: BoxDecoration(
-                    color: AppColor.pureWhiteColor,
-                    borderRadius: BorderRadius.circular(12),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x19101828),
-                      blurRadius: 4,
-                      offset: Offset(0, 2),
-                      spreadRadius: -1,
-                    )
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        AppAssets.test,
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      Text(
-                        bookTest,
-                        style: AppTextStyle.mediumText.copyWith(
-                          color: AppColor.navyBlueColor,
-                          fontSize: 14
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 2.h,
-          ),
-          Text(
+              ],
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            Text(
               currentToken,
-            style: AppTextStyle.mediumText.copyWith(
-              fontSize: 20,
-              color: AppColor.navyBlueColor
-            ),
-          ),
-          SizedBox(
-            height: 1.h,
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            // margin: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: AppColor.lightBlueColor,
-                borderRadius: BorderRadius.circular(4)),
-            child: Text(
-              "10",
-              style: AppTextStyle.semiBoldText
-                  .copyWith(color: AppColor.primaryColor, fontSize: 60),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                upcomingBookings,
-                style: AppTextStyle.semiBoldText
-                    .copyWith(color: AppColor.primaryColor, fontSize: 16),
+              style: AppTextStyle.mediumText.copyWith(
+                  fontSize: 20,
+                  color: AppColor.navyBlueColor
               ),
-              ButtonWidget(
-                text: viewAll,
-                width: 25.w,
-                height: 5.h,
-                textStyle: AppTextStyle.normalText.copyWith(
-                  color: AppColor.pureWhiteColor,
+            ),
+            SizedBox(
+              height: 1.h,
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              // margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: AppColor.lightBlueColor,
+                  borderRadius: BorderRadius.circular(4)),
+              child: Text(
+                "10",
+                style: AppTextStyle.semiBoldText
+                    .copyWith(color: AppColor.primaryColor, fontSize: 60),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  upcomingBookings,
+                  style: AppTextStyle.semiBoldText
+                      .copyWith(color: AppColor.primaryColor, fontSize: 16),
                 ),
-                onTap: () {},
-                borderRadius: 10,
-              )
-            ],
-          ),
-          SizedBox(
-            height: 1.h,
-          ),
-          Expanded(
-            child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: 5,
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(00),
-                itemBuilder: (BuildContext context, int index) {
-                  return bookingListWidget();
-                }),
-          ),
-        ],
-      ),
-    );
+                ButtonWidget(
+                  text: viewAll,
+                  width: 25.w,
+                  height: 5.h,
+                  textStyle: AppTextStyle.normalText.copyWith(
+                    color: AppColor.pureWhiteColor,
+                  ),
+                  onTap: () {},
+                  borderRadius: 10,
+                )
+              ],
+            ),
+            SizedBox(
+              height: 1.h,
+            ),
+            Expanded(
+              child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: 5,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(00),
+                  itemBuilder: (BuildContext context, int index) {
+                    return bookingListWidget();
+                  }),
+            ),
+          ],
+        );
+      }
+    }));
+
   }
 
   Widget bookingListWidget() {

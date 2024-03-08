@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/controllers/forgot_password/forgot_password_controller.dart';
-import 'package:health_workers/controllers/login/login_controller.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
+import 'package:health_workers/main.dart';
 import 'package:health_workers/screens/otp/otp_screen.dart';
+import 'package:health_workers/utils/validator.dart';
 import 'package:health_workers/widgets/button_widget.dart';
 import 'package:health_workers/widgets/custom_text_field.dart';
 import 'package:sizer/sizer.dart';
@@ -71,6 +72,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               label: emailEnter,
               controller: controller.emailController,
               borderRadius: 8,
+              validator: (String? value) => Validators.validateEmail(value!.trim()),
               keyboardType: null,
             ),
             SizedBox(
@@ -85,7 +87,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     color: AppColor.whiteColor
                 ),
                 onTap: () {
-                  Get.to(() => const OtpScreen());
+                  if (formKey.currentState!.validate()) {
+                    Get.to(() => const OtpScreen());
+                  }
+
                 },
               ),
             )
