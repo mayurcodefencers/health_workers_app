@@ -68,6 +68,8 @@
  const String healthWorker = "Health Worker";
  const String transaction = "Transaction";
  const String transactionId = "Transaction Id";
+ const String currentToken = "Current Token Number";
+ const String totalAmount = "Total Amount";
 
 
  final kToday = DateTime.now();

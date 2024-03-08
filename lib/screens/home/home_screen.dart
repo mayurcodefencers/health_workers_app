@@ -146,7 +146,29 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           SizedBox(
-            height: 3.h,
+            height: 2.h,
+          ),
+          Text(
+              currentToken,
+            style: AppTextStyle.mediumText.copyWith(
+              fontSize: 20,
+              color: AppColor.navyBlueColor
+            ),
+          ),
+          SizedBox(
+            height: 1.h,
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            // margin: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                color: AppColor.lightBlueColor,
+                borderRadius: BorderRadius.circular(4)),
+            child: Text(
+              "10",
+              style: AppTextStyle.semiBoldText
+                  .copyWith(color: AppColor.primaryColor, fontSize: 60),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -167,6 +189,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: 10,
               )
             ],
+          ),
+          SizedBox(
+            height: 1.h,
           ),
           Expanded(
             child: ListView.builder(

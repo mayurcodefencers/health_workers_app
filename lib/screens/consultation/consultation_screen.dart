@@ -433,7 +433,35 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
             ),
           )),
           SizedBox(
-            height: 8.h,
+            height: 4.h,
+          ),
+          SvgPicture.asset(
+            AppAssets.line
+          ),
+          SizedBox(
+            height: 1.h,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                 totalAmount,
+                style: AppTextStyle.semiBoldText.copyWith(
+                  color: AppColor.navyBlueColor,
+                  fontSize: 20
+                ),
+              ),
+              Text(
+                "80",
+                style: AppTextStyle.mediumText.copyWith(
+                    color: AppColor.primaryColor,
+                    fontSize: 24
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 5.h,
           ),
           Center(
             child: ButtonWidget(
@@ -718,7 +746,35 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
             ),
           ),
           SizedBox(
-            height: 8.h,
+            height: 4.h,
+          ),
+          SvgPicture.asset(
+              AppAssets.line
+          ),
+          SizedBox(
+            height: 1.h,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                totalAmount,
+                style: AppTextStyle.semiBoldText.copyWith(
+                    color: AppColor.navyBlueColor,
+                    fontSize: 20
+                ),
+              ),
+              Text(
+                "80",
+                style: AppTextStyle.mediumText.copyWith(
+                    color: AppColor.primaryColor,
+                    fontSize: 24
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 5.h,
           ),
           Center(
             child: ButtonWidget(

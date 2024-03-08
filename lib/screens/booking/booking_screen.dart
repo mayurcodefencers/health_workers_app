@@ -38,6 +38,28 @@ class _BookingScreenState extends State<BookingScreen> {
       ),
       body: Column(
         children: [
+          Text(
+            currentToken,
+            style: AppTextStyle.mediumText.copyWith(
+                fontSize: 20,
+                color: AppColor.navyBlueColor
+            ),
+          ),
+          SizedBox(
+            height: 1.h,
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            // margin: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                color: AppColor.lightBlueColor,
+                borderRadius: BorderRadius.circular(4)),
+            child: Text(
+              "10",
+              style: AppTextStyle.semiBoldText
+                  .copyWith(color: AppColor.primaryColor, fontSize: 60),
+            ),
+          ),
           Expanded(
             child: ListView.builder(
                 physics: const BouncingScrollPhysics(),
