@@ -66,7 +66,7 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         validator: validator,
         maxLength: maxLength,
-        maxLines: maxLine,
+        maxLines: maxLine ?? 1,
         showCursor: true,
         enabled: enabled,
         readOnly: readOnly,

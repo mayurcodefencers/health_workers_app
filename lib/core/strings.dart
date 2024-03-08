@@ -70,6 +70,8 @@
  const String transactionId = "Transaction Id";
  const String currentToken = "Current Token Number";
  const String totalAmount = "Total Amount";
+ const String exitApp = "Exit App";
+ const String exitText = "Do you want to exit an App?";
 
 
  final kToday = DateTime.now();
