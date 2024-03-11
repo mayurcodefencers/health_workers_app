@@ -386,10 +386,10 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 fontSize: 14
             ),
           ),
-      SizedBox(
+         SizedBox(
         height: 1.h,
       ),
-      Obx(() => Container(
+         Obx(() => Container(
         height: 6.h,
         width: 40.w,
         decoration: BoxDecoration(
@@ -441,7 +441,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
           SizedBox(
             height: 1.h,
           ),
-          Row(
+          newController.storeDoctorPrice!.value != '' ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -452,14 +452,14 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 ),
               ),
               Text(
-                "80",
+                newController.storeDoctorPrice!.value.toString(),
                 style: AppTextStyle.mediumText.copyWith(
                     color: AppColor.primaryColor,
                     fontSize: 24
                 ),
               ),
             ],
-          ),
+          ) : const SizedBox(),
           SizedBox(
             height: 5.h,
           ),
@@ -794,6 +794,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
       ),
     );
   }
+
   Widget genderWidgetNew() {
     return Obx(() => DropdownButtonHideUnderline(
       child: DropdownButtonFormField(
@@ -874,7 +875,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
             onTap: () {
               newController.storeDepartmentId?.value = value['id'];
               newController.getDoctorData(newController.storeDepartmentId!.value);
-            },
+              },
             value: departmentValue,
             child: Text(departmentValue),
           );
@@ -930,6 +931,9 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 .map<DropdownMenuItem<String>>((dynamic value) {
               String doctorValue = value['name'];
               return DropdownMenuItem<String>(
+                onTap: () {
+                  newController.storeDoctorPrice!.value = value['price'];
+                },
                 value: doctorValue,
                 child: Text(doctorValue),
               );

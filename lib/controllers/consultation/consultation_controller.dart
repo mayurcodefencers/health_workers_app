@@ -39,6 +39,7 @@ class ConsultationController extends GetxController {
   RxString? selectedValueDoctorExisting = "".obs;
 
   RxString? storeDepartmentId = "".obs;
+  RxString? storeDoctorPrice = "".obs;
 
   List<String> dropdownValuesGender = {
     "Male",
