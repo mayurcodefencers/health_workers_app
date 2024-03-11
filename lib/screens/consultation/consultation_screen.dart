@@ -253,17 +253,17 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
           SizedBox(
             height: 2.h,
           ),
-          Text(
+          newController.selectedValueDepartment!.value != "" ? Text(
             doctor,
             style: AppTextStyle.mediumText.copyWith(
                 color: AppColor.navyBlueColor,
                 fontSize: 14
             ),
-          ),
+          ) : SizedBox(),
           SizedBox(
             height: 1.h,
           ),
-          doctorWidgetNew(),
+          newController.selectedValueDepartment!.value != "" ? doctorWidgetNew() : SizedBox(),
           SizedBox(
             height: 2.h,
           ),
@@ -710,7 +710,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
             borderRadius: BorderRadius.circular(8)),
         child: Center(
           child: Text(
-            newController.timeListMorningExisting!.value,
+            newController.timeScheduleModel!.timeschedule!.first.morningShift.toString(),
             style: AppTextStyle.normalText.copyWith(
               color: newController.isSelectedMorningExisting?.value != null ? AppColor.whiteColor : AppColor.primaryColor,
             ),
@@ -738,7 +738,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 borderRadius: BorderRadius.circular(8)),
             child: Center(
               child: Text(
-                newController.timeListEveningExisting!.value,
+                newController.timeScheduleModel!.timeschedule!.first.eveningShift.toString(),
                 style: AppTextStyle.normalText.copyWith(
                   color: newController.isSelectedEveningExisting?.value != null ? AppColor.whiteColor : AppColor.primaryColor,
                 ),
@@ -865,13 +865,18 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
           ),
         ),
         validator: (String? value) {
-          return value == null ? "Choose Note from list" : null;
+          return value == null ? "Choose Department from list" : null;
         },
         items: newController.dropdownValuesDepartment
-            .map<DropdownMenuItem<String>>((String value) {
+            .map<DropdownMenuItem<String>>((dynamic value) {
+          String departmentValue = value['department'];
           return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
+            onTap: () {
+              newController.storeDepartmentId?.value = value['id'];
+              newController.getDoctorData(newController.storeDepartmentId!.value);
+            },
+            value: departmentValue,
+            child: Text(departmentValue),
           );
         }).toList(),
         onChanged: newController.onSelectedDepartment,
@@ -895,54 +900,61 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
     ));
   }
   Widget doctorWidgetNew() {
-    return Obx(() => DropdownButtonHideUnderline(
-      child: DropdownButtonFormField(
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(16),
-          fillColor: AppColor.skyBlueColor,
-            filled: true,
-            enabledBorder: UnderlineInputBorder(
+    return Obx(() {
+      if (newController.dropdownValuesDoctor.isEmpty) {
+        return const Text('No doctors available');
+      } else {
+        return DropdownButtonHideUnderline(
+          child: DropdownButtonFormField(
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.all(16),
+              fillColor: AppColor.skyBlueColor,
+              filled: true,
+              enabledBorder: UnderlineInputBorder(
                 borderSide: const BorderSide(
                   color: AppColor.skyBlueColor,
                 ),
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-          focusedBorder: UnderlineInputBorder(
-              borderSide: const BorderSide(
-                color: AppColor.skyBlueColor,
+                borderRadius: BorderRadius.circular(8.0),
               ),
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-        validator: (String? value) {
-          return value == null ? "Choose Note from list" : null;
-        },
-        items: newController.dropdownValuesDoctor
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        onChanged: newController.onSelectedDoctor,
-        icon: const Icon(
-          Icons.keyboard_arrow_down_outlined,
-          size: 30,
-          color: AppColor.navyBlueColor,
-        ),
-        value: newController.selectedValueDoctor!.value.isNotEmpty
-            ? newController.selectedValueDoctor!.value
-            : null,
-        hint: Text(
-            selectDoctor,
-            style: AppTextStyle.mediumText.copyWith(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: const BorderSide(
+                  color: AppColor.skyBlueColor,
+                ),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            validator: (String? value) {
+              return value == null ? "Choose Doctor from list" : null;
+            },
+            items: newController.dropdownValuesDoctor
+                .map<DropdownMenuItem<String>>((dynamic value) {
+              String doctorValue = value['name'];
+              return DropdownMenuItem<String>(
+                value: doctorValue,
+                child: Text(doctorValue),
+              );
+            }).toList(),
+            onChanged: newController.onSelectedDoctor,
+            icon: const Icon(
+              Icons.keyboard_arrow_down_outlined,
+              size: 30,
               color: AppColor.navyBlueColor,
-              fontSize: 14
+            ),
+            value: newController.selectedValueDoctor!.value.isNotEmpty
+                ? newController.selectedValueDoctor!.value
+                : null,
+            hint: Text(
+              selectDoctor,
+              style: AppTextStyle.mediumText.copyWith(
+                  color: AppColor.navyBlueColor,
+                  fontSize: 14
+              ),
+            ),
+            isExpanded: false,
           ),
-        ),
-        isExpanded: false,
-      ),
-    ));
+        );
+      }
+    });
   }
 
   Widget departmentWidgetExisting() {
@@ -966,7 +978,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
           ),
         ),
         validator: (String? value) {
-          return value == null ? "Choose Note from list" : null;
+          return value == null ? "Choose Department from list" : null;
         },
         items: newController.dropdownValuesDepartmentExisting
             .map<DropdownMenuItem<String>>((String value) {
@@ -1016,7 +1028,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
           ),
         ),
         validator: (String? value) {
-          return value == null ? "Choose Note from list" : null;
+          return value == null ? "Choose Doctor from list" : null;
         },
         items: newController.dropdownValuesDoctorExisting
             .map<DropdownMenuItem<String>>((String value) {

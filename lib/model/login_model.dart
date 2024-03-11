@@ -43,14 +43,16 @@ class Admindata {
   String? name;
   String? email;
   String? password;
+  String? cfToken;
 
-  Admindata({this.id, this.name, this.email, this.password});
+  Admindata({this.id, this.name, this.email, this.password, this.cfToken});
 
   Admindata.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
     password = json['password'];
+    cfToken = json['cf_token'];
   }
 
   Map<String, dynamic> toJson() {
@@ -59,6 +61,7 @@ class Admindata {
     data['name'] = this.name;
     data['email'] = this.email;
     data['password'] = this.password;
+    data['cf_token'] = this.cfToken;
     return data;
   }
 }
@@ -74,6 +77,8 @@ class UserData {
   String? address;
   String? tokenVal;
   String? tokenUpdate;
+  String? otp;
+  String? expiryTime;
   String? createdDate;
   String? addedBy;
   String? updatedDate;
@@ -90,6 +95,8 @@ class UserData {
         this.address,
         this.tokenVal,
         this.tokenUpdate,
+        this.otp,
+        this.expiryTime,
         this.createdDate,
         this.addedBy,
         this.updatedDate,
@@ -106,6 +113,8 @@ class UserData {
     address = json['address'];
     tokenVal = json['token_val'];
     tokenUpdate = json['token_update'];
+    otp = json['otp'];
+    expiryTime = json['expiry_time'];
     createdDate = json['created_date'];
     addedBy = json['added_by'];
     updatedDate = json['updated_date'];
@@ -124,6 +133,8 @@ class UserData {
     data['address'] = this.address;
     data['token_val'] = this.tokenVal;
     data['token_update'] = this.tokenUpdate;
+    data['otp'] = this.otp;
+    data['expiry_time'] = this.expiryTime;
     data['created_date'] = this.createdDate;
     data['added_by'] = this.addedBy;
     data['updated_date'] = this.updatedDate;
