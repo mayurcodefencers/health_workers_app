@@ -64,7 +64,7 @@
  const String rescheduleNow = "Reschedule Now";
  const String walletBalance = "Wallet Balance";
  const String notification = "Notification";
- const String logOut = "logOut";
+ const String logOut = "LogOut";
  const String healthWorker = "Health Worker";
  const String transaction = "Transaction";
  const String transactionId = "Transaction Id";

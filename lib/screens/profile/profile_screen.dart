@@ -102,10 +102,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                     child: Row(
                       children: [
-                        const Icon(
-                          Icons.notifications_none,
-                          size: 34,
-                          color: AppColor.primaryColor,
+                        SvgPicture.asset(
+                            AppAssets.notification
                         ),
                         SizedBox(
                           width: 2.w,
@@ -128,13 +126,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () {},
                     child: Row(
                       children: [
-                        const Icon(
-                          Icons.logout_outlined,
-                          size: 34,
-                          color: AppColor.primaryColor,
+                        SvgPicture.asset(
+                            AppAssets.logout,
+                          height: 3.h,
+                          width: 6.w,
                         ),
                         SizedBox(
-                          width: 2.w,
+                          width: 3.w,
                         ),
                         Text(
                           logOut,

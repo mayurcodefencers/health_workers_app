@@ -1,6 +1,5 @@
 class AppAssets {
   // SVG
-  static const String notification = "assets/svg/noti.svg";
   static const String arrow = "assets/svg/arrow.svg";
   static const String fileUpload = "assets/svg/file_upload.svg";
   static const String booking = "assets/svg/booking.svg";
@@ -15,6 +14,8 @@ class AppAssets {
   static const String credit = "assets/svg/credit.svg";
   static const String debit = "assets/svg/debit.svg";
   static const String line = "assets/svg/line.svg";
+  static const String notification = "assets/svg/notification_health.svg";
+  static const String logout = "assets/svg/logout_health.svg";
 
   //PNG
   static const String bookAppointment = "assets/svg/book_appo.png";

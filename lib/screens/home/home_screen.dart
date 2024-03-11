@@ -82,11 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       Get.to(() => const NotificationScreen());
                     },
-                    child: const Icon(
-                      Icons.notifications_none,
-                      size: 34,
-                      color: AppColor.primaryColor,
-                    ),
+                    child: SvgPicture.asset(
+                      AppAssets.notification
+                    )
                   )
                 ],
               ),
