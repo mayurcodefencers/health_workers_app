@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/dio_services/api_service.dart';
@@ -40,34 +41,21 @@ class ConsultationController extends GetxController {
 
   RxString? storeDepartmentId = "".obs;
   RxString? storeDoctorPrice = "".obs;
+  RxString? storeDoctorPriceExisting = "".obs;
 
   List<String> dropdownValuesGender = {
     "Male",
     "Female",
   }.toList().obs;
   var dropdownValuesDepartment = [].obs;
-  List<String> dropdownValuesDepartmentExisting = {
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-  }.toList().obs;
+  var dropdownValuesDepartmentExisting = [].obs;
 
   var dropdownValuesDoctor = [].obs;
-  List<String> dropdownValuesDoctorExisting = {
-    "Doctor 1",
-    "Doctor 2",
-    "Doctor 3",
-    "Doctor 4",
-    "Doctor 5",
-  }.toList().obs;
+  var dropdownValuesDoctorExisting = [].obs;
 
 
-  RxInt? isSelectedMorning = 0.obs;
-  RxInt? isSelectedMorningExisting = 0.obs;
-  RxInt? isSelectedEvening = 0.obs;
-  RxInt? isSelectedEveningExisting = 0.obs;
+  RxString? morningShift = "".obs;
+  RxString? eveningShift = "".obs;
 
   RxString? timeListMorning = "09:00 to 12:00".obs;
   RxString? timeListMorningExisting = "09:00 to 12:00".obs;
@@ -133,6 +121,7 @@ class ConsultationController extends GetxController {
         List<dynamic> departmentList = jsonMap['departmentlist'];
         departmentListModel = DepartmentListModel.fromJson(jsonMap);
         dropdownValuesDepartment.value = departmentList;
+        dropdownValuesDepartmentExisting.value = departmentList;
 
         // Get.to(() => const HomePage());
 
@@ -188,6 +177,7 @@ class ConsultationController extends GetxController {
         doctorListModel = DoctorListModel.fromJson(jsonMap);
 
         dropdownValuesDoctor.value = doctorList;
+        dropdownValuesDoctorExisting.value = doctorList;
 
 
       } else {
@@ -249,7 +239,7 @@ class ConsultationController extends GetxController {
         isLoading.value = false;
       }
     } catch (e) {
-      print("ErrorDepartmentList $e");
+      print("ErrorTimeSchedule $e");
       isLoading.value = false;
     }
   }

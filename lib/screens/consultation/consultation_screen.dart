@@ -67,15 +67,11 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                   physics: const ScrollPhysics(),
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(20),
-                  itemCount: newController.type.length,
+                  itemCount: newController.type.length ?? 0,
                   itemBuilder: (ctx, index) {
                     return GestureDetector(
                       onTap: () {
                         newController.isType.value = index;
-                        // String? getUserId = pref?.getString("userId");
-                        // controller.isSelectedBooking.value == 0
-                        //     ? controller.getOrderListData(controller.userLoginId!.value)
-                        //     : controller.pastOrderListData(getUserId!);
                       },
                       child: Obx(
                             () => Row(
@@ -386,24 +382,24 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 fontSize: 14
             ),
           ),
-         SizedBox(
+          SizedBox(
         height: 1.h,
       ),
-         Obx(() => Container(
-        height: 6.h,
-        width: 40.w,
-        decoration: BoxDecoration(
-            color: newController.isSelectedMorning?.value != null ? AppColor.primaryColor : AppColor.whiteColor,
-            borderRadius: BorderRadius.circular(8)),
-        child: Center(
-          child: Text(
-            newController.timeListMorning!.value,
-            style: AppTextStyle.normalText.copyWith(
-              color: newController.isSelectedMorning?.value != null ? AppColor.whiteColor : AppColor.primaryColor,
+          Container(
+            height: 6.h,
+            width: 40.w,
+            decoration: BoxDecoration(
+                color: AppColor.primaryColor ,
+                borderRadius: BorderRadius.circular(8)),
+            child: Center(
+              child: Text(
+                newController.timeScheduleModel?.timeschedule?.first.morningShift?.toString() ?? '11',
+                style: AppTextStyle.normalText.copyWith(
+                  color: AppColor.whiteColor,
+                ),
+              ),
             ),
           ),
-        ),
-      )),
           SizedBox(
             height: 2.h,
           ),
@@ -417,21 +413,21 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
           SizedBox(
             height: 1.h,
           ),
-          Obx(() => Container(
+          Container(
             height: 6.h,
             width: 40.w,
             decoration: BoxDecoration(
-                color: newController.isSelectedEvening?.value != null ? AppColor.primaryColor : AppColor.whiteColor,
+                color: AppColor.primaryColor,
                 borderRadius: BorderRadius.circular(8)),
             child: Center(
               child: Text(
-                newController.timeListEvening!.value,
+                newController.timeScheduleModel?.timeschedule?.first.eveningShift?.toString() ?? '11',
                 style: AppTextStyle.normalText.copyWith(
-                  color: newController.isSelectedEvening?.value != null? AppColor.whiteColor : AppColor.primaryColor,
+                  color: AppColor.whiteColor,
                 ),
               ),
             ),
-          )),
+          ),
           SizedBox(
             height: 4.h,
           ),
@@ -566,17 +562,19 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
           SizedBox(
             height: 2.h,
           ),
-          Text(
+          newController.selectedValueDepartmentExisting!.value != "" ? Text(
             doctor,
             style: AppTextStyle.mediumText.copyWith(
                 color: AppColor.navyBlueColor,
                 fontSize: 14
             ),
-          ),
+          ) : const SizedBox(),
           SizedBox(
             height: 1.h,
           ),
-          doctorWidgetExisting(),
+          newController.selectedValueDepartmentExisting!.value != "" ?
+          doctorWidgetExisting()
+          : const SizedBox(),
           SizedBox(
             height: 2.h,
           ),
@@ -699,24 +697,23 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 fontSize: 14
             ),
           ),
-      SizedBox(
+          SizedBox(
         height: 1.h,
       ),
-      Obx(() => Container(
-        height: 6.h,
-        width: 40.w,
-        decoration: BoxDecoration(
-            color: newController.isSelectedMorningExisting?.value != null ? AppColor.primaryColor : AppColor.whiteColor,
-            borderRadius: BorderRadius.circular(8)),
-        child: Center(
-          child: Text(
-            newController.timeScheduleModel!.timeschedule!.first.morningShift.toString(),
-            style: AppTextStyle.normalText.copyWith(
-              color: newController.isSelectedMorningExisting?.value != null ? AppColor.whiteColor : AppColor.primaryColor,
+          Container(
+            height: 6.h,
+            width: 40.w,
+            decoration: BoxDecoration(
+                color: AppColor.primaryColor,
+                borderRadius: BorderRadius.circular(8)),
+            child: Center(
+              child: Text(
+                  newController.timeScheduleModel!.timeschedule!.first.morningShift.toString(),
+                  style: AppTextStyle.normalText.copyWith(
+                    color: AppColor.whiteColor,
+                  )) ,
+              ),
             ),
-          ),
-        ),
-      )),
           SizedBox(
             height: 2.h,
           ),
@@ -734,13 +731,13 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
             height: 6.h,
             width: 40.w,
             decoration: BoxDecoration(
-                color: newController.isSelectedEveningExisting?.value != null ? AppColor.primaryColor : AppColor.whiteColor,
+                color: AppColor.primaryColor,
                 borderRadius: BorderRadius.circular(8)),
             child: Center(
               child: Text(
                 newController.timeScheduleModel!.timeschedule!.first.eveningShift.toString(),
                 style: AppTextStyle.normalText.copyWith(
-                  color: newController.isSelectedEveningExisting?.value != null ? AppColor.whiteColor : AppColor.primaryColor,
+                  color: AppColor.whiteColor,
                 ),
               ),
             ),
@@ -754,7 +751,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
           SizedBox(
             height: 1.h,
           ),
-          Row(
+          newController.storeDoctorPriceExisting!.value != '' ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -765,14 +762,14 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 ),
               ),
               Text(
-                "80",
+                newController.storeDoctorPriceExisting!.value,
                 style: AppTextStyle.mediumText.copyWith(
                     color: AppColor.primaryColor,
                     fontSize: 24
                 ),
               ),
             ],
-          ),
+          ) : const SizedBox(),
           SizedBox(
             height: 5.h,
           ),
@@ -985,10 +982,15 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
           return value == null ? "Choose Department from list" : null;
         },
         items: newController.dropdownValuesDepartmentExisting
-            .map<DropdownMenuItem<String>>((String value) {
+            .map<DropdownMenuItem<String>>((dynamic value) {
+          String departmentValueExisting = value['department'];
           return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
+            onTap: () {
+              newController.storeDepartmentId?.value = value['id'];
+              newController.getDoctorData(newController.storeDepartmentId!.value);
+            },
+            value: departmentValueExisting,
+            child: Text(departmentValueExisting),
           );
         }).toList(),
         onChanged: newController.onSelectedDepartmentExisting,
@@ -1012,54 +1014,64 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
     ));
   }
   Widget doctorWidgetExisting() {
-    return Obx(() => DropdownButtonHideUnderline(
-      child: DropdownButtonFormField(
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(16),
-          fillColor: AppColor.skyBlueColor,
-          filled: true,
-          enabledBorder: UnderlineInputBorder(
-            borderSide: const BorderSide(
-              color: AppColor.skyBlueColor,
+    return Obx(() {
+      if (newController.dropdownValuesDoctorExisting.isEmpty) {
+        return const Text('No doctors available');
+      } else {
+        return DropdownButtonHideUnderline(
+          child: DropdownButtonFormField(
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.all(16),
+              fillColor: AppColor.skyBlueColor,
+              filled: true,
+              enabledBorder: UnderlineInputBorder(
+                borderSide: const BorderSide(
+                  color: AppColor.skyBlueColor,
+                ),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: const BorderSide(
+                  color: AppColor.skyBlueColor,
+                ),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
             ),
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: const BorderSide(
-              color: AppColor.skyBlueColor,
-            ),
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-        validator: (String? value) {
-          return value == null ? "Choose Doctor from list" : null;
-        },
-        items: newController.dropdownValuesDoctorExisting
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        onChanged: newController.onSelectedDoctorExisting,
-        icon: const Icon(
-          Icons.keyboard_arrow_down_outlined,
-          size: 30,
-          color: AppColor.navyBlueColor,
-        ),
-        value: newController.selectedValueDoctorExisting!.value.isNotEmpty
-            ? newController.selectedValueDoctorExisting!.value
-            : null,
-        hint: Text(
-          selectDoctor,
-          style: AppTextStyle.mediumText.copyWith(
+            validator: (String? value) {
+              return value == null ? "Choose Doctor from list" : null;
+            },
+            items: newController.dropdownValuesDoctorExisting
+                .map<DropdownMenuItem<String>>((dynamic value) {
+              String doctorValueExisting = value['name'];
+              return DropdownMenuItem<String>(
+                onTap: () {
+                  newController.storeDoctorPriceExisting!.value = value['price'];
+                },
+                value: doctorValueExisting,
+                child: Text(doctorValueExisting),
+              );
+            }).toList(),
+            onChanged: newController.onSelectedDoctorExisting,
+            icon: const Icon(
+              Icons.keyboard_arrow_down_outlined,
+              size: 30,
               color: AppColor.navyBlueColor,
-              fontSize: 14
+            ),
+            value: newController.selectedValueDoctorExisting!.value.isNotEmpty
+                ? newController.selectedValueDoctorExisting!.value
+                : null,
+            hint: Text(
+              selectDoctor,
+              style: AppTextStyle.mediumText.copyWith(
+                  color: AppColor.navyBlueColor,
+                  fontSize: 14
+              ),
+            ),
+            isExpanded: false,
           ),
-        ),
-        isExpanded: false,
-      ),
-    ));
+        );
+      }
+    });
   }
 
 }

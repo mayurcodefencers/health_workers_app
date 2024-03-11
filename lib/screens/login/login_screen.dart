@@ -27,8 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    controller.emailController.text = 'mayur.patil@codefencers.com';
-    controller.passwordController.text = '123456';
+    // controller.emailController.text = 'mayur.patil@codefencers.com';
+    // controller.passwordController.text = '123456';
   }
 
   @override
@@ -107,24 +107,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 )),
                 keyboardType: null,
               ),
-              Padding(
-                padding: EdgeInsets.only(right: 6.w, top: 2.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(() => const ForgotPasswordScreen());
-                      },
-                      child: Text(
-                        "$forgotPassword?",
-                        style: AppTextStyle.mediumText
-                            .copyWith(color: AppColor.primaryColor, fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(right: 6.w, top: 2.h),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.end,
+              //     children: [
+              //       GestureDetector(
+              //         onTap: () {
+              //           Get.to(() => const ForgotPasswordScreen());
+              //         },
+              //         child: Text(
+              //           "$forgotPassword?",
+              //           style: AppTextStyle.mediumText
+              //               .copyWith(color: AppColor.primaryColor, fontSize: 14),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               SizedBox(
                 height: 10.h,
               ),
