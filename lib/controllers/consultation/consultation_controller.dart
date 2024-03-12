@@ -18,7 +18,7 @@ class ConsultationController extends GetxController {
   final ApiService _apiService = ApiService();
   DepartmentListModel? departmentListModel;
   DoctorListModel? doctorListModel;
-  TimeScheduleModel? timeScheduleModel;
+  var timeScheduleModel = TimeScheduleModel().obs;
 
   final emailController = TextEditingController();
   final nameController = TextEditingController();
@@ -220,8 +220,8 @@ class ConsultationController extends GetxController {
       print("MessageTimeSchedule ${jsonMap['message']}");
 
       if (jsonMap['status'] == "200") {
-
-        timeScheduleModel = TimeScheduleModel.fromJson(jsonMap);
+          print("SuccessTime");
+        timeScheduleModel.value = TimeScheduleModel.fromJson(jsonMap);
 
         // Get.to(() => const HomePage());
 
@@ -240,6 +240,8 @@ class ConsultationController extends GetxController {
       }
     } catch (e) {
       print("ErrorTimeSchedule $e");
+      isLoading.value = false;
+    } finally {
       isLoading.value = false;
     }
   }

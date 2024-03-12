@@ -393,7 +393,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 borderRadius: BorderRadius.circular(8)),
             child: Center(
               child: Text(
-                newController.timeScheduleModel?.timeschedule?.first.morningShift?.toString() ?? '11',
+                newController.timeScheduleModel.value.timeschedule?.first.morningShift?.toString() ?? '11',
                 style: AppTextStyle.normalText.copyWith(
                   color: AppColor.whiteColor,
                 ),
@@ -421,7 +421,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 borderRadius: BorderRadius.circular(8)),
             child: Center(
               child: Text(
-                newController.timeScheduleModel?.timeschedule?.first.eveningShift?.toString() ?? '11',
+                newController.timeScheduleModel.value.timeschedule?.first.eveningShift?.toString() ?? '11',
                 style: AppTextStyle.normalText.copyWith(
                   color: AppColor.whiteColor,
                 ),
@@ -708,8 +708,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 borderRadius: BorderRadius.circular(8)),
             child: Center(
               child: Text(
-                  newController.timeScheduleModel!.timeschedule!.first.morningShift.toString(),
-                  style: AppTextStyle.normalText.copyWith(
+                  newController.timeScheduleModel.value.timeschedule?.first.morningShift?.toString() ?? '11',                  style: AppTextStyle.normalText.copyWith(
                     color: AppColor.whiteColor,
                   )) ,
               ),
@@ -735,8 +734,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
                 borderRadius: BorderRadius.circular(8)),
             child: Center(
               child: Text(
-                newController.timeScheduleModel!.timeschedule!.first.eveningShift.toString(),
-                style: AppTextStyle.normalText.copyWith(
+                newController.timeScheduleModel.value.timeschedule?.first.eveningShift?.toString() ?? '11',                style: AppTextStyle.normalText.copyWith(
                   color: AppColor.whiteColor,
                 ),
               ),
