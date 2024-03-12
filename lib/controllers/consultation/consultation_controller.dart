@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/dio_services/api_service.dart';
 import 'package:health_workers/dio_services/api_url_constant.dart';
 import 'package:health_workers/main.dart';
+import 'package:health_workers/model/book_new_user.dart';
 import 'package:health_workers/model/department_list_model.dart';
 import 'package:health_workers/model/doctor_list_model.dart';
 import 'package:health_workers/model/time_schedule_model.dart';
@@ -16,9 +18,11 @@ import 'package:health_workers/model/time_schedule_model.dart';
 class ConsultationController extends GetxController {
   final RxBool isLoading = false.obs;
   final ApiService _apiService = ApiService();
-  DepartmentListModel? departmentListModel;
-  DoctorListModel? doctorListModel;
+
+  var doctorListModel = DoctorListModel().obs;
   var timeScheduleModel = TimeScheduleModel().obs;
+  var departmentListModel = DepartmentListModel().obs;
+  BookNewUserAppointmentModel? bookNewUserAppointmentModel;
 
   final emailController = TextEditingController();
   final nameController = TextEditingController();
@@ -28,9 +32,14 @@ class ConsultationController extends GetxController {
   final addressController = TextEditingController();
 
   RxInt isType = 0.obs;
+  RxInt? isShift = 0.obs;
   List<String> type = [
     newText,
     existing,
+  ].obs;
+  List<String> shift = [
+    morningTime,
+    eveningTime,
   ].obs;
 
   RxString? selectedValueGender = "".obs;
@@ -38,6 +47,9 @@ class ConsultationController extends GetxController {
   RxString? selectedValueDepartmentExisting = "".obs;
   RxString? selectedValueDoctor = "".obs;
   RxString? selectedValueDoctorExisting = "".obs;
+  RxString? hwId = "".obs;
+
+  List<File> selectedImages = [];
 
   RxString? storeDepartmentId = "".obs;
   RxString? storeDoctorPrice = "".obs;
@@ -90,9 +102,14 @@ class ConsultationController extends GetxController {
 
   @override
   void onInit() {
+    initializeSharedPreferences();
     super.onInit();
     getDepartmentData();
     getTimeData();
+  }
+
+  Future<void> initializeSharedPreferences() async {
+    hwId?.value = pref?.getString("hwId") ?? "";
   }
 
   Future<void> getDepartmentData() async {
@@ -119,7 +136,7 @@ class ConsultationController extends GetxController {
 
       if (jsonMap['status'] == "200") {
         List<dynamic> departmentList = jsonMap['departmentlist'];
-        departmentListModel = DepartmentListModel.fromJson(jsonMap);
+        departmentListModel.value = DepartmentListModel.fromJson(jsonMap);
         dropdownValuesDepartment.value = departmentList;
         dropdownValuesDepartmentExisting.value = departmentList;
 
@@ -174,7 +191,7 @@ class ConsultationController extends GetxController {
 
       if (jsonMap['status'] == "200") {
         List<dynamic> doctorList = jsonMap['doctorlist'];
-        doctorListModel = DoctorListModel.fromJson(jsonMap);
+        doctorListModel.value = DoctorListModel.fromJson(jsonMap);
 
         dropdownValuesDoctor.value = doctorList;
         dropdownValuesDoctorExisting.value = doctorList;
@@ -242,6 +259,65 @@ class ConsultationController extends GetxController {
       print("ErrorTimeSchedule $e");
       isLoading.value = false;
     } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> submitNewUserData(Map<String, dynamic> formData) async {
+    try {
+      print("kndfndkf");
+      isLoading.value = true;
+      var token = pref?.getString("token");
+      var cfToken = pref?.getString("cfToken");
+      var headers = {
+        'Authorization': token ?? '', // Add default value if token is null
+        'CF-Token': cfToken ?? '', // Add default value if cfToken is null
+      };
+      final response = await _apiService.postDataWithForm(
+        formData,
+        AppConstant.bookNewAppointment,
+        headers: headers
+      );
+      String jsonString = response.data;
+      Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+
+      print("MessageNewUserBook ${jsonMap['message']}");
+
+      if (jsonMap['status'] == "200") {
+        Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+
+        bookNewUserAppointmentModel = BookNewUserAppointmentModel.fromJson(jsonMap);
+
+
+        Get.snackbar(
+          'Yehhh...',
+          jsonMap['message'],
+          backgroundColor: AppColor.primaryColor, // Customize the background color
+          colorText: AppColor.whiteColor, // Customize the text color
+          snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
+          duration: const Duration(
+              seconds: 2),
+        );
+
+        // Get.to(() => const HomePage());
+
+        isLoading.value = false;
+      } else {
+        Get.snackbar(
+          'OOPS...!!',
+          jsonMap['message'],
+          backgroundColor: AppColor.primaryColor, // Customize the background color
+          colorText: AppColor.whiteColor, // Customize the text color
+          snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
+          duration: const Duration(
+              seconds: 2),
+        );
+        isLoading.value = false;
+      }
+    } catch (e) {
+      print("ErrorLogin $e");
+      isLoading.value = false;
+    }  finally {
       isLoading.value = false;
     }
   }

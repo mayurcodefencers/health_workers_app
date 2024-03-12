@@ -5,4 +5,5 @@ class AppConstant {
   static const departmentList = 'Department_listapi/departmentlist';
   static const doctorList = 'Doctor_listapi/doctorlist';
   static const timeSchedule = 'Timeschedule_api/timeschedule';
+  static const bookNewAppointment = 'Appointment_bookapi/appointment_book';
 }

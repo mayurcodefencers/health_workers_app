@@ -29,10 +29,35 @@ class Validators {
     }
   }
 
-  static String? validateText(String? value, String type) {
-    if (value?.trim() == '' || value?.trim().isEmpty == true) {
-      return '$type is required';
-    } else {
+  static String? validateName(String value) {
+    if (value.isEmpty) {
+      return 'Name is required';
+    } else if (value.length >= 20) {
+      return 'Name should Not be more than 20 characters';
+    }
+    else {
+      return null;
+    }
+  }
+
+  static String? validateAge(String value) {
+    if (value.isEmpty) {
+      return 'Age is required';
+    } else if (value.length >= 3) {
+      return 'Age should Not be more than 3';
+    }
+    else {
+      return null;
+    }
+  }
+
+  static String? validateAddress(String value) {
+    if (value.isEmpty) {
+      return 'Address is required';
+    } else if (value.length >= 70) {
+      return 'Address should Not be more than 70';
+    }
+    else {
       return null;
     }
   }
@@ -44,22 +69,13 @@ class Validators {
       //   //   return "Please Enter a Valid Phone Number";
       // }
       // if (mobileNumberLength != null) {
-    } else if (value!.length < (mobileNumberLength ?? 9)) {
+    } else if (value!.length < (mobileNumberLength ?? 10)) {
       return "Invalid Phone Number";
     } else if (value.contains(RegExp(r'[;*+_,#/()]'))) {
       return "Invalid Phone Number";
     }
     // }
 
-    return null;
-  }
-
-  static String? validateSmilesMobile(String? value) {
-    if (value == '' || value?.isEmpty == true) {
-      return "Please Enter a Phone Number";
-    } else if (value!.length < 9) {
-      return "Invalid Phone Number";
-    }
     return null;
   }
 

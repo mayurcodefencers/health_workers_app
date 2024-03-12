@@ -45,12 +45,14 @@ class LoginController extends GetxController {
         String? userImage = loginModel!.userData!.first.img;
         String? userName = loginModel!.userData!.first.name;
         String? loginToken = loginModel!.userData!.first.tokenVal;
+        String? hwId = loginModel!.userData!.first.id;
         String? cfToken = loginModel!.admindata!.cfToken;
 
         pref?.setString("userImage", userImage!);
         pref?.setString("userName", userName!);
         pref?.setString("token", loginToken!);
         pref?.setString("cfToken", cfToken!);
+        pref?.setString("hwId", hwId!);
 
         Get.snackbar(
           'Yehhh...',
