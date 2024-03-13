@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
@@ -14,8 +14,10 @@ import 'package:health_workers/model/book_new_user.dart';
 import 'package:health_workers/model/department_list_model.dart';
 import 'package:health_workers/model/doctor_list_model.dart';
 import 'package:health_workers/model/time_schedule_model.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:intl/intl.dart';
 
-class ConsultationController extends GetxController {
+class ConsultingController extends GetxController {
   final RxBool isLoading = false.obs;
   final ApiService _apiService = ApiService();
 
@@ -42,61 +44,41 @@ class ConsultationController extends GetxController {
     eveningTime,
   ].obs;
 
-  RxString? selectedValueGender = "".obs;
   RxString? selectedValueDepartment = "".obs;
-  RxString? selectedValueDepartmentExisting = "".obs;
   RxString? selectedValueDoctor = "".obs;
-  RxString? selectedValueDoctorExisting = "".obs;
   RxString? hwId = "".obs;
 
   List<File> selectedImages = [];
 
   RxString? storeDepartmentId = "".obs;
   RxString? storeDoctorPrice = "".obs;
-  RxString? storeDoctorPriceExisting = "".obs;
 
   List<String> dropdownValuesGender = {
     "Male",
     "Female",
   }.toList().obs;
   var dropdownValuesDepartment = [].obs;
-  var dropdownValuesDepartmentExisting = [].obs;
 
   var dropdownValuesDoctor = [].obs;
-  var dropdownValuesDoctorExisting = [].obs;
 
 
   RxString? morningShift = "".obs;
   RxString? eveningShift = "".obs;
 
   RxString? timeListMorning = "09:00 to 12:00".obs;
-  RxString? timeListMorningExisting = "09:00 to 12:00".obs;
   RxString? timeListEvening = "04:00 to 07:00".obs;
-  RxString? timeListEveningExisting = "04:00 to 07:00".obs;
 
-  void onSelectedGender(String? value) {
-    if (value != null) {
-      selectedValueGender!.value = value;
-    }
-  }
+  Rx<DateTime?> selectedDay = Rx<DateTime?>(null);
+
+
   void onSelectedDepartment(String? value) {
     if (value != null) {
       selectedValueDepartment!.value = value;
     }
   }
-  void onSelectedDepartmentExisting(String? value) {
-    if (value != null) {
-      selectedValueDepartmentExisting!.value = value;
-    }
-  }
   void onSelectedDoctor(String? value) {
     if (value != null) {
       selectedValueDoctor!.value = value;
-    }
-  }
-  void onSelectedDoctorExisting(String? value) {
-    if (value != null) {
-      selectedValueDoctorExisting!.value = value;
     }
   }
 
@@ -125,8 +107,8 @@ class ConsultationController extends GetxController {
       };
 
       final response = await _apiService.getDataWithForm(
-        AppConstant.departmentList,
-        headers
+          AppConstant.departmentList,
+          headers
       );
 
       String jsonString = response.data;
@@ -138,7 +120,6 @@ class ConsultationController extends GetxController {
         List<dynamic> departmentList = jsonMap['departmentlist'];
         departmentListModel.value = DepartmentListModel.fromJson(jsonMap);
         dropdownValuesDepartment.value = departmentList;
-        dropdownValuesDepartmentExisting.value = departmentList;
 
         // Get.to(() => const HomePage());
 
@@ -194,7 +175,6 @@ class ConsultationController extends GetxController {
         doctorListModel.value = DoctorListModel.fromJson(jsonMap);
 
         dropdownValuesDoctor.value = doctorList;
-        dropdownValuesDoctorExisting.value = doctorList;
 
 
       } else {
@@ -237,7 +217,7 @@ class ConsultationController extends GetxController {
       print("MessageTimeSchedule ${jsonMap['message']}");
 
       if (jsonMap['status'] == "200") {
-          print("SuccessTime");
+        print("SuccessTime");
         timeScheduleModel.value = TimeScheduleModel.fromJson(jsonMap);
 
         // Get.to(() => const HomePage());
@@ -263,41 +243,75 @@ class ConsultationController extends GetxController {
     }
   }
 
-  Future<void> submitNewUserData(Map<String, dynamic> formData) async {
+  Future<void> submitNewUserData( Map<String, dynamic>  data, List<File> selectedImages) async {
     try {
-      print("kndfndkf");
+      print("Submitting user data...");
       isLoading.value = true;
+
       var token = pref?.getString("token");
       var cfToken = pref?.getString("cfToken");
       var headers = {
-        'Authorization': token ?? '', // Add default value if token is null
-        'CF-Token': cfToken ?? '', // Add default value if cfToken is null
+        'Authorization': token ?? '',
+        'CF-Token': cfToken ?? '',
+        'Content-Type': 'multipart/form-data',
       };
-      final response = await _apiService.postDataWithForm(
-        formData,
-        AppConstant.bookNewAppointment,
-        headers: headers
+
+      dio.Dio dioClient = dio.Dio();
+      dio.FormData formData = dio.FormData();
+      String formattedDate = DateFormat('dd/MM/yyyy').format(selectedDay.value!);
+      // Add other form data
+      formData.fields.addAll({
+        for (var entry in {
+          'name': nameController.text,
+          'email': emailController.text,
+          'phone_no': phoneController.text,
+          'age': ageController.text,
+          'address': addressController.text,
+          'department': selectedValueDepartment!.value.toString(), // Convert to String
+          'doctor': selectedValueDoctor!.value.toString(), // Convert to String
+          'upload_file[]': selectedImages.toString(), // Convert to String or provide a default value
+          'date': formattedDate.toString(), // Convert to String
+          'time_shift': isShift?.value == 0
+              ? timeScheduleModel.value.timeschedule?.first.morningShift ?? "11"
+              : timeScheduleModel.value.timeschedule?.first.eveningShift ?? "11",
+          'total_amount': storeDoctorPrice!.value,
+          'hwid': hwId!.value,
+        }.entries)
+          MapEntry(entry.key, entry.value),
+      });
+
+
+      // Add images to FormData
+      for (int i = 0; i < selectedImages.length; i++) {
+        String fileName = 'image_$i.jpg'; // Adjust filename as needed
+        formData.files.add(MapEntry(
+          'upload_file[]', // Adjust the key as needed
+          await dio.MultipartFile.fromFileSync(
+            selectedImages[i].path,
+            filename: fileName,
+          ),
+        ));
+      }
+
+      print("wwwwwwww ${formData.fields}");
+
+      // Send POST request
+      final response = await dioClient.post(
+        "https://saasmeditech.com/Appointment_bookapi/appointment_book",
+        data: formData,
+        options: dio.Options(headers: headers),
       );
+
+      print("Response Status Code: ${response.statusCode}");
+
       String jsonString = response.data;
       Map<String, dynamic> jsonMap = jsonDecode(jsonString);
 
-      print("MessageNewUserBook ${jsonMap['message']}");
+      print("MessageTimeSchedule ${jsonMap['message']}");
 
       if (jsonMap['status'] == "200") {
-        Map<String, dynamic> jsonMap = jsonDecode(jsonString);
-
-        bookNewUserAppointmentModel = BookNewUserAppointmentModel.fromJson(jsonMap);
-
-
-        Get.snackbar(
-          'Yehhh...',
-          jsonMap['message'],
-          backgroundColor: AppColor.primaryColor, // Customize the background color
-          colorText: AppColor.whiteColor, // Customize the text color
-          snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
-          duration: const Duration(
-              seconds: 2),
-        );
+        print("SuccessTime");
+        timeScheduleModel.value = TimeScheduleModel.fromJson(jsonMap);
 
         // Get.to(() => const HomePage());
 
@@ -315,10 +329,11 @@ class ConsultationController extends GetxController {
         isLoading.value = false;
       }
     } catch (e) {
-      print("ErrorLogin $e");
+      print("ErrorTimeSchedule $e");
       isLoading.value = false;
-    }  finally {
+    } finally {
       isLoading.value = false;
     }
   }
+
 }

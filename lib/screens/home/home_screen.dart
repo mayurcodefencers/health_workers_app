@@ -1,15 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
 import 'package:health_workers/controllers/home/home_controller.dart';
-import 'package:health_workers/controllers/login/login_controller.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
-import 'package:health_workers/screens/consultation/consultation_screen.dart';
+import 'package:health_workers/screens/add_patient/add_patient_screen.dart';
+import 'package:health_workers/screens/consulting/consulting_screen.dart';
 import 'package:health_workers/screens/notification/notification_screen.dart';
 import 'package:health_workers/widgets/button_widget.dart';
 import 'package:sizer/sizer.dart';
@@ -43,7 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
         return Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 6.h),
+              padding: EdgeInsets.symmetric(
+                  horizontal: 5.w,
+                  vertical: 5.h,
+              ),
               child: Row(
                 children: [
                   ClipRRect(
@@ -94,11 +95,12 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => const ConsultationScreen());
+                    Get.to(() => const ConsultingScreen());
                   },
                   child: Container(
                     height: 15.h,
                     width: 40.w,
+                    // padding: EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       color: AppColor.pureWhiteColor,
                       borderRadius: BorderRadius.circular(12),
@@ -115,6 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Image.asset(
                           AppAssets.bookAppointmentHome,
+                          // height: 10.h,
+                          // width: 20.w,
                         ),
                         SizedBox(
                           height: 1.h,
@@ -130,33 +134,39 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 15.h,
-                  width: 40.w,
-                  decoration: BoxDecoration(
-                    color: AppColor.pureWhiteColor,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x19101828),
-                        blurRadius: 4,
-                        offset: Offset(0, 2),
-                        spreadRadius: -1,
-                      )
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => const PatientRegisterScreen());
+                  },
+                  child: Container(
+                    height: 15.h,
+                    width: 40.w,
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      color: AppColor.pureWhiteColor,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x19101828),
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                          spreadRadius: -1,
+                        )
+                      ],
+                    ),
                     child: Column(
                       children: [
+                        SizedBox(
+                          height: 1.h,
+                        ),
                         Image.asset(
-                          AppAssets.test,
+                          AppAssets.addMember,
                         ),
                         SizedBox(
                           height: 1.h,
                         ),
                         Text(
-                          bookTest,
+                          addMember,
                           style: AppTextStyle.mediumText.copyWith(
                               color: AppColor.navyBlueColor,
                               fontSize: 14
@@ -166,10 +176,51 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+
               ],
             ),
             SizedBox(
               height: 2.h,
+            ),
+            Container(
+              height: 15.h,
+              width: 40.w,
+              // padding: EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: AppColor.pureWhiteColor,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x19101828),
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                    spreadRadius: -1,
+                  )
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      AppAssets.test,
+                    ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    Text(
+                      bookTest,
+                      style: AppTextStyle.mediumText.copyWith(
+                          color: AppColor.navyBlueColor,
+                          fontSize: 14
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 1.h,
             ),
             Text(
               currentToken,
@@ -182,15 +233,19 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 1.h,
             ),
             Container(
-              padding: const EdgeInsets.all(10),
+              height: 12.h,
+              width: 30.w,
+              // padding: const EdgeInsets.all(10),
               // margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                   color: AppColor.lightBlueColor,
                   borderRadius: BorderRadius.circular(4)),
-              child: Text(
-                "10",
-                style: AppTextStyle.semiBoldText
-                    .copyWith(color: AppColor.primaryColor, fontSize: 60),
+              child: Center(
+                child: Text(
+                  "10",
+                  style: AppTextStyle.semiBoldText
+                      .copyWith(color: AppColor.primaryColor, fontSize: 60),
+                ),
               ),
             ),
             Row(

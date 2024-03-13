@@ -72,6 +72,7 @@
  const String totalAmount = "Total Amount";
  const String exitApp = "Exit App";
  const String exitText = "Do you want to exit an App?";
+ const String addMember = "Add Member";
 
 
  final kToday = DateTime.now();
