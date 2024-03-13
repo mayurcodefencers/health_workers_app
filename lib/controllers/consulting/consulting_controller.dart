@@ -10,6 +10,7 @@ import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/dio_services/api_service.dart';
 import 'package:health_workers/dio_services/api_url_constant.dart';
 import 'package:health_workers/main.dart';
+import 'package:health_workers/model/appoinment_list_model.dart';
 import 'package:health_workers/model/book_new_user.dart';
 import 'package:health_workers/model/department_list_model.dart';
 import 'package:health_workers/model/doctor_list_model.dart';
@@ -25,6 +26,7 @@ class ConsultingController extends GetxController {
   var timeScheduleModel = TimeScheduleModel().obs;
   var departmentListModel = DepartmentListModel().obs;
   BookNewUserAppointmentModel? bookNewUserAppointmentModel;
+  AppointmentListModel? appointmentListModel;
 
   final emailController = TextEditingController();
   final nameController = TextEditingController();
@@ -332,6 +334,54 @@ class ConsultingController extends GetxController {
       print("ErrorTimeSchedule $e");
       isLoading.value = false;
     } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> appointmentList(Map<String, dynamic> formData) async {
+    try {
+      isLoading.value = true;
+
+      var token = pref?.getString("token");
+      var cfToken = pref?.getString("cfToken");
+
+      var headers = {
+        'Authorization': token ?? '', // Add default value if token is null
+        'CF-Token': cfToken ?? '', // Add default value if cfToken is null
+      };
+
+      final response = await _apiService.postDataWithForm(
+          formData,
+          AppConstant.appointmentList,
+          headers: headers
+      );
+
+      String jsonString = response.data;
+      Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+      print("appointmentListModel $jsonMap");
+
+      print("MessageAppointmentList ${jsonMap['message']}");
+
+      if (jsonMap['status'] == "200") {
+        print("AppointmentList");
+        appointmentListModel = AppointmentListModel.fromJson(jsonMap);
+        print("wwwwwww ${appointmentListModel!.appointmentlist!.length}");
+
+        isLoading.value = false;
+      } else {
+        Get.snackbar(
+          'OOPS...!!',
+          jsonMap['message'],
+          backgroundColor: AppColor.primaryColor, // Customize the background color
+          colorText: AppColor.whiteColor, // Customize the text color
+          snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
+          duration: const Duration(
+              seconds: 2),
+        );
+        isLoading.value = false;
+      }
+    } catch (e) {
+      print("ErrorDepartmentList $e");
       isLoading.value = false;
     }
   }

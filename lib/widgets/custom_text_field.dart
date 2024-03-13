@@ -13,6 +13,9 @@ class CustomTextField extends StatelessWidget {
   String? Function(String?)? validator;
   Widget? widget;
   GestureTapCallback? onTap, onSufixIconClick;
+  ValueChanged<String>? onChanged;
+  Function()? onEditingComplete;
+  ValueChanged<String>? onSubmitted;
   FocusNode? focusNode;
   bool obscureText = false,
       showCursor = true,
@@ -38,6 +41,9 @@ class CustomTextField extends StatelessWidget {
       required this.keyboardType,
       // this.validator,
       this.onTap,
+      this.onChanged,
+      this.onEditingComplete,
+      this.onSubmitted,
       this.focusNode,
       this.showCursor = false,
       this.obscureText = false,
@@ -72,6 +78,9 @@ class CustomTextField extends StatelessWidget {
         readOnly: readOnly,
         autofocus: autoFocus,
         onTap: onTap,
+        onChanged: onChanged,
+        onEditingComplete: onEditingComplete,
+        onFieldSubmitted: onSubmitted,
         focusNode: FocusNode(),
         textInputAction: textInputAction,
         cursorColor: AppColor.primaryColor,

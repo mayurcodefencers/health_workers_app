@@ -18,6 +18,7 @@ class LoginController extends GetxController {
   RxString password = "".obs;
   RxBool showPassword = false.obs;
   final ApiService _apiService = ApiService();
+  // var loginModel = LoginModel().obs;
   LoginModel? loginModel;
   final AuthController _authController = Get.put(AuthController());
 
