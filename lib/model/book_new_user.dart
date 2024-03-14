@@ -1,13 +1,13 @@
-class BookNewUserAppointmentModel {
+class BookUserAppointmentModel {
   String? success;
   String? status;
   String? message;
   int? tokenNo;
 
-  BookNewUserAppointmentModel(
+  BookUserAppointmentModel(
       {this.success, this.status, this.message, this.tokenNo});
 
-  BookNewUserAppointmentModel.fromJson(Map<String, dynamic> json) {
+  BookUserAppointmentModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     status = json['status'];
     message = json['message'];

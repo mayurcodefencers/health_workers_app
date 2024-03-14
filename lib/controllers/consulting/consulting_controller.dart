@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/state_manager.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/dio_services/api_service.dart';
@@ -16,6 +17,8 @@ import 'package:health_workers/model/department_list_model.dart';
 import 'package:health_workers/model/doctor_list_model.dart';
 import 'package:health_workers/model/time_schedule_model.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:health_workers/screens/booking/booking_screen.dart';
+import 'package:health_workers/widgets/bottom_nav_widget.dart';
 import 'package:intl/intl.dart';
 
 class ConsultingController extends GetxController {
@@ -25,7 +28,7 @@ class ConsultingController extends GetxController {
   var doctorListModel = DoctorListModel().obs;
   var timeScheduleModel = TimeScheduleModel().obs;
   var departmentListModel = DepartmentListModel().obs;
-  BookNewUserAppointmentModel? bookNewUserAppointmentModel;
+ var bookUserAppointmentModel = BookUserAppointmentModel().obs;
   AppointmentListModel? appointmentListModel;
 
   final emailController = TextEditingController();
@@ -53,6 +56,7 @@ class ConsultingController extends GetxController {
   List<File> selectedImages = [];
 
   RxString? storeDepartmentId = "".obs;
+  RxString? storeDoctorId = "".obs;
   RxString? storeDoctorPrice = "".obs;
 
   List<String> dropdownValuesGender = {
@@ -63,6 +67,8 @@ class ConsultingController extends GetxController {
 
   var dropdownValuesDoctor = [].obs;
 
+  RxInt selectedContainerIndex = RxInt(-1);
+  RxString? getPatientId = "".obs;
 
   RxString? morningShift = "".obs;
   RxString? eveningShift = "".obs;
@@ -245,99 +251,6 @@ class ConsultingController extends GetxController {
     }
   }
 
-  Future<void> submitNewUserData( Map<String, dynamic>  data, List<File> selectedImages) async {
-    try {
-      print("Submitting user data...");
-      isLoading.value = true;
-
-      var token = pref?.getString("token");
-      var cfToken = pref?.getString("cfToken");
-      var headers = {
-        'Authorization': token ?? '',
-        'CF-Token': cfToken ?? '',
-        'Content-Type': 'multipart/form-data',
-      };
-
-      dio.Dio dioClient = dio.Dio();
-      dio.FormData formData = dio.FormData();
-      String formattedDate = DateFormat('dd/MM/yyyy').format(selectedDay.value!);
-      // Add other form data
-      formData.fields.addAll({
-        for (var entry in {
-          'name': nameController.text,
-          'email': emailController.text,
-          'phone_no': phoneController.text,
-          'age': ageController.text,
-          'address': addressController.text,
-          'department': selectedValueDepartment!.value.toString(), // Convert to String
-          'doctor': selectedValueDoctor!.value.toString(), // Convert to String
-          'upload_file[]': selectedImages.toString(), // Convert to String or provide a default value
-          'date': formattedDate.toString(), // Convert to String
-          'time_shift': isShift?.value == 0
-              ? timeScheduleModel.value.timeschedule?.first.morningShift ?? "11"
-              : timeScheduleModel.value.timeschedule?.first.eveningShift ?? "11",
-          'total_amount': storeDoctorPrice!.value,
-          'hwid': hwId!.value,
-        }.entries)
-          MapEntry(entry.key, entry.value),
-      });
-
-
-      // Add images to FormData
-      for (int i = 0; i < selectedImages.length; i++) {
-        String fileName = 'image_$i.jpg'; // Adjust filename as needed
-        formData.files.add(MapEntry(
-          'upload_file[]', // Adjust the key as needed
-          await dio.MultipartFile.fromFileSync(
-            selectedImages[i].path,
-            filename: fileName,
-          ),
-        ));
-      }
-
-      print("wwwwwwww ${formData.fields}");
-
-      // Send POST request
-      final response = await dioClient.post(
-        "https://saasmeditech.com/Appointment_bookapi/appointment_book",
-        data: formData,
-        options: dio.Options(headers: headers),
-      );
-
-      print("Response Status Code: ${response.statusCode}");
-
-      String jsonString = response.data;
-      Map<String, dynamic> jsonMap = jsonDecode(jsonString);
-
-      print("MessageTimeSchedule ${jsonMap['message']}");
-
-      if (jsonMap['status'] == "200") {
-        print("SuccessTime");
-        timeScheduleModel.value = TimeScheduleModel.fromJson(jsonMap);
-
-        // Get.to(() => const HomePage());
-
-        isLoading.value = false;
-      } else {
-        Get.snackbar(
-          'OOPS...!!',
-          jsonMap['message'],
-          backgroundColor: AppColor.primaryColor, // Customize the background color
-          colorText: AppColor.whiteColor, // Customize the text color
-          snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
-          duration: const Duration(
-              seconds: 2),
-        );
-        isLoading.value = false;
-      }
-    } catch (e) {
-      print("ErrorTimeSchedule $e");
-      isLoading.value = false;
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
   Future<void> appointmentList(Map<String, dynamic> formData) async {
     try {
       isLoading.value = true;
@@ -385,5 +298,99 @@ class ConsultingController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  Future<void> submitUserData(List<File> selectedImages) async {
+    try {
+      print("Submitting user data...");
+      isLoading.value = true;
+
+      var token = pref?.getString("token");
+      var cfToken = pref?.getString("cfToken");
+      var headers = {
+        'Authorization': token ?? '',
+        'CF-Token': cfToken ?? '',
+        'Content-Type': 'multipart/form-data',
+      };
+
+      dio.Dio dioClient = dio.Dio();
+      dio.FormData formData = dio.FormData();
+      String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDay.value!);
+      // Add other form data
+      formData.fields.addAll({
+        for (var entry in {
+          'department': storeDepartmentId!.value.toString(), // Convert to String
+          'doctor': storeDoctorId!.value ,// Convert to String
+          'upload_file[]': selectedImages.toString(), // Convert to String or provide a default value
+          'date': formattedDate.toString(), // Convert to String
+          'time_shift': isShift?.value == 0
+              ? timeScheduleModel.value.timeschedule?.first.morningShift ?? "11"
+              : timeScheduleModel.value.timeschedule?.first.eveningShift ?? "11",
+          'total_amount': storeDoctorPrice!.value,
+          'hwid': hwId!.value,
+          'uid' : getPatientId!.value
+        }.entries)
+          MapEntry(entry.key, entry.value),
+      });
+print("dndnknknfnf ${appointmentListModel?.appointmentlist?.first.id}");
+print("department ${storeDepartmentId!.value.toString()}");
+print("doctor ${storeDoctorId!.value.toString()}");
+print("date ${formattedDate.toString()}");
+
+      // Add images to FormData
+      for (int i = 0; i < selectedImages.length; i++) {
+        String fileName = 'image_$i.jpg'; // Adjust filename as needed
+        formData.files.add(MapEntry(
+          'upload_file[]', // Adjust the key as needed
+          await dio.MultipartFile.fromFileSync(
+            selectedImages[i].path,
+            filename: fileName,
+          ),
+        ));
+      }
+
+      print("wwwwwwww ${formData.fields}");
+
+      // Send POST request
+      final response = await dioClient.post(
+        "https://saasmeditech.com/Appointment_bookapi/appointment_book",
+        data: formData,
+        options: dio.Options(headers: headers),
+      );
+
+      print("Response Status Code: ${response.statusCode}");
+
+      String jsonString = response.data;
+      Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+
+      print("MessageTimeSchedule ${jsonMap['message']}");
+
+      if (jsonMap['status'] == "200") {
+        print("SuccessBookPatient");
+        bookUserAppointmentModel.value = BookUserAppointmentModel.fromJson(jsonMap);
+
+
+        Get.to(() => const HomePage());
+
+        isLoading.value = false;
+      } else {
+        Get.snackbar(
+          'OOPS...!!',
+          jsonMap['message'],
+          backgroundColor: AppColor.primaryColor, // Customize the background color
+          colorText: AppColor.whiteColor, // Customize the text color
+          snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
+          duration: const Duration(
+              seconds: 2),
+        );
+        isLoading.value = false;
+      }
+    } catch (e) {
+      print("ErrorTimeSchedule $e");
+      isLoading.value = false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
 
 }

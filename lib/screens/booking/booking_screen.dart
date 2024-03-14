@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
+import 'package:health_workers/controllers/booking/booking_controller.dart';
+import 'package:health_workers/controllers/home/home_controller.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
@@ -15,6 +17,15 @@ class BookingScreen extends StatefulWidget {
 }
 
 class _BookingScreenState extends State<BookingScreen> {
+  final BookingController controller = Get.put(BookingController());
+  final HomeController homeController = Get.put(HomeController());
+
+  @override
+  void initState() {
+    super.initState();
+    // controller.getMeetingList(homeController.hwId.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,127 +47,206 @@ class _BookingScreenState extends State<BookingScreen> {
         //   ),
         // ),
       ),
-      body: Column(
-        children: [
-          Text(
-            currentToken,
-            style: AppTextStyle.mediumText.copyWith(
-                fontSize: 20,
-                color: AppColor.navyBlueColor
-            ),
-          ),
-          SizedBox(
-            height: 1.h,
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            // margin: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: AppColor.lightBlueColor,
-                borderRadius: BorderRadius.circular(4)),
-            child: Text(
-              "10",
-              style: AppTextStyle.semiBoldText
-                  .copyWith(color: AppColor.primaryColor, fontSize: 60),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: 5,
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(00),
-                itemBuilder: (BuildContext context, int index) {
-                  return bookingListWidget();
-                }),
-          ),
-        ],
-      ),
-    );
-  }
-  Widget bookingListWidget() {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => const BookingDetailsScreen());
-      },
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        margin: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: AppColor.pureWhiteColor,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x19101828),
-              blurRadius: 4,
-              offset: Offset(0, 2),
-              spreadRadius: -1,
-            )
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage(AppAssets.profilePic),
-            ),
-            SizedBox(
-              width: 6.w,
-            ),
-            Column(
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(
+              child: CircularProgressIndicator(
+            color: AppColor.primaryColor,
+          ));
+        } else if (controller.bookingListModel == null) {
+          return const Center(child: Text('No Data Available'));
+        } else {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.w),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Dr. Parthiv Joshi",
-                  style: AppTextStyle.semiBoldText
-                      .copyWith(color: AppColor.navyBlueColor, fontSize: 16),
+                  doctor,
+                  style: AppTextStyle.mediumText
+                      .copyWith(color: AppColor.navyBlueColor, fontSize: 14),
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                allDoctorWidget(),
+                SizedBox(
+                  height: 1.h,
                 ),
                 Text(
-                  "Mr Mukesh Parmar",
+                  currentToken,
                   style: AppTextStyle.mediumText
-                      .copyWith(color: AppColor.greyColor, fontSize: 14),
+                      .copyWith(fontSize: 20, color: AppColor.navyBlueColor),
                 ),
-                Text(
-                  "+91 7990230441",
-                  style: AppTextStyle.mediumText
-                      .copyWith(color: AppColor.greyColor, fontSize: 10),
+                SizedBox(
+                  height: 1.h,
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "05-03-2024",
-                      style: AppTextStyle.mediumText
-                          .copyWith(color: AppColor.greyColor, fontSize: 10),
-                    ),
-                    SizedBox(
-                      width: 2.w,
-                    ),
-                    Text(
-                      "12:00AM",
-                      style: AppTextStyle.mediumText
-                          .copyWith(color: AppColor.greyColor, fontSize: 10),
-                    ),
-                  ],
-                ),
+                // Container(
+                //   height: 15.h,
+                //   width: 40.w,
+                //   // padding: const EdgeInsets.all(10),
+                //   // margin: const EdgeInsets.all(10),
+                //   decoration: BoxDecoration(
+                //       color: AppColor.lightBlueColor,
+                //       borderRadius: BorderRadius.circular(4)),
+                //   child: Center(
+                //     child: Text(
+                //       controller.bookingListModel?.currenttoken?.first.tokenNo ?? "0",
+                //       style: AppTextStyle.semiBoldText
+                //           .copyWith(color: AppColor.primaryColor, fontSize: 60),
+                //     ),
+                //   ),
+                // ),
+                // Expanded(
+                //   child: ListView.builder(
+                //       physics: const BouncingScrollPhysics(),
+                //       itemCount: controller.bookingListModel?.nexttokenlist?.length ?? 0,
+                //       shrinkWrap: true,
+                //       padding: const EdgeInsets.all(00),
+                //       itemBuilder: (BuildContext context, int index) {
+                //         return GestureDetector(
+                //           onTap: () {
+                //             Get.to(() => const BookingDetailsScreen());
+                //           },
+                //           child: Container(
+                //             padding: const EdgeInsets.all(12),
+                //             margin: const EdgeInsets.all(8),
+                //             decoration: BoxDecoration(
+                //               color: AppColor.pureWhiteColor,
+                //               borderRadius: BorderRadius.circular(12),
+                //               boxShadow: const [
+                //                 BoxShadow(
+                //                   color: Color(0x19101828),
+                //                   blurRadius: 4,
+                //                   offset: Offset(0, 2),
+                //                   spreadRadius: -1,
+                //                 )
+                //               ],
+                //             ),
+                //             child: Row(
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               children: [
+                //                 Container(
+                //                   width: 8.h,
+                //                   height: 14.w,
+                //                   decoration: const BoxDecoration(
+                //                     color: AppColor.primaryColor,
+                //                     shape: BoxShape.circle,
+                //                   ),
+                //                   child: Center(
+                //                     child: Text(
+                //                       controller.bookingListModel?.nexttokenlist![index].username![0].toUpperCase() ?? "",
+                //                       style: AppTextStyle.semiBoldText.copyWith(
+                //                           color: AppColor.whiteColor,
+                //                           fontSize: 22),
+                //                     ),
+                //                   ),
+                //                 ),
+                //                 SizedBox(
+                //                   width: 6.w,
+                //                 ),
+                //                 Column(
+                //                   crossAxisAlignment: CrossAxisAlignment.start,
+                //                   children: [
+                //                     Text(
+                //                       controller.bookingListModel?.nexttokenlist![index].doctorname ?? "Doctor Name",
+                //                       style: AppTextStyle.semiBoldText
+                //                           .copyWith(color: AppColor.navyBlueColor, fontSize: 16),
+                //                     ),
+                //                     Text(
+                //                       controller.bookingListModel?.nexttokenlist![index].username ?? "",
+                //                       style: AppTextStyle.mediumText
+                //                           .copyWith(color: AppColor.greyColor, fontSize: 14),
+                //                     ),
+                //                     Text(
+                //                       controller.bookingListModel?.nexttokenlist![index].userphoneno ?? "",
+                //                       style: AppTextStyle.mediumText
+                //                           .copyWith(color: AppColor.greyColor, fontSize: 10),
+                //                     ),
+                //                     Text(
+                //                       controller.bookingListModel?.nexttokenlist![index].createdDate ?? "",
+                //                       style: AppTextStyle.mediumText
+                //                           .copyWith(color: AppColor.greyColor, fontSize: 10),
+                //                     ),
+                //                   ],
+                //                 ),
+                //                 const Spacer(),
+                //                 Container(
+                //                   padding: const EdgeInsets.all(18),
+                //                   // margin: const EdgeInsets.all(10),
+                //                   decoration: BoxDecoration(
+                //                       color: AppColor.lightBlueColor,
+                //                       borderRadius: BorderRadius.circular(4)),
+                //                   child: Text(
+                //                       controller.bookingListModel?.nexttokenlist![index].tokenNo ?? "",
+                //                     style: AppTextStyle.semiBoldText
+                //                         .copyWith(color: AppColor.primaryColor, fontSize: 23),
+                //                   ),
+                //                 )
+                //               ],
+                //             ),
+                //           ),
+                //         );
+                //       }),
+                // ),
               ],
             ),
-            const Spacer(),
-            Container(
-              padding: const EdgeInsets.all(18),
-              // margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: AppColor.lightBlueColor,
-                  borderRadius: BorderRadius.circular(4)),
-              child: Text(
-                "10",
-                style: AppTextStyle.semiBoldText
-                    .copyWith(color: AppColor.primaryColor, fontSize: 23),
-              ),
-            )
-          ],
-        ),
-      ),
+          );
+        }
+      }),
     );
+  }
+  Widget allDoctorWidget() {
+    return Obx(() => DropdownButtonHideUnderline(
+      child: DropdownButtonFormField(
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(16),
+          fillColor: AppColor.skyBlueColor,
+          filled: true,
+          enabledBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(
+              color: AppColor.skyBlueColor,
+            ),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(
+              color: AppColor.skyBlueColor,
+            ),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+        validator: (String? value) {
+          return value == null ? "Choose Doctor" : null;
+        },
+        items: controller.dropdownValuesAllDoctor
+            .map<DropdownMenuItem<String>>((dynamic value) {
+          String departmentValue = value['department'];
+          return DropdownMenuItem<String>(
+            onTap: () {
+              // controller.storeDepartmentId?.value = value['id'];
+              // controller.getDoctorData(controller.storeDepartmentId!.value);
+            },
+            value: departmentValue,
+            child: Text(departmentValue),
+          );
+        }).toList(),
+        onChanged: controller.onSelectedAllDoctor,
+        icon: const Icon(
+          Icons.keyboard_arrow_down_outlined,
+          size: 30,
+          color: AppColor.navyBlueColor,
+        ),
+        value: controller.selectedValueAllDoctor!.value.isNotEmpty
+            ? controller.selectedValueAllDoctor!.value
+            : null,
+        hint: Text(
+          selectDoctor,
+          style: AppTextStyle.mediumText
+              .copyWith(color: AppColor.navyBlueColor, fontSize: 14),
+        ),
+        isExpanded: false,
+      ),
+    ));
   }
 }

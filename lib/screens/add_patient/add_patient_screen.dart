@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
 import 'package:health_workers/controllers/add_patient/add_patient_controller.dart';
+import 'package:health_workers/controllers/consulting/consulting_controller.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
@@ -28,6 +29,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final AddPatientController newController = Get.put(AddPatientController());
+
 
   @override
   void initState() {
@@ -195,7 +197,6 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                 textStyle: AppTextStyle.mediumText
                     .copyWith(color: AppColor.whiteColor),
                 onTap: () {
-                  Get.to(() => ConsultingScreen());
                   if (_formKey.currentState!.validate()) {
                     // String formattedDate = DateFormat('dd/MM/yyyy').format(newController.selectedDay.value!);
                     Map<String, dynamic> formData = {
@@ -270,91 +271,4 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
           ),
         ));
   }
-
-// Future<List<File>> pickMultipleImages() async {
-//   List<XFile> xFiles = await ImagePicker().pickMultiImage(); // Use pickMultiImage() to select multiple images
-//   List<File> images = [];
-//   for (XFile file in xFiles) {
-//     images.add(File(file.path));
-//   }
-//   return images;
-// }
-
-/*  final ImagePicker _picker = ImagePicker();
-  List<File> _selectedImages = [];
-
-  Future<void> _getImages() async {
-    List<XFile>? pickedFiles = await _picker.pickMultiImage(
-      imageQuality: 100,
-      maxHeight: 1000,
-      maxWidth: 1000,
-    );
-    if (pickedFiles != null) {
-      setState(() {
-        _selectedImages.clear();
-        for (var file in pickedFiles) {
-          _selectedImages.add(File(file.path));
-        }
-      });
-    }
-  }
-
-  Future<void> _uploadImages() async {
-    Dio dio = Dio();
-
-    FormData formData = FormData();
-
-    for (var file in _selectedImages) {
-      String fileName = file.path.split("/").last;
-      formData.files.add(MapEntry(
-        'upload_file[]',
-        await MultipartFile.fromFile(
-          file.path,
-          filename: fileName,
-        ),
-      ));
-    }
-
-    formData.fields.addAll({
-      'name': 'ere',
-      'email': 'a@a.com',
-      'phone_no': '12121212121',
-      'age': '12121212121',
-      'gender': '12121212121',
-      'address': '12121212121',
-      'department': '12121212121',
-      'doctor': '12121212121',
-      'date': '12121212121',
-      'time_shift': '12121212121',
-      'total_amount': '12121212121',
-      'hwid': '12121212121',
-    });
-
-    try {
-      Response response = await dio.post(
-        'https://saasmeditech.com/Appointment_bookapi/appointment_book',
-        data: formData,
-        options: Options(
-          headers: {
-            'Authorization': 'mrXSxT4n2Ff9Dr1a1mL5',
-            'CF-Token': '123',
-          },
-        ),
-      );
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        var responseData = response.data;
-        if (responseData['status'] == '200') {
-          print("2000000");
-          return response.data.toString();
-        } else {
-          return response.data.toString();
-        }
-      } else {
-        throw Exception('Failed to upload images');
-      }
-    } catch (e) {
-      throw Exception('Failed to upload images: $e');
-    }
-  }*/
 }

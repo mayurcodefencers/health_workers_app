@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/core/theme/app_color.dart';
@@ -8,7 +7,6 @@ import 'package:health_workers/dio_services/api_service.dart';
 import 'package:health_workers/dio_services/api_url_constant.dart';
 import 'package:health_workers/main.dart';
 import 'package:health_workers/model/add_patient_model.dart';
-import 'package:health_workers/screens/consulting/consulting_screen.dart';
 import 'package:health_workers/widgets/bottom_nav_widget.dart';
 
 class AddPatientController extends GetxController {
@@ -92,7 +90,7 @@ class AddPatientController extends GetxController {
         phoneController.clear();
         ageController.clear();
         addressController.clear();
-        dropdownValuesGender = [];
+        dropdownValuesGender.clear();
 
         isLoading.value = false;
       } else {
@@ -108,7 +106,7 @@ class AddPatientController extends GetxController {
         isLoading.value = false;
       }
     } catch (e) {
-      print("ErrorDepartmentList $e");
+      print("ErrorRegister $e");
       isLoading.value = false;
     }
   }

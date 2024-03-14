@@ -93,31 +93,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 SizedBox(
                   height: 2.h,
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 3.w,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      Get.to(() => const NotificationScreen());
-                    },
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                            AppAssets.notification
-                        ),
-                        SizedBox(
-                          width: 2.w,
-                        ),
-                        Text(
-                          notification,
-                          style: AppTextStyle.mediumText.copyWith(
-                              fontSize: 14, color: AppColor.navyBlueColor),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //     horizontal: 3.w,
+                //   ),
+                //   child: GestureDetector(
+                //     onTap: () {
+                //       Get.to(() => const NotificationScreen());
+                //     },
+                //     child: Row(
+                //       children: [
+                //         SvgPicture.asset(
+                //             AppAssets.notification
+                //         ),
+                //         SizedBox(
+                //           width: 2.w,
+                //         ),
+                //         Text(
+                //           notification,
+                //           style: AppTextStyle.mediumText.copyWith(
+                //               fontSize: 14, color: AppColor.navyBlueColor),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 2.h,
                 ),
