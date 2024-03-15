@@ -341,7 +341,9 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
                     onTap: () {
                       controller.isShift?.value = index;
                       print(
-                          "snjndjfnjdnj ${controller.isShift?.value == 0 ? controller.timeScheduleModel.value.timeschedule?.first.morningShift ?? "11" : controller.timeScheduleModel.value.timeschedule?.first.eveningShift ?? "11"}");
+                          "snjndjfnjdnj ${controller.isShift?.value == 0 ? controller.timeScheduleModel.value.timeschedule?.first.morningShift ??
+                              "11"
+                              : controller.timeScheduleModel.value.timeschedule?.first.eveningShift ?? "11"}");
                     },
                     child: Obx(
                           () => Column(

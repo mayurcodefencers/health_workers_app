@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     print("insideeeeee");
-    controller.upcomingList();
+    // controller.upcomingList();
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColor.whiteColor,

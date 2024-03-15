@@ -17,6 +17,7 @@ import 'package:health_workers/model/department_list_model.dart';
 import 'package:health_workers/model/doctor_list_model.dart';
 import 'package:health_workers/model/time_schedule_model.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:health_workers/model/wallet_amount_model.dart';
 import 'package:health_workers/screens/booking/booking_screen.dart';
 import 'package:health_workers/widgets/bottom_nav_widget.dart';
 import 'package:intl/intl.dart';
@@ -30,6 +31,7 @@ class ConsultingController extends GetxController {
   var departmentListModel = DepartmentListModel().obs;
  var bookUserAppointmentModel = BookUserAppointmentModel().obs;
   AppointmentListModel? appointmentListModel;
+  WalletAmountModel? walletAmountModel;
 
   final emailController = TextEditingController();
   final nameController = TextEditingController();
@@ -96,6 +98,7 @@ class ConsultingController extends GetxController {
     super.onInit();
     getDepartmentData();
     getTimeData();
+
   }
 
   Future<void> initializeSharedPreferences() async {
@@ -246,9 +249,60 @@ class ConsultingController extends GetxController {
     } catch (e) {
       print("ErrorTimeSchedule $e");
       isLoading.value = false;
-    } finally {
+    }
+    // finally {
+    //   isLoading.value = false;
+    // }
+  }
+
+  Future<void> getWalletAmount() async {
+    try {
+      isLoading.value = true;
+
+      var token = pref?.getString("token");
+      var cfToken = pref?.getString("cfToken");
+
+      var headers = {
+        'Authorization': token ?? '', // Add default value if token is null
+        'CF-Token': cfToken ?? '', // Add default value if cfToken is null
+      };
+
+      final response = await _apiService.getDataWithForm(
+          AppConstant.walletAmount,
+          headers
+      );
+
+      String jsonString = response.data;
+      Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+
+      print("MessageWalletAmount ${jsonMap['message']}");
+
+      if (jsonMap['status'] == "200") {
+        print("SuccessWalletAmount");
+        walletAmountModel = WalletAmountModel.fromJson(jsonMap);
+
+        // Get.to(() => const HomePage());
+
+        isLoading.value = false;
+      } else {
+        Get.snackbar(
+          'OOPS...!!',
+          jsonMap['message'],
+          backgroundColor: AppColor.primaryColor, // Customize the background color
+          colorText: AppColor.whiteColor, // Customize the text color
+          snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
+          duration: const Duration(
+              seconds: 2),
+        );
+        isLoading.value = false;
+      }
+    } catch (e) {
+      print("ErrorWalletAmount $e");
       isLoading.value = false;
     }
+    // finally {
+    //   isLoading.value = false;
+    // }
   }
 
   Future<void> appointmentList(Map<String, dynamic> formData) async {
@@ -279,7 +333,7 @@ class ConsultingController extends GetxController {
         print("AppointmentList");
         appointmentListModel = AppointmentListModel.fromJson(jsonMap);
         print("wwwwwww ${appointmentListModel!.appointmentlist!.length}");
-
+        getWalletAmount();
         isLoading.value = false;
       } else {
         Get.snackbar(

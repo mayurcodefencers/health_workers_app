@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
+import 'package:health_workers/controllers/consulting/consulting_controller.dart';
 import 'package:health_workers/controllers/home/home_controller.dart';
 import 'package:health_workers/controllers/login/login_controller.dart';
 import 'package:health_workers/core/strings.dart';
@@ -21,6 +22,13 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final HomeController controller = Get.put(HomeController());
+  final ConsultingController consultingController = Get.put(ConsultingController());
+
+  @override
+  void initState() {
+    super.initState();
+    consultingController.getWalletAmount();
+  }
 
   @override
   Widget build(BuildContext context) {
