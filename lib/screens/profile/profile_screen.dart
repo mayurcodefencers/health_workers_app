@@ -61,7 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           );
         }
-        // else if (controller.loginModel == null) {
+        // else if (consultingController.walletAmountModel == null) {
         //   return const Center(child: Text('No data available'));
         // }
         else {
@@ -201,7 +201,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               Text(
-                "20,000",
+                consultingController.walletAmountModel?.walletAmount?.walletAmount ?? "0",
                 style: AppTextStyle.mediumText
                     .copyWith(fontSize: 22, color: AppColor.navyBlueColor),
               )

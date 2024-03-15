@@ -32,8 +32,6 @@ class AddPatientController extends GetxController {
   List<File> selectedImages = [];
 
   RxString? storeDepartmentId = "".obs;
-  RxString? storeDoctorPrice = "".obs;
-  RxString? storeDoctorPriceExisting = "".obs;
 
   void onSelectedGender(String? value) {
     if (value != null) {

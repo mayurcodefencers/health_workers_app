@@ -1,11 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/state_manager.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/dio_services/api_service.dart';
@@ -16,10 +13,9 @@ import 'package:health_workers/model/book_new_user.dart';
 import 'package:health_workers/model/department_list_model.dart';
 import 'package:health_workers/model/doctor_list_model.dart';
 import 'package:health_workers/model/time_schedule_model.dart';
-import 'package:dio/dio.dart' as dio;
 import 'package:health_workers/model/wallet_amount_model.dart';
-import 'package:health_workers/screens/booking/booking_screen.dart';
 import 'package:health_workers/widgets/bottom_nav_widget.dart';
+import 'package:health_workers/widgets/success_screen.dart';
 import 'package:intl/intl.dart';
 
 class ConsultingController extends GetxController {
@@ -373,15 +369,15 @@ class ConsultingController extends GetxController {
       formData.fields.addAll({
         for (var entry in {
           'department': storeDepartmentId!.value.toString(), // Convert to String
-          'doctor': storeDoctorId!.value ,// Convert to String
+          'doctor': storeDoctorId!.value.toString() ,// Convert to String
           'upload_file[]': selectedImages.toString(), // Convert to String or provide a default value
           'date': formattedDate.toString(), // Convert to String
           'time_shift': isShift?.value == 0
-              ? timeScheduleModel.value.timeschedule?.first.morningShift ?? "11"
-              : timeScheduleModel.value.timeschedule?.first.eveningShift ?? "11",
-          'total_amount': storeDoctorPrice!.value,
-          'hwid': hwId!.value,
-          'uid' : getPatientId!.value
+              ? timeScheduleModel.value.timeschedule?.morningShift.toString() ?? "11"
+              : timeScheduleModel.value.timeschedule?.eveningShift.toString() ?? "11",
+          'total_amount': storeDoctorPrice!.value.toString(),
+          'hwid': hwId!.value.toString(),
+          'uid' : getPatientId!.value.toString()
         }.entries)
           MapEntry(entry.key, entry.value),
       });
@@ -389,6 +385,11 @@ print("dndnknknfnf ${appointmentListModel?.appointmentlist?.first.id}");
 print("department ${storeDepartmentId!.value.toString()}");
 print("doctor ${storeDoctorId!.value.toString()}");
 print("date ${formattedDate.toString()}");
+print("time_shifttime_shift ${
+    isShift?.value == 0
+        ? timeScheduleModel.value.timeschedule?.morningShift ?? "11"
+        : timeScheduleModel.value.timeschedule?.eveningShift ?? "11"
+}");
 
       // Add images to FormData
       for (int i = 0; i < selectedImages.length; i++) {
@@ -421,9 +422,9 @@ print("date ${formattedDate.toString()}");
       if (jsonMap['status'] == "200") {
         print("SuccessBookPatient");
         bookUserAppointmentModel.value = BookUserAppointmentModel.fromJson(jsonMap);
+          phoneController.clear();
 
-
-        Get.to(() => const HomePage());
+        Get.to(() => const SuccessScreen());
 
         isLoading.value = false;
       } else {
@@ -439,7 +440,7 @@ print("date ${formattedDate.toString()}");
         isLoading.value = false;
       }
     } catch (e) {
-      print("ErrorTimeSchedule $e");
+      print("ErrorSlotBooked $e");
       isLoading.value = false;
     } finally {
       isLoading.value = false;

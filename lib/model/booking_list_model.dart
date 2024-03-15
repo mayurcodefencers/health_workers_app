@@ -59,18 +59,21 @@ class Currenttoken {
   String? completeStatus;
   String? rescheduleStatus;
   String? missedStatus;
+  String? hwid;
   String? createdDate;
   String? createdBy;
   String? updatedDate;
   String? updatedBy;
   String? userid;
+  String? gender;
+  String? userAddress;
   String? username;
   String? useremail;
   String? userphoneno;
   String? userage;
-  Null? doctorname;
-  Null? doctorprofile;
-  Null? departmentname;
+  String? doctorname;
+  String? doctorprofile;
+  String? departmentname;
 
   Currenttoken(
       {this.id,
@@ -85,11 +88,14 @@ class Currenttoken {
         this.completeStatus,
         this.rescheduleStatus,
         this.missedStatus,
+        this.hwid,
         this.createdDate,
         this.createdBy,
         this.updatedDate,
         this.updatedBy,
         this.userid,
+        this.gender,
+        this.userAddress,
         this.username,
         this.useremail,
         this.userphoneno,
@@ -111,11 +117,14 @@ class Currenttoken {
     completeStatus = json['complete_status'];
     rescheduleStatus = json['reschedule_status'];
     missedStatus = json['missed_status'];
+    hwid = json['hwid'];
     createdDate = json['created_date'];
     createdBy = json['created_by'];
     updatedDate = json['updated_date'];
     updatedBy = json['updated_by'];
     userid = json['userid'];
+    gender = json['gender'];
+    userAddress = json['user_address'];
     username = json['username'];
     useremail = json['useremail'];
     userphoneno = json['userphoneno'];
@@ -139,11 +148,14 @@ class Currenttoken {
     data['complete_status'] = this.completeStatus;
     data['reschedule_status'] = this.rescheduleStatus;
     data['missed_status'] = this.missedStatus;
+    data['hwid'] = this.hwid;
     data['created_date'] = this.createdDate;
     data['created_by'] = this.createdBy;
     data['updated_date'] = this.updatedDate;
     data['updated_by'] = this.updatedBy;
     data['userid'] = this.userid;
+    data['gender'] = this.gender;
+    data['user_address'] = this.userAddress;
     data['username'] = this.username;
     data['useremail'] = this.useremail;
     data['userphoneno'] = this.userphoneno;
@@ -159,6 +171,7 @@ class Nexttokenlist {
   String? id;
   String? userId;
   String? doctor;
+  String? department;
   String? uploadFile;
   String? date;
   String? timeShift;
@@ -176,6 +189,8 @@ class Nexttokenlist {
   String? useremail;
   String? userphoneno;
   String? userage;
+  String? gender;
+  String? address;
   String? doctorname;
   String? doctorprofile;
   String? departmentname;
@@ -184,6 +199,7 @@ class Nexttokenlist {
       {this.id,
         this.userId,
         this.doctor,
+        this.department,
         this.uploadFile,
         this.date,
         this.timeShift,
@@ -201,6 +217,8 @@ class Nexttokenlist {
         this.useremail,
         this.userphoneno,
         this.userage,
+        this.gender,
+        this.address,
         this.doctorname,
         this.doctorprofile,
         this.departmentname});
@@ -209,6 +227,7 @@ class Nexttokenlist {
     id = json['id'];
     userId = json['user_id'];
     doctor = json['doctor'];
+    department = json['department'];
     uploadFile = json['upload_file'];
     date = json['date'];
     timeShift = json['time_shift'];
@@ -226,6 +245,8 @@ class Nexttokenlist {
     useremail = json['useremail'];
     userphoneno = json['userphoneno'];
     userage = json['userage'];
+    gender = json['gender'];
+    address = json['address'];
     doctorname = json['doctorname'];
     doctorprofile = json['doctorprofile'];
     departmentname = json['departmentname'];
@@ -236,6 +257,7 @@ class Nexttokenlist {
     data['id'] = this.id;
     data['user_id'] = this.userId;
     data['doctor'] = this.doctor;
+    data['department'] = this.department;
     data['upload_file'] = this.uploadFile;
     data['date'] = this.date;
     data['time_shift'] = this.timeShift;
@@ -253,6 +275,8 @@ class Nexttokenlist {
     data['useremail'] = this.useremail;
     data['userphoneno'] = this.userphoneno;
     data['userage'] = this.userage;
+    data['gender'] = this.gender;
+    data['address'] = this.address;
     data['doctorname'] = this.doctorname;
     data['doctorprofile'] = this.doctorprofile;
     data['departmentname'] = this.departmentname;

@@ -2,7 +2,7 @@ class TimeScheduleModel {
   String? success;
   String? status;
   String? message;
-  List<Timeschedule>? timeschedule;
+  Timeschedule? timeschedule;
 
   TimeScheduleModel(
       {this.success, this.status, this.message, this.timeschedule});
@@ -11,12 +11,9 @@ class TimeScheduleModel {
     success = json['success'];
     status = json['status'];
     message = json['message'];
-    if (json['timeschedule'] != null) {
-      timeschedule = <Timeschedule>[];
-      json['timeschedule'].forEach((v) {
-        timeschedule!.add(new Timeschedule.fromJson(v));
-      });
-    }
+    timeschedule = json['timeschedule'] != null
+        ? new Timeschedule.fromJson(json['timeschedule'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -25,7 +22,7 @@ class TimeScheduleModel {
     data['status'] = this.status;
     data['message'] = this.message;
     if (this.timeschedule != null) {
-      data['timeschedule'] = this.timeschedule!.map((v) => v.toJson()).toList();
+      data['timeschedule'] = this.timeschedule!.toJson();
     }
     return data;
   }
@@ -63,3 +60,4 @@ class Timeschedule {
     return data;
   }
 }
+

@@ -10,5 +10,6 @@ class AppConstant {
   static const bookingList = 'Tokenlist_api/tokenlist';
   static const upcoming = 'Upcoming_meetinglist_api/upcomingmeeting';
   static const walletAmount = 'Health_workerwallet_api/wallet_balance';
+  static const allDoctorList = 'Doctorselectionlist_api/doctorselect';
 
 }

@@ -341,9 +341,9 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
                     onTap: () {
                       controller.isShift?.value = index;
                       print(
-                          "snjndjfnjdnj ${controller.isShift?.value == 0 ? controller.timeScheduleModel.value.timeschedule?.first.morningShift ??
+                          "snjndjfnjdnj ${controller.isShift?.value == 0 ? controller.timeScheduleModel.value.timeschedule?.morningShift ??
                               "11"
-                              : controller.timeScheduleModel.value.timeschedule?.first.eveningShift ?? "11"}");
+                              : controller.timeScheduleModel.value.timeschedule?.eveningShift ?? "11"}");
                     },
                     child: Obx(
                           () => Column(
@@ -371,10 +371,10 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
                               child: Text(
                                 index == 0
                                     ? controller.timeScheduleModel.value
-                                    .timeschedule?.first.morningShift ??
+                                    .timeschedule?.morningShift ??
                                     "11"
                                     : controller.timeScheduleModel.value
-                                    .timeschedule?.first.eveningShift ??
+                                    .timeschedule?.eveningShift ??
                                     "11",
                                 style: AppTextStyle.normalText.copyWith(
                                   color: index == controller.isShift?.value
@@ -413,7 +413,7 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
                         color: AppColor.navyBlueColor, fontSize: 20),
                   ),
                   Text(
-                    controller.storeDoctorPrice!.value,
+                    controller.storeDoctorPrice!.value.toString(),
                     style: AppTextStyle.mediumText
                         .copyWith(color: AppColor.primaryColor, fontSize: 24),
                   ),
@@ -430,10 +430,29 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
                   width: 50.w,
                   textStyle:
                   AppTextStyle.mediumText.copyWith(color: AppColor.whiteColor),
-                  onTap: () {
+                  onTap: () async {
                     // if (formKey.currentState!.validate()) {
-                      print("ddddddd ${controller.getPatientId!.value}");
-                      controller.submitUserData(controller.selectedImages);
+                    if (controller.storeDoctorPrice!.value != null &&
+                        controller.walletAmountModel?.walletAmount?.walletAmount != null) {
+                      double storeDoctorPrice = double.tryParse(controller.storeDoctorPrice!.value) ?? 0;
+                      double walletAmount = double.tryParse(controller.walletAmountModel?.walletAmount?.walletAmount ?? "") ?? 0;
+
+                       if (storeDoctorPrice <= walletAmount) {
+                          controller.submitUserData(controller.selectedImages);
+                          controller.getWalletAmount();
+                          controller.phoneController.clear();
+                      } else {
+                        Get.snackbar(
+                          'OOPS...!!',
+                          'Please Add Amount',
+                          backgroundColor: AppColor.primaryColor, // Customize the background color
+                          colorText: AppColor.whiteColor, // Customize the text color
+                          snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
+                          duration: const Duration(
+                              seconds: 2),
+                        );
+                      }
+                    }
                     // }
                   },
                 ),
