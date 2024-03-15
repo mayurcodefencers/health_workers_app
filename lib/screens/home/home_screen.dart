@@ -246,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 //     ),
                 //   ),
                 // ),
-                Row(
+                controller.upcomingModel?.upcomingMeetinglist?.length != null ? Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
@@ -267,11 +267,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: 10,
                     )
                   ],
-                ),
+                ) : const SizedBox(),
                 SizedBox(
                   height: 1.h,
                 ),
-                Expanded(
+                controller.upcomingModel?.upcomingMeetinglist?.length != null
+                    ? Expanded(
                   child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       itemCount: controller.upcomingModel?.upcomingMeetinglist?.length ?? 0,
@@ -386,7 +387,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       }),
-                ),
+                ) : const Text("No Upcoming List Found"),
               ],
             );
           }
