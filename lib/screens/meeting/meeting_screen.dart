@@ -358,6 +358,8 @@ class _MeetingScreenState extends State<MeetingScreen> {
     return GestureDetector(
       onTap: () {
         Get.to(() => const HistoryScreen());
+        controller.storeAppointmentIdHistory!.value =
+            controller.completeMeetingModel!.completeMeetinglist![index].id.toString();
       },
       child: Container(
         padding: const EdgeInsets.all(12),

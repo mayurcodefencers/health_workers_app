@@ -15,5 +15,6 @@ class AppConstant {
   static const bookingDetails = 'Appointment_detailsapi/appointmentdetails';
   static const missingMeeting = 'Missing_meetinglist_api/missingmeeting';
   static const completeMeeting = 'Complete_meetinglist_api/completemeeting';
+  static const transactionList = 'Wallet_history_api/wallet_history';
 
 }

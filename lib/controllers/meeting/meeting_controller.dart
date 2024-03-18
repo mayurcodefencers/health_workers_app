@@ -11,6 +11,7 @@ import 'package:health_workers/model/missing_model.dart';
 
 class MeetingController extends GetxController {
   final RxBool isLoading = false.obs;
+  RxString? storeAppointmentIdHistory = "".obs;
   RxInt isType = 0.obs;
   final ApiService _apiService = ApiService();
   MissingMeetingModel? missingMeetingModel;

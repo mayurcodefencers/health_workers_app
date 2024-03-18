@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
+import 'package:health_workers/controllers/profile/profile_controller.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
@@ -14,6 +15,18 @@ class TransactionScreen extends StatefulWidget {
 }
 
 class _TransactionScreenState extends State<TransactionScreen> {
+  final ProfileController controller = Get.put(ProfileController());
+
+  @override
+  void initState() {
+    transactionDetails();
+    super.initState();
+  }
+
+  Future<void> transactionDetails() async {
+    await controller.getTransactionList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,23 +50,38 @@ class _TransactionScreenState extends State<TransactionScreen> {
           ),
         ),
       ),
-      body: Column(
-         children: [
-           Expanded(
-             child: ListView.builder(
-                 physics: const BouncingScrollPhysics(),
-                 itemCount: 5,
-                 shrinkWrap: true,
-                 padding: const EdgeInsets.all(00),
-                 itemBuilder: (BuildContext context, int index) {
-                   return transactionContainer();
-                 }),
-           ),
-         ],
-      ),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppColor.primaryColor,
+            ),
+          );
+        } else if (controller.transactionModel == null) {
+          return const Center(child: Text('No data available'));
+        } else {
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: controller
+                            .transactionModel?.upcomingMeetinglist?.length ??
+                        0,
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(00),
+                    itemBuilder: (BuildContext context, int index) {
+                      return transactionContainer(index);
+                    }),
+              ),
+            ],
+          );
+        }
+      }),
     );
   }
-  Widget transactionContainer() {
+
+  Widget transactionContainer(int index) {
     return Container(
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.all(10),
@@ -73,28 +101,25 @@ class _TransactionScreenState extends State<TransactionScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
-              "50",
-              style: AppTextStyle.mediumText.copyWith(
-                  color: AppColor.navyBlueColor,
-                  fontSize: 16
-              ),
+              controller.transactionModel?.upcomingMeetinglist?[index].amount ??
+                  "",
+              style: AppTextStyle.mediumText
+                  .copyWith(color: AppColor.navyBlueColor, fontSize: 16),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  transactionId,
-                  style: AppTextStyle.mediumText.copyWith(
-                      fontSize: 12,
-                      color: AppColor.navyBlueColor
-                  ),
+                  doctorName,
+                  style: AppTextStyle.mediumText
+                      .copyWith(fontSize: 12, color: AppColor.navyBlueColor),
                 ),
                 Text(
-                  "CDE456FVTGH45678",
-                  style: AppTextStyle.normalText.copyWith(
-                      fontSize: 12,
-                      color: AppColor.navyBlueColor
-                  ),
+                  controller.transactionModel?.upcomingMeetinglist?[index]
+                          .doctorname ??
+                      "",
+                  style: AppTextStyle.normalText
+                      .copyWith(fontSize: 12, color: AppColor.navyBlueColor),
                 ),
               ],
             ),
@@ -103,26 +128,24 @@ class _TransactionScreenState extends State<TransactionScreen> {
               children: [
                 Text(
                   date,
-                  style: AppTextStyle.mediumText.copyWith(
-                      fontSize: 12,
-                      color: AppColor.navyBlueColor
-                  ),
+                  style: AppTextStyle.mediumText
+                      .copyWith(fontSize: 12, color: AppColor.navyBlueColor),
                 ),
                 Text(
-                  "07-03-2024",
-                  style: AppTextStyle.normalText.copyWith(
-                      fontSize: 12,
-                      color: AppColor.navyBlueColor
-                  ),
+                  controller.transactionModel?.upcomingMeetinglist?[index]
+                          .createdDate ??
+                      "",
+                  style: AppTextStyle.normalText
+                      .copyWith(fontSize: 12, color: AppColor.navyBlueColor),
                 ),
               ],
             ),
-            SvgPicture.asset(
-                AppAssets.credit
-            )
+            controller.transactionModel?.upcomingMeetinglist?[index]
+                        .paymentType ==
+                    "1"
+                ? SvgPicture.asset(AppAssets.credit)
+                : SvgPicture.asset(AppAssets.debit)
           ],
-        )
-
-    );
+        ));
   }
 }

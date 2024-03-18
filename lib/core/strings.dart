@@ -67,7 +67,7 @@
  const String logOut = "LogOut";
  const String healthWorker = "Health Worker";
  const String transaction = "Transaction";
- const String transactionId = "Transaction Id";
+ const String doctorName = "Doctor Name";
  const String currentToken = "Current Token Number";
  const String totalAmount = "Total Amount";
  const String exitApp = "Exit App";
