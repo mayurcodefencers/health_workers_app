@@ -104,9 +104,26 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage(AppAssets.profilePic),
+              Container(
+                width: 8.h,
+                height: 14.w,
+                decoration: const BoxDecoration(
+                  color: AppColor.primaryColor,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Text(
+                    // controller
+                    //     .appointmentListModel
+                    //     ?.appointmentlist![index]
+                    //     .name![0].toUpperCase()
+                    //     .toString() ??
+                    //     "10",
+                    controller.bookingDetailsModel?.appointmentDetails?.first.doctorname?[0].toUpperCase() ?? "",
+                    style: AppTextStyle.semiBoldText.copyWith(
+                        color: AppColor.whiteColor,
+                        fontSize: 22),),
+                ),
               ),
               SizedBox(
                 width: 6.w,
@@ -196,7 +213,7 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-      controller.bookingDetailsModel?.appointmentDetails?.first.username ?? "",
+            controller.bookingDetailsModel?.appointmentDetails?.first.username ?? "",
             style: AppTextStyle.semiBoldText.copyWith(
               fontSize: 18,
               color: AppColor.primaryColor
