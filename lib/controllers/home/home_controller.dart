@@ -24,9 +24,10 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     initializeSharedPreferences();
-    upcomingList();
+    // upcomingList();
     consultingController.getWalletAmount();
   }
+
 
   Future<void> initializeSharedPreferences() async {
     userImage?.value = pref?.getString("userImage") ?? "";
@@ -63,7 +64,6 @@ class HomeController extends GetxController {
         print("UpcomingListSuccess");
         upcomingModel = UpcomingModel.fromJson(jsonMap);
 
-
         isLoading.value = false;
       } else {
         Get.snackbar(
@@ -79,6 +79,8 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       print("ErrorUpcomingList $e");
+      isLoading.value = false;
+    } finally {
       isLoading.value = false;
     }
   }

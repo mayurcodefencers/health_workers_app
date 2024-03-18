@@ -8,6 +8,7 @@ import 'package:health_workers/dio_services/api_url_constant.dart';
 import 'package:health_workers/main.dart';
 import 'package:health_workers/model/all_doctor_model.dart';
 import 'package:health_workers/model/booking_list_model.dart';
+import 'package:health_workers/model/current_token_model.dart';
 
 class BookingController extends GetxController {
   final RxBool isLoading = false.obs;
@@ -18,6 +19,7 @@ class BookingController extends GetxController {
   RxString? selectedValueAllDoctor = "".obs;
   var allDoctorModel = AllDoctorModel().obs;
   BookingListModel? bookingListModel;
+  CurrentTokenModel? currentTokenModel;
 
   void onSelectedAllDoctor(String? value) {
     if (value != null) {
@@ -130,6 +132,60 @@ class BookingController extends GetxController {
       }
     } catch (e) {
       print("ErrorAllBookingList $e");
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getCurrentToken(String doctorId, String hwId) async {
+    try {
+      isLoading.value = true;
+
+      var token = pref?.getString("token");
+      var cfToken = pref?.getString("cfToken");
+
+      var headers = {
+        'Authorization': token ?? '', // Add default value if token is null
+        'CF-Token': cfToken ?? '', // Add default value if cfToken is null
+      };
+      var formData = {
+        'doctor_id': doctorId,
+        'hwid': hwId,
+      };
+
+      final response = await _apiService.postDataWithForm(
+          formData,
+          AppConstant.currentToken,
+          headers: headers
+
+      );
+
+      String jsonString = response.data;
+      Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+
+      print("MessageCurrentToken ${jsonMap['message']}");
+
+      if (jsonMap['status'] == "200") {
+        print("CurrentTokenSuccess");
+        // List<dynamic> allDoctorList = jsonMap['doctorlist'];
+        currentTokenModel = CurrentTokenModel.fromJson(jsonMap);
+        // dropdownValuesAllDoctor.value = allDoctorList;
+        // print("dataaaaaa ${dropdownValuesAllDoctor.value}");
+
+        isLoading.value = false;
+      } else {
+        Get.snackbar(
+          'OOPS...!!',
+          jsonMap['message'],
+          backgroundColor: AppColor.primaryColor, // Customize the background color
+          colorText: AppColor.whiteColor, // Customize the text color
+          snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
+          duration: const Duration(
+              seconds: 2),
+        );
+        isLoading.value = false;
+      }
+    } catch (e) {
+      print("ErrorCurrentToken $e");
       isLoading.value = false;
     }
   }

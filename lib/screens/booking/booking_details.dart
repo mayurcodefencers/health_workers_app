@@ -22,17 +22,12 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    callFunction();
+    bookingDetails();
 
   }
 
-  Future<void> callFunction() async {
+  Future<void> bookingDetails() async {
     await controller.bookingDetails(bookingController.storeAppointmentId!.value);
-    print("calling ${
-        controller.bookingDetailsModel?.appointmentDetails?.isNotEmpty == true
-            ? controller.bookingDetailsModel?.appointmentDetails?.first.doctorname ?? ""
-            : ""
-    }");
   }
 
   @override
@@ -43,7 +38,7 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text(
-          bookingDetails,
+          bookingDetailsText,
           style: AppTextStyle.boldText
               .copyWith(color: AppColor.primaryColor, fontSize: 22),
         ),

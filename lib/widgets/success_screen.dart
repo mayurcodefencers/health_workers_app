@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
+import 'package:health_workers/controllers/home/home_controller.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
@@ -14,6 +15,7 @@ class SuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final HomeController homeController = Get.put(HomeController());
     return Scaffold(
       body: Column(
         children: [
@@ -53,7 +55,8 @@ class SuccessScreen extends StatelessWidget {
             width: 50.w,
             textStyle:
             AppTextStyle.mediumText.copyWith(color: AppColor.whiteColor),
-            onTap: () {
+            onTap: () async {
+              await homeController.upcomingList();
               Get.to(() => const HomePage());
             },
           )

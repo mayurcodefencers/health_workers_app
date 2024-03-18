@@ -23,7 +23,11 @@ class _BookingScreenState extends State<BookingScreen> {
   @override
   void initState() {
     super.initState();
-    // controller.getAllDoctorList();
+    controller.getAllDoctorList();
+  }
+
+  Future<void> bookingList() async {
+    await controller.getAllDoctorList();
   }
 
   @override
@@ -74,37 +78,41 @@ class _BookingScreenState extends State<BookingScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
+                //   controller.currentTokenModel?.currenttoken?.isNotEmpty == true
+                //       ? Column(
+                //   children: [
+                //     Text(
+                //       currentToken,
+                //       style: AppTextStyle.mediumText.copyWith(
+                //           fontSize: 20, color: AppColor.navyBlueColor),
+                //     ),
+                //     SizedBox(
+                //       height: 1.h,
+                //     ),
+                //     Center(
+                //       child: Container(
+                //         height: 15.h,
+                //         width: 40.w,
+                //         // padding: const EdgeInsets.all(10),
+                //         // margin: const EdgeInsets.all(10),
+                //         decoration: BoxDecoration(
+                //             color: AppColor.lightBlueColor,
+                //             borderRadius: BorderRadius.circular(4)),
+                //         child: Center(
+                //           child: Text(
+                //             controller.currentTokenModel?.currenttoken ?? "",
+                //             style: AppTextStyle.semiBoldText.copyWith(
+                //                 color: AppColor.primaryColor,
+                //                 fontSize: 60),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ) : const SizedBox(),
                   controller.bookingListModel?.nexttokenlist?.length != null
                       ? Column(
                           children: [
-                            // Text(
-                            //   currentToken,
-                            //   style: AppTextStyle.mediumText.copyWith(
-                            //       fontSize: 20, color: AppColor.navyBlueColor),
-                            // ),
-                            // SizedBox(
-                            //   height: 1.h,
-                            // ),
-                            // Container(
-                            //   height: 15.h,
-                            //   width: 40.w,
-                            //   // padding: const EdgeInsets.all(10),
-                            //   // margin: const EdgeInsets.all(10),
-                            //   decoration: BoxDecoration(
-                            //       color: AppColor.lightBlueColor,
-                            //       borderRadius: BorderRadius.circular(4)),
-                            //   child: Center(
-                            //     child: Text(
-                            //       (controller.bookingListModel?.currenttoken?.isNotEmpty == true &&
-                            //           controller.bookingListModel!.currenttoken!.first.tokenNo != null)
-                            //           ? controller.bookingListModel!.currenttoken!.first.tokenNo.toString()
-                            //           : "0",
-                            //       style: AppTextStyle.semiBoldText.copyWith(
-                            //           color: AppColor.primaryColor,
-                            //           fontSize: 60),
-                            //     ),
-                            //   ),
-                            // ),
                              ListView.builder(
                                 physics: const BouncingScrollPhysics(),
                                 itemCount: controller.bookingListModel
@@ -300,6 +308,10 @@ class _BookingScreenState extends State<BookingScreen> {
                     controller.storeAllListDoctorId!.value,
                     homeController.hwId!.value,
                   );
+                  // controller.getCurrentToken(
+                  //   controller.storeAllListDoctorId!.value,
+                  //   homeController.hwId!.value,
+                  // );
                 },
                 value: allDoctorValue ?? "",
                 child: Text(allDoctorValue ?? ""),

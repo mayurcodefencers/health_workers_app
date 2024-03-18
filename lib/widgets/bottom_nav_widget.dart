@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
+import 'package:health_workers/controllers/home/home_controller.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
@@ -20,6 +21,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final HomeController controller = Get.put(HomeController());
   int pageIndex = 0;
 
   final pages = [
@@ -34,6 +36,7 @@ class _HomePageState extends State<HomePage> {
       pageIndex = index;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

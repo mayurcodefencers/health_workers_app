@@ -26,14 +26,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    upcomingDetails();
     super.initState();
-    print("initttttt ${controller.hwId.toString()}");
+  }
+
+  Future<void> upcomingDetails() async {
+    await controller.upcomingList();
   }
 
   @override
   Widget build(BuildContext context) {
-    print("insideeeeee");
-    // controller.upcomingList();
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColor.whiteColor,

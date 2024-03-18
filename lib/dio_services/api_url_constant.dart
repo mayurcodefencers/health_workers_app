@@ -8,6 +8,7 @@ class AppConstant {
   static const registerUser = 'Register_userapi/registeruser';
   static const appointmentList = 'Appointmentlist_api/appointmentlist';
   static const bookingList = 'Tokenlist_api/tokenlist';
+  static const currentToken = 'Currenttoken_api/currenttoken';
   static const upcoming = 'Upcoming_meetinglist_api/upcomingmeeting';
   static const walletAmount = 'Health_workerwallet_api/wallet_balance';
   static const allDoctorList = 'Doctorselectionlist_api/doctorselect';

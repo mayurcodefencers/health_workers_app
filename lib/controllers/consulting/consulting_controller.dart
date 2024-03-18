@@ -381,11 +381,11 @@ class ConsultingController extends GetxController {
         }.entries)
           MapEntry(entry.key, entry.value),
       });
-print("dndnknknfnf ${appointmentListModel?.appointmentlist?.first.id}");
-print("department ${storeDepartmentId!.value.toString()}");
-print("doctor ${storeDoctorId!.value.toString()}");
-print("date ${formattedDate.toString()}");
-print("time_shifttime_shift ${
+      print("dndnknknfnf ${appointmentListModel?.appointmentlist?.first.id}");
+      print("department ${storeDepartmentId!.value.toString()}");
+      print("doctor ${storeDoctorId!.value.toString()}");
+      print("date ${formattedDate.toString()}");
+      print("time_shifttime_shift ${
     isShift?.value == 0
         ? timeScheduleModel.value.timeschedule?.morningShift ?? "11"
         : timeScheduleModel.value.timeschedule?.eveningShift ?? "11"
