@@ -24,7 +24,7 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     initializeSharedPreferences();
-    // upcomingList();
+    upcomingList();
     consultingController.getWalletAmount();
   }
 

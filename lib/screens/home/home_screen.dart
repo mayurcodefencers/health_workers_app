@@ -26,13 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    upcomingDetails();
+    // upcomingDetails();
     super.initState();
   }
 
-  Future<void> upcomingDetails() async {
-    await controller.upcomingList();
-  }
+  // Future<void> upcomingDetails() async {
+  //   await controller.upcomingList();
+  // }
 
   @override
   Widget build(BuildContext context) {

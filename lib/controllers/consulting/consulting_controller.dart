@@ -423,6 +423,13 @@ class ConsultingController extends GetxController {
         print("SuccessBookPatient");
         bookUserAppointmentModel.value = BookUserAppointmentModel.fromJson(jsonMap);
           phoneController.clear();
+          selectedContainerIndex.value = -1;
+          dropdownValuesDepartment.value = [];
+          dropdownValuesDoctor.value = [];
+          selectedImages = [];
+          selectedDay.value = null;
+          isShift?.value == 0;
+
 
         Get.to(() => const SuccessScreen());
 
