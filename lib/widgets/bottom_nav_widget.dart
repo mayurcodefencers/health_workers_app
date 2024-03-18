@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   final pages = [
     const HomeScreen(),
     const BookingScreen(),
-    const SuccessScreen(),
+    const MeetingScreen(),
     const ProfileScreen(),
   ];
 

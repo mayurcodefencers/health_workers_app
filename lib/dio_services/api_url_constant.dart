@@ -13,5 +13,7 @@ class AppConstant {
   static const walletAmount = 'Health_workerwallet_api/wallet_balance';
   static const allDoctorList = 'Doctorselectionlist_api/doctorselect';
   static const bookingDetails = 'Appointment_detailsapi/appointmentdetails';
+  static const missingMeeting = 'Missing_meetinglist_api/missingmeeting';
+  static const completeMeeting = 'Complete_meetinglist_api/completemeeting';
 
 }

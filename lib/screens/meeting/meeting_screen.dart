@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
+import 'package:health_workers/controllers/home/home_controller.dart';
 import 'package:health_workers/controllers/meeting/meeting_controller.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
@@ -19,6 +20,17 @@ class MeetingScreen extends StatefulWidget {
 
 class _MeetingScreenState extends State<MeetingScreen> {
   final MeetingController controller = Get.put(MeetingController());
+  final HomeController homeController = Get.put(HomeController());
+
+  @override
+  void initState() {
+    // upcomingDetails();
+    super.initState();
+  }
+
+  // Future<void> upcomingDetails() async {
+  //   await homeController.upcomingList();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -42,104 +54,122 @@ class _MeetingScreenState extends State<MeetingScreen> {
         //   ),
         // ),
       ),
-      body: Column(
-        children: [
-          Obx(
-            () => Padding(
-              padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: AppColor.pureWhiteColor,
-                    borderRadius: BorderRadius.circular(4)),
-                child: GridView.builder(
-                  physics: const ScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(20),
-                  itemCount: controller.type.length,
-                  itemBuilder: (ctx, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        controller.isType.value = index;
-                        // String? getUserId = pref?.getString("userId");
-                        // controller.isSelectedBooking.value == 0
-                        //     ? controller.getOrderListData(controller.userLoginId!.value)
-                        //     : controller.pastOrderListData(getUserId!);
-                      },
-                      child: Obx(
-                        () => Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Container(
-                              height: 10.h,
-                              width: 25.w,
-                              decoration: BoxDecoration(
-                                  color: controller.isType.value == index
-                                      ? AppColor.primaryColor
-                                      : AppColor.pureWhiteColor,
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: Center(
-                                child: Text(
-                                  controller.type[index].toString(),
-                                  style: AppTextStyle.semiBoldText.copyWith(
-                                    fontSize: 14,
-                                    color: controller.isType.value == index
-                                        ? AppColor.whiteColor
-                                        : AppColor.navyBlueColor,
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppColor.primaryColor,
+            ),
+          );
+        }
+        // else if (controller.loginModel == null) {
+        //   return const Center(child: Text('No data available'));
+        // }
+        else {
+          return Column(
+            children: [
+              Obx(() => Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: AppColor.pureWhiteColor,
+                        borderRadius: BorderRadius.circular(4)),
+                    child: GridView.builder(
+                      physics: const ScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(20),
+                      itemCount: controller.type.length,
+                      itemBuilder: (ctx, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            controller.isType.value = index;
+                            controller.isType.value == 0 ?
+                            homeController.upcomingList() :
+                            controller.isType.value == 1 ?
+                            controller.getMissingList() :
+                            controller.isType.value == 2 ?
+                            controller.getCompleteList() :
+                            homeController.upcomingList();
+
+                          },
+                          child: Obx(
+                                () => Row(
+                              children: [
+                                Container(
+                                  height: 10.h,
+                                  width: 25.w,
+                                  decoration: BoxDecoration(
+                                      color: controller.isType.value == index
+                                          ? AppColor.primaryColor
+                                          : AppColor.pureWhiteColor,
+                                      borderRadius: BorderRadius.circular(6)),
+                                  child: Center(
+                                    child: Text(
+                                      controller.type[index].toString(),
+                                      style: AppTextStyle.semiBoldText.copyWith(
+                                        fontSize: 14,
+                                        color: controller.isType.value == index
+                                            ? AppColor.whiteColor
+                                            : AppColor.navyBlueColor,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        );
+                      },
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          childAspectRatio: 20 / 3,
+                          crossAxisSpacing: 0,
+                          mainAxisSpacing: 10,
+                          mainAxisExtent: 40
                       ),
-                    );
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 20 / 3,
-                    crossAxisSpacing: 0,
-                    mainAxisSpacing: 10,
-                    mainAxisExtent: 40
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-          Obx(() => controller.isType.value == 0 ? Expanded(
-            child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: 5,
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(00),
-                itemBuilder: (BuildContext context, int index) {
-                  return upcomingContainer();
-                }),
-          ) : controller.isType.value == 1 ?
-          Expanded(
-            child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: 5,
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(00),
-                itemBuilder: (BuildContext context, int index) {
-                  return missedContainer();
-                }),
-          ) :
-          Expanded(
-            child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: 5,
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(00),
-                itemBuilder: (BuildContext context, int index) {
-                  return historyContainer();
-                }),
-          ),)
-        ],
-      ),
+              Obx(() => controller.isType.value == 0 ?
+              Expanded(
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: homeController.upcomingModel?.upcomingMeetinglist?.length ?? 0,
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(00),
+                    itemBuilder: (BuildContext context, int index) {
+                      return upcomingContainer(index);
+                    }),
+              ) :
+              controller.isType.value == 1 ?
+              Expanded(
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: controller.missingMeetingModel?.missingMeetinglist?.length ?? 0,
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(00),
+                    itemBuilder: (BuildContext context, int index) {
+                      return missedContainer(index);
+                    }),
+              ) :
+              Expanded(
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: controller.completeMeetingModel?.completeMeetinglist?.length ?? 0,
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(00),
+                    itemBuilder: (BuildContext context, int index) {
+                      return historyContainer(index);
+                    }),
+              ),)
+            ],
+          );
+        }
+      }),
     );
   }
-  Widget upcomingContainer() {
+  Widget upcomingContainer(int index) {
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -160,9 +190,25 @@ class _MeetingScreenState extends State<MeetingScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage(AppAssets.profilePic),
+            Container(
+              width: 8.h,
+              height: 14.w,
+              decoration: const BoxDecoration(
+                color: AppColor.primaryColor,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  homeController
+                      .upcomingModel
+                      ?.upcomingMeetinglist![index]
+                      .username![0]
+                      .toUpperCase() ??
+                      "",
+                  style: AppTextStyle.semiBoldText.copyWith(
+                      color: AppColor.whiteColor, fontSize: 22),
+                ),
+              ),
             ),
             SizedBox(
               width: 6.w,
@@ -171,36 +217,40 @@ class _MeetingScreenState extends State<MeetingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Dr. Parthiv Joshi",
+                  homeController
+                      .upcomingModel
+                      ?.upcomingMeetinglist?[index]
+                      .doctorname ??
+                      "",
                   style: AppTextStyle.semiBoldText
                       .copyWith(color: AppColor.navyBlueColor, fontSize: 16),
                 ),
                 Text(
-                  "Mr Mukesh Parmar",
+                  homeController
+                      .upcomingModel
+                      ?.upcomingMeetinglist?[index]
+                      .username ??
+                      "",
                   style: AppTextStyle.mediumText
                       .copyWith(color: AppColor.greyColor, fontSize: 14),
                 ),
                 Text(
-                  "+91 7990230441",
+                  homeController
+                      .upcomingModel
+                      ?.upcomingMeetinglist?[index]
+                      .userphoneno ??
+                      "",
                   style: AppTextStyle.mediumText
                       .copyWith(color: AppColor.greyColor, fontSize: 10),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "05-03-2024",
-                      style: AppTextStyle.mediumText
-                          .copyWith(color: AppColor.greyColor, fontSize: 10),
-                    ),
-                    SizedBox(
-                      width: 2.w,
-                    ),
-                    Text(
-                      "12:00AM",
-                      style: AppTextStyle.mediumText
-                          .copyWith(color: AppColor.greyColor, fontSize: 10),
-                    ),
-                  ],
+                Text(
+                  homeController
+                      .upcomingModel
+                      ?.upcomingMeetinglist?[index]
+                      .createdDate ??
+                      "",
+                  style: AppTextStyle.mediumText
+                      .copyWith(color: AppColor.greyColor, fontSize: 10),
                 ),
               ],
             ),
@@ -221,7 +271,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
       ),
     );
   }
-  Widget missedContainer() {
+  Widget missedContainer(int index) {
     return GestureDetector(
       onTap: () {
         Get.to(() => const RescheduleScreen());
@@ -244,9 +294,20 @@ class _MeetingScreenState extends State<MeetingScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage(AppAssets.profilePic),
+            Container(
+              width: 8.h,
+              height: 14.w,
+              decoration: const BoxDecoration(
+                color: AppColor.primaryColor,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  controller.missingMeetingModel?.missingMeetinglist?[index].username![0].toUpperCase() ?? "",
+                  style: AppTextStyle.semiBoldText.copyWith(
+                      color: AppColor.whiteColor, fontSize: 22),
+                ),
+              ),
             ),
             SizedBox(
               width: 6.w,
@@ -255,36 +316,24 @@ class _MeetingScreenState extends State<MeetingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Dr. Parthiv Joshi",
+                  controller.missingMeetingModel?.missingMeetinglist?[index].doctorname ?? "",
                   style: AppTextStyle.semiBoldText
                       .copyWith(color: AppColor.navyBlueColor, fontSize: 16),
                 ),
                 Text(
-                  "Mr Mukesh Parmar",
+                  controller.missingMeetingModel?.missingMeetinglist?[index].username ?? "",
                   style: AppTextStyle.mediumText
                       .copyWith(color: AppColor.greyColor, fontSize: 14),
                 ),
                 Text(
-                  "+91 7990230441",
+                  controller.missingMeetingModel?.missingMeetinglist?[index].userphoneno ?? "",
                   style: AppTextStyle.mediumText
                       .copyWith(color: AppColor.greyColor, fontSize: 10),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "05-03-2024",
-                      style: AppTextStyle.mediumText
-                          .copyWith(color: AppColor.greyColor, fontSize: 10),
-                    ),
-                    SizedBox(
-                      width: 2.w,
-                    ),
-                    Text(
-                      "12:00AM",
-                      style: AppTextStyle.mediumText
-                          .copyWith(color: AppColor.greyColor, fontSize: 10),
-                    ),
-                  ],
+                Text(
+                  controller.missingMeetingModel?.missingMeetinglist?[index].createdDate ?? "",
+                  style: AppTextStyle.mediumText
+                      .copyWith(color: AppColor.greyColor, fontSize: 10),
                 ),
               ],
             ),
@@ -305,7 +354,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
       ),
     );
   }
-  Widget historyContainer() {
+  Widget historyContainer(int index) {
     return GestureDetector(
       onTap: () {
         Get.to(() => const HistoryScreen());
@@ -328,9 +377,20 @@ class _MeetingScreenState extends State<MeetingScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage(AppAssets.profilePic),
+            Container(
+              width: 8.h,
+              height: 14.w,
+              decoration: const BoxDecoration(
+                color: AppColor.primaryColor,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  controller.completeMeetingModel?.completeMeetinglist?[index].username![0].toUpperCase() ?? "",
+                  style: AppTextStyle.semiBoldText.copyWith(
+                      color: AppColor.whiteColor, fontSize: 22),
+                ),
+              ),
             ),
             SizedBox(
               width: 6.w,
@@ -339,36 +399,24 @@ class _MeetingScreenState extends State<MeetingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Dr. Parthiv Joshi",
+                  controller.completeMeetingModel?.completeMeetinglist?[index].doctorname ?? "",
                   style: AppTextStyle.semiBoldText
                       .copyWith(color: AppColor.navyBlueColor, fontSize: 16),
                 ),
                 Text(
-                  "Mr Mukesh Parmar",
+                  controller.completeMeetingModel?.completeMeetinglist?[index].username ?? "",
                   style: AppTextStyle.mediumText
                       .copyWith(color: AppColor.greyColor, fontSize: 14),
                 ),
                 Text(
-                  "+91 7990230441",
+                  controller.completeMeetingModel?.completeMeetinglist?[index].userphoneno ?? "",
                   style: AppTextStyle.mediumText
                       .copyWith(color: AppColor.greyColor, fontSize: 10),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "05-03-2024",
-                      style: AppTextStyle.mediumText
-                          .copyWith(color: AppColor.greyColor, fontSize: 10),
-                    ),
-                    SizedBox(
-                      width: 2.w,
-                    ),
-                    Text(
-                      "12:00AM",
-                      style: AppTextStyle.mediumText
-                          .copyWith(color: AppColor.greyColor, fontSize: 10),
-                    ),
-                  ],
+                Text(
+                  controller.completeMeetingModel?.completeMeetinglist?[index].createdDate ?? "",
+                  style: AppTextStyle.mediumText
+                      .copyWith(color: AppColor.greyColor, fontSize: 10),
                 ),
               ],
             ),
