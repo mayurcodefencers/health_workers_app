@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
+import 'package:health_workers/controllers/booking/bookin_details_controller.dart';
+import 'package:health_workers/controllers/booking/booking_controller.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
@@ -14,6 +16,25 @@ class BookingDetailsScreen extends StatefulWidget {
 }
 
 class _BookingDetailsState extends State<BookingDetailsScreen> {
+  final BookingDetailsController controller = Get.put(BookingDetailsController());
+  final BookingController bookingController = Get.put(BookingController());
+
+  @override
+  void initState() {
+    super.initState();
+    callFunction();
+
+  }
+
+  Future<void> callFunction() async {
+    await controller.bookingDetails(bookingController.storeAppointmentId!.value);
+    print("calling ${
+        controller.bookingDetailsModel?.appointmentDetails?.isNotEmpty == true
+            ? controller.bookingDetailsModel?.appointmentDetails?.first.doctorname ?? ""
+            : ""
+    }");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,18 +57,29 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 2.h,
-          ),
-          doctorContainer(),
-          SizedBox(
-            height: 3.h,
-          ),
-          patientContainer()
-        ],
-      ),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(
+              child: CircularProgressIndicator(
+                color: AppColor.primaryColor,
+              ));
+        } else if (controller.bookingDetailsModel == null) {
+          return const Center(child: Text('No Data Available'));
+        } else {
+          return Column(
+            children: [
+              SizedBox(
+                height: 2.h,
+              ),
+              doctorContainer(),
+              SizedBox(
+                height: 3.h,
+              ),
+              patientContainer()
+            ],
+          );
+        }
+      }),
     );
   }
 
@@ -83,12 +115,12 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Dr. Parthiv Joshi",
-                    style: AppTextStyle.mediumText
-                        .copyWith(color: AppColor.primaryColor, fontSize: 18),
+                    controller.bookingDetailsModel?.appointmentDetails?.first.doctorname ?? "",
+                    style: AppTextStyle.mediumText.copyWith(
+                        color: AppColor.primaryColor, fontSize: 18),
                   ),
                   Text(
-                    "General Physician",
+                    controller.bookingDetailsModel?.appointmentDetails?.first.departmentname ?? "",
                     style: AppTextStyle.mediumText
                         .copyWith(color: AppColor.greyColor, fontSize: 12),
                   ),
@@ -113,7 +145,7 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
                         ),
                       ),
                       Text(
-                        "10",
+                        controller.bookingDetailsModel?.appointmentDetails?.first.tokenNo ?? "",
                         style: AppTextStyle.semiBoldText
                             .copyWith(color: AppColor.primaryColor, fontSize: 23),
                       ),
@@ -134,20 +166,7 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
                     .copyWith(color: AppColor.navyBlueColor, fontSize: 12),
               ),
               Text(
-                "05-03-2024",
-                style: AppTextStyle.mediumText
-                    .copyWith(color: AppColor.greyColor, fontSize: 12),
-              ),
-              SizedBox(
-                width: 4.w,
-              ),
-              Text(
-                "$time : ",
-                style: AppTextStyle.mediumText
-                    .copyWith(color: AppColor.navyBlueColor, fontSize: 12),
-              ),
-              Text(
-                "12 AM",
+                  controller.bookingDetailsModel?.appointmentDetails?.first.createdDate ?? "",
                 style: AppTextStyle.mediumText
                     .copyWith(color: AppColor.greyColor, fontSize: 12),
               ),
@@ -177,7 +196,7 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Mr.Mukesh Parmar ",
+      controller.bookingDetailsModel?.appointmentDetails?.first.username ?? "",
             style: AppTextStyle.semiBoldText.copyWith(
               fontSize: 18,
               color: AppColor.primaryColor
@@ -196,7 +215,7 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
                 ),
               ),
               Text(
-                "Male",
+                controller.bookingDetailsModel?.appointmentDetails?.first.gender ?? "",
                 style: AppTextStyle.semiBoldText.copyWith(
                     fontSize: 12,
                     color: AppColor.greyColor
@@ -213,7 +232,7 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
                 ),
               ),
               Text(
-                "25",
+                controller.bookingDetailsModel?.appointmentDetails?.first.userage ?? "",
                 style: AppTextStyle.semiBoldText.copyWith(
                     fontSize: 12,
                     color: AppColor.greyColor
@@ -234,7 +253,7 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
                 ),
               ),
               Text(
-                "+91 9809876789",
+                controller.bookingDetailsModel?.appointmentDetails?.first.userphoneno ?? "",
                 style: AppTextStyle.semiBoldText.copyWith(
                     fontSize: 12,
                     color: AppColor.greyColor
@@ -255,7 +274,7 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
                 ),
               ),
               Text(
-                "mukesh@gmail.com",
+                controller.bookingDetailsModel?.appointmentDetails?.first.useremail ?? "",
                 style: AppTextStyle.semiBoldText.copyWith(
                     fontSize: 12,
                     color: AppColor.greyColor
@@ -276,7 +295,7 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
                 ),
               ),
               Text(
-                "Viswas bus stand, Nr. Jakatnaka Ahmedabad",
+                controller.bookingDetailsModel?.appointmentDetails?.first.address ?? "",
                 style: AppTextStyle.semiBoldText.copyWith(
                     fontSize: 12,
                     color: AppColor.greyColor

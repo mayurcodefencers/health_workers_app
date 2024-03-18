@@ -116,6 +116,9 @@ class _BookingScreenState extends State<BookingScreen> {
                                     (BuildContext context, int index) {
                                   return GestureDetector(
                                     onTap: () {
+                                      controller.storeAppointmentId?.value =
+                                          controller.bookingListModel!.nexttokenlist![index]
+                                          .id.toString();
                                       Get.to(
                                           () => const BookingDetailsScreen());
                                     },

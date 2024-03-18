@@ -12,6 +12,7 @@ import 'package:health_workers/model/booking_list_model.dart';
 class BookingController extends GetxController {
   final RxBool isLoading = false.obs;
   RxString? storeAllListDoctorId = "".obs;
+  RxString? storeAppointmentId = "".obs;
   final ApiService _apiService = ApiService();
   var dropdownValuesAllDoctor = [].obs;
   RxString? selectedValueAllDoctor = "".obs;
