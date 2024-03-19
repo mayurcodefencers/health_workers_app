@@ -88,7 +88,7 @@ class AddPatientController extends GetxController {
         phoneController.clear();
         ageController.clear();
         addressController.clear();
-        dropdownValuesGender.clear();
+        selectedValueGender!.value = "";
 
         isLoading.value = false;
       } else {

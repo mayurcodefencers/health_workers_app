@@ -25,7 +25,7 @@ class ConsultingController extends GetxController {
   var doctorListModel = DoctorListModel().obs;
   var timeScheduleModel = TimeScheduleModel().obs;
   var departmentListModel = DepartmentListModel().obs;
- var bookUserAppointmentModel = BookUserAppointmentModel().obs;
+  var bookUserAppointmentModel = BookUserAppointmentModel().obs;
   AppointmentListModel? appointmentListModel;
   WalletAmountModel? walletAmountModel;
 
@@ -76,12 +76,12 @@ class ConsultingController extends GetxController {
 
   Rx<DateTime?> selectedDay = Rx<DateTime?>(null);
 
-
   void onSelectedDepartment(String? value) {
     if (value != null) {
       selectedValueDepartment!.value = value;
     }
   }
+
   void onSelectedDoctor(String? value) {
     if (value != null) {
       selectedValueDoctor!.value = value;
@@ -94,7 +94,6 @@ class ConsultingController extends GetxController {
     super.onInit();
     getDepartmentData();
     getTimeData();
-
   }
 
   Future<void> initializeSharedPreferences() async {
@@ -114,9 +113,7 @@ class ConsultingController extends GetxController {
       };
 
       final response = await _apiService.getDataWithForm(
-          AppConstant.departmentList,
-          headers
-      );
+          AppConstant.departmentList, headers);
 
       String jsonString = response.data;
       Map<String, dynamic> jsonMap = jsonDecode(jsonString);
@@ -135,11 +132,11 @@ class ConsultingController extends GetxController {
         Get.snackbar(
           'OOPS...!!',
           jsonMap['message'],
-          backgroundColor: AppColor.primaryColor, // Customize the background color
+          backgroundColor:
+              AppColor.primaryColor, // Customize the background color
           colorText: AppColor.whiteColor, // Customize the text color
           snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
-          duration: const Duration(
-              seconds: 2),
+          duration: const Duration(seconds: 2),
         );
         isLoading.value = false;
       }
@@ -171,19 +168,15 @@ class ConsultingController extends GetxController {
       );
       String jsonString = response.data;
 
-
       Map<String, dynamic> jsonMap = jsonDecode(jsonString);
 
       print("DoctorListMessage: ${jsonMap['message']}");
-
 
       if (jsonMap['status'] == "200") {
         List<dynamic> doctorList = jsonMap['doctorlist'];
         doctorListModel.value = DoctorListModel.fromJson(jsonMap);
 
         dropdownValuesDoctor.value = doctorList;
-
-
       } else {
         Get.snackbar(
           'Oops!',
@@ -213,10 +206,8 @@ class ConsultingController extends GetxController {
         'CF-Token': cfToken ?? '', // Add default value if cfToken is null
       };
 
-      final response = await _apiService.getDataWithForm(
-          AppConstant.timeSchedule,
-          headers
-      );
+      final response =
+          await _apiService.getDataWithForm(AppConstant.timeSchedule, headers);
 
       String jsonString = response.data;
       Map<String, dynamic> jsonMap = jsonDecode(jsonString);
@@ -234,11 +225,11 @@ class ConsultingController extends GetxController {
         Get.snackbar(
           'OOPS...!!',
           jsonMap['message'],
-          backgroundColor: AppColor.primaryColor, // Customize the background color
+          backgroundColor:
+              AppColor.primaryColor, // Customize the background color
           colorText: AppColor.whiteColor, // Customize the text color
           snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
-          duration: const Duration(
-              seconds: 2),
+          duration: const Duration(seconds: 2),
         );
         isLoading.value = false;
       }
@@ -263,10 +254,8 @@ class ConsultingController extends GetxController {
         'CF-Token': cfToken ?? '', // Add default value if cfToken is null
       };
 
-      final response = await _apiService.getDataWithForm(
-          AppConstant.walletAmount,
-          headers
-      );
+      final response =
+          await _apiService.getDataWithForm(AppConstant.walletAmount, headers);
 
       String jsonString = response.data;
       Map<String, dynamic> jsonMap = jsonDecode(jsonString);
@@ -284,11 +273,11 @@ class ConsultingController extends GetxController {
         Get.snackbar(
           'OOPS...!!',
           jsonMap['message'],
-          backgroundColor: AppColor.primaryColor, // Customize the background color
+          backgroundColor:
+              AppColor.primaryColor, // Customize the background color
           colorText: AppColor.whiteColor, // Customize the text color
           snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
-          duration: const Duration(
-              seconds: 2),
+          duration: const Duration(seconds: 2),
         );
         isLoading.value = false;
       }
@@ -314,10 +303,8 @@ class ConsultingController extends GetxController {
       };
 
       final response = await _apiService.postDataWithForm(
-          formData,
-          AppConstant.appointmentList,
-          headers: headers
-      );
+          formData, AppConstant.appointmentList,
+          headers: headers);
 
       String jsonString = response.data;
       Map<String, dynamic> jsonMap = jsonDecode(jsonString);
@@ -335,11 +322,11 @@ class ConsultingController extends GetxController {
         Get.snackbar(
           'OOPS...!!',
           jsonMap['message'],
-          backgroundColor: AppColor.primaryColor, // Customize the background color
+          backgroundColor:
+              AppColor.primaryColor, // Customize the background color
           colorText: AppColor.whiteColor, // Customize the text color
           snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
-          duration: const Duration(
-              seconds: 2),
+          duration: const Duration(seconds: 2),
         );
         isLoading.value = false;
       }
@@ -364,20 +351,25 @@ class ConsultingController extends GetxController {
 
       dio.Dio dioClient = dio.Dio();
       dio.FormData formData = dio.FormData();
-      String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDay.value!);
+      String formattedDate =
+          DateFormat('yyyy-MM-dd').format(selectedDay.value!);
       // Add other form data
       formData.fields.addAll({
         for (var entry in {
-          'department': storeDepartmentId!.value.toString(), // Convert to String
-          'doctor': storeDoctorId!.value.toString() ,// Convert to String
-          'upload_file[]': selectedImages.toString(), // Convert to String or provide a default value
+          'department':
+              storeDepartmentId!.value.toString(), // Convert to String
+          'doctor': storeDoctorId!.value.toString(), // Convert to String
+          'upload_file[]': selectedImages
+              .toString(), // Convert to String or provide a default value
           'date': formattedDate.toString(), // Convert to String
           'time_shift': isShift?.value == 0
-              ? timeScheduleModel.value.timeschedule?.morningShift.toString() ?? "11"
-              : timeScheduleModel.value.timeschedule?.eveningShift.toString() ?? "11",
+              ? timeScheduleModel.value.timeschedule?.morningShift.toString() ??
+                  "11"
+              : timeScheduleModel.value.timeschedule?.eveningShift.toString() ??
+                  "11",
           'total_amount': storeDoctorPrice!.value.toString(),
           'hwid': hwId!.value.toString(),
-          'uid' : getPatientId!.value.toString()
+          'uid': getPatientId!.value.toString()
         }.entries)
           MapEntry(entry.key, entry.value),
       });
@@ -385,11 +377,8 @@ class ConsultingController extends GetxController {
       print("department ${storeDepartmentId!.value.toString()}");
       print("doctor ${storeDoctorId!.value.toString()}");
       print("date ${formattedDate.toString()}");
-      print("time_shifttime_shift ${
-    isShift?.value == 0
-        ? timeScheduleModel.value.timeschedule?.morningShift ?? "11"
-        : timeScheduleModel.value.timeschedule?.eveningShift ?? "11"
-}");
+      print(
+          "time_shifttime_shift ${isShift?.value == 0 ? timeScheduleModel.value.timeschedule?.morningShift ?? "11" : timeScheduleModel.value.timeschedule?.eveningShift ?? "11"}");
 
       // Add images to FormData
       for (int i = 0; i < selectedImages.length; i++) {
@@ -421,17 +410,17 @@ class ConsultingController extends GetxController {
 
       if (jsonMap['status'] == "200") {
         print("SuccessBookPatient");
-        bookUserAppointmentModel.value = BookUserAppointmentModel.fromJson(jsonMap);
-           phoneController.clear();
-          // selectedContainerIndex.value = -1;
-          // dropdownValuesDepartment.value = [];
-          // dropdownValuesDoctor.value = [];
-          // selectedImages = [];
-          // selectedDay.value = null;
-          // isShift?.value = 0;
-          // storeDoctorPrice?.value = '';
+        bookUserAppointmentModel.value =
+            BookUserAppointmentModel.fromJson(jsonMap);
         appointmentListModel?.appointmentlist = null;
-
+        phoneController.clear();
+        selectedContainerIndex.value = -1;
+        selectedValueDepartment!.value = "";
+        selectedValueDoctor!.value = "";
+        selectedImages.clear();
+        selectedDay.value = null;
+        isShift?.value = 0;
+        storeDoctorPrice?.value = '';
 
         Get.to(() => const SuccessScreen());
 
@@ -440,11 +429,11 @@ class ConsultingController extends GetxController {
         Get.snackbar(
           'OOPS...!!',
           jsonMap['message'],
-          backgroundColor: AppColor.primaryColor, // Customize the background color
+          backgroundColor:
+              AppColor.primaryColor, // Customize the background color
           colorText: AppColor.whiteColor, // Customize the text color
           snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
-          duration: const Duration(
-              seconds: 2),
+          duration: const Duration(seconds: 2),
         );
         isLoading.value = false;
       }
@@ -455,6 +444,4 @@ class ConsultingController extends GetxController {
       isLoading.value = false;
     }
   }
-
-
 }

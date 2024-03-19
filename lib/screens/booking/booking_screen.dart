@@ -23,6 +23,8 @@ class _BookingScreenState extends State<BookingScreen> {
   @override
   void initState() {
     super.initState();
+    controller.selectedValueAllDoctor!.value = "";
+    controller.bookingListModel?.nexttokenlist?.length = 0;
     controller.getAllDoctorList();
   }
 
