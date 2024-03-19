@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
@@ -34,6 +35,8 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
   @override
   void initState() {
     super.initState();
+    controller.appointmentListModel?.appointmentlist?.length = 0;
+    controller.phoneController.clear();
   }
 
   @override
@@ -89,6 +92,9 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
             label: phoneNo,
             controller: controller.phoneController,
             borderRadius: 8,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9]')), // Allow digits and dot
+            ],
             maxLength: 10,
             validator: (String? value) =>
                 Validators.validateMobile(value!.trim()),
@@ -103,6 +109,7 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
             height: 2.h,
           ),
           controller.appointmentListModel?.appointmentlist?.length != null
+        && controller.phoneController.text != ''
               ? ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemCount: controller
@@ -195,6 +202,7 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
             height: 2.h,
           ),
           controller.appointmentListModel?.appointmentlist?.length != null
+              && controller.phoneController.text != ''
               ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -271,7 +279,7 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
                   ),
                   rightChevronIcon: const Icon(
                     Icons.arrow_back_ios_outlined,
-                    // textDirection: TextDirection.rtl,
+                    textDirection: TextDirection.rtl,
                     size: 20,
                     color: AppColor.primaryColor,
                   ),

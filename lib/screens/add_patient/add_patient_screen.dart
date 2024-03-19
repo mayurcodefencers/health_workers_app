@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
@@ -129,6 +130,9 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
             CustomTextField(
               label: phoneNo,
               controller: newController.phoneController,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')), // Allow digits and dot
+              ],
               validator: (String? value) =>
                   Validators.validateMobile(value!.trim()),
               borderRadius: 8,
@@ -148,6 +152,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
             ),
             CustomTextField(
               label: age,
+              maxLength: 3,
               controller: newController.ageController,
               validator: (String? value) =>
                   Validators.validateAge(value!.trim()),

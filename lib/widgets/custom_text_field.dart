@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
 import 'package:sizer/sizer.dart';
@@ -10,6 +11,7 @@ class CustomTextField extends StatelessWidget {
   final String? hintText, counterText;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
   String? Function(String?)? validator;
   Widget? widget;
   GestureTapCallback? onTap, onSufixIconClick;
@@ -37,6 +39,7 @@ class CustomTextField extends StatelessWidget {
       required this.label,
       this.hintText,
       this.borderRadius,
+      this.inputFormatters,
       required this.controller,
       required this.keyboardType,
       // this.validator,
@@ -72,6 +75,7 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         validator: validator,
         maxLength: maxLength,
+        inputFormatters: inputFormatters,
         maxLines: maxLine ?? 1,
         showCursor: true,
         enabled: enabled,
