@@ -335,7 +335,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                       .copyWith(color: AppColor.greyColor, fontSize: 10),
                 ),
                 Text(
-                  controller.missingMeetingModel?.missingMeetinglist?[index].createdDate ?? "",
+                  controller.missingMeetingModel?.missingMeetinglist?[index].date ?? "",
                   style: AppTextStyle.mediumText
                       .copyWith(color: AppColor.greyColor, fontSize: 10),
                 ),

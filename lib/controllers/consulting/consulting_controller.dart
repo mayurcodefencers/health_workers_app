@@ -351,17 +351,15 @@ class ConsultingController extends GetxController {
 
       dio.Dio dioClient = dio.Dio();
       dio.FormData formData = dio.FormData();
-      String formattedDate =
-          DateFormat('yyyy-MM-dd').format(selectedDay.value!);
+      String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.fromMillisecondsSinceEpoch((selectedDay.value ?? DateTime.now()).millisecondsSinceEpoch));
+
       // Add other form data
       formData.fields.addAll({
         for (var entry in {
           'department':
               storeDepartmentId!.value.toString(), // Convert to String
           'doctor': storeDoctorId!.value.toString(), // Convert to String
-          'upload_file[]': selectedImages
-              .toString(), // Convert to String or provide a default value
-          'date': formattedDate.toString(), // Convert to String
+          'date': formattedDate.toString(),
           'time_shift': isShift?.value == 0
               ? timeScheduleModel.value.timeschedule?.morningShift.toString() ??
                   "11"
@@ -371,26 +369,33 @@ class ConsultingController extends GetxController {
           'hwid': hwId!.value.toString(),
           'uid': getPatientId!.value.toString()
         }.entries)
-          MapEntry(entry.key, entry.value),
+          MapEntry(entry.key, entry.value.toString()),
       });
       print("dndnknknfnf ${appointmentListModel?.appointmentlist?.first.id}");
       print("department ${storeDepartmentId!.value.toString()}");
       print("doctor ${storeDoctorId!.value.toString()}");
       print("date ${formattedDate.toString()}");
-      print(
-          "time_shifttime_shift ${isShift?.value == 0 ? timeScheduleModel.value.timeschedule?.morningShift ?? "11" : timeScheduleModel.value.timeschedule?.eveningShift ?? "11"}");
+      print("upload_file[] $selectedImages");
 
-      // Add images to FormData
-      for (int i = 0; i < selectedImages.length; i++) {
-        String fileName = 'image_$i.jpg'; // Adjust filename as needed
+      if (selectedImages.isNotEmpty) {
+        for (int i = 0; i < selectedImages.length; i++) {
+          String fileName = 'image_$i.jpg';
+          formData.files.add(MapEntry(
+            'upload_file[]',
+            await dio.MultipartFile.fromFileSync(
+              selectedImages[i].path,
+              filename: fileName,
+            ),
+          ));
+        }
+      } else {
         formData.files.add(MapEntry(
-          'upload_file[]', // Adjust the key as needed
-          await dio.MultipartFile.fromFileSync(
-            selectedImages[i].path,
-            filename: fileName,
-          ),
+          'upload_file[]',
+          dio.MultipartFile.fromString('', filename: 'empty_file.txt'),
         ));
       }
+
+
 
       print("wwwwwwww ${formData.fields}");
 

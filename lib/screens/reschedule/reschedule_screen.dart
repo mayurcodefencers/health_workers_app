@@ -8,6 +8,7 @@ import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
 import 'package:health_workers/widgets/button_widget.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -113,7 +114,7 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
                             ),
                             rightChevronIcon: const Icon(
                               Icons.arrow_back_ios_outlined,
-                              textDirection: TextDirection.rtl,
+                              // textDirection: TextDirection.rtl,
                               size: 20,
                               color: AppColor.primaryColor,
                             ),
@@ -122,7 +123,11 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
                           ),
                           rangeEndDay: _rangeEnd,
                           calendarStyle: const CalendarStyle(
-                            isTodayHighlighted: false,
+                            isTodayHighlighted: true,
+                            todayDecoration: BoxDecoration(
+                              color: AppColor.primaryColor,
+                              shape: BoxShape.circle,
+                            ),
                             weekendDecoration: BoxDecoration(
                                 color: AppColor.whiteColor,
                                 shape: BoxShape.circle),
@@ -262,10 +267,13 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
                             width: 50.w,
                             textStyle: AppTextStyle.mediumText
                                 .copyWith(color: AppColor.whiteColor),
-                            onTap: () {
-                              controller.rescheduleAppointment(
+                            onTap: () async {
+                              print("dgffg");
+                              String formattedDate = DateFormat('yyyy-MM-dd').format(controller.selectedDay.value ?? DateTime.now());
+
+                              await controller.rescheduleAppointment(
                                 controller.storeAppointmentIdReschedule!.value,
-                                controller.selectedDay.value.toString(),
+                                formattedDate,
                                 controller.isShift?.value == 0
                                     ? consultingController.timeScheduleModel
                                             .value.timeschedule?.morningShift
@@ -276,6 +284,8 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
                                             .toString() ??
                                         "11",
                               );
+                              print("dateeeeeeeeee ${controller.storeAppointmentIdReschedule!.value}");
+                              print("dateeeeeeeeee $formattedDate");
                             },
                           ),
                         ),
@@ -394,7 +404,7 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
               ),
               Text(
                 detailsController.bookingDetailsModel?.appointmentDetails?.first
-                        .createdDate ??
+                        .date ??
                     "",
                 style: AppTextStyle.mediumText
                     .copyWith(color: AppColor.greyColor, fontSize: 12),

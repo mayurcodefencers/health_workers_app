@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
@@ -8,7 +7,6 @@ import 'package:health_workers/dio_services/api_service.dart';
 import 'package:health_workers/dio_services/api_url_constant.dart';
 import 'package:health_workers/main.dart';
 import 'package:health_workers/model/reschedule_model.dart';
-import 'package:health_workers/widgets/bottom_nav_widget.dart';
 import 'package:health_workers/widgets/success_screen.dart';
 
 class RescheduleController extends GetxController {
