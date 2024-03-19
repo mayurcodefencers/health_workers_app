@@ -22,6 +22,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final HomeController controller = Get.put(HomeController());
+  final LoginController loginController = Get.put(LoginController());
   final ConsultingController consultingController = Get.put(ConsultingController());
 
   @override
@@ -132,8 +133,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 3.w),
                   child: GestureDetector(
-                    onTap: () {
-                      Get.to(() => const LoginScreen());
+                    onTap: () async {
+                      await loginController.logout();
                     },
                     child: Row(
                       children: [

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
 import 'package:health_workers/controllers/home/home_controller.dart';
 import 'package:health_workers/controllers/meeting/meeting_controller.dart';
+import 'package:health_workers/controllers/reschedule/reschedule_controller.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
@@ -20,6 +21,7 @@ class MeetingScreen extends StatefulWidget {
 
 class _MeetingScreenState extends State<MeetingScreen> {
   final MeetingController controller = Get.put(MeetingController());
+  final RescheduleController reController = Get.put(RescheduleController());
   final HomeController homeController = Get.put(HomeController());
 
   @override
@@ -275,6 +277,8 @@ class _MeetingScreenState extends State<MeetingScreen> {
     return GestureDetector(
       onTap: () {
         Get.to(() => const RescheduleScreen());
+        reController.storeAppointmentIdReschedule!.value =
+            controller.missingMeetingModel!.missingMeetinglist![index].id.toString();
       },
       child: Container(
         padding: const EdgeInsets.all(12),

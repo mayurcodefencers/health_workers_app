@@ -1,14 +1,17 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:health_workers/controllers/auth_controller.dart';
+import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/dio_services/api_service.dart';
 import 'package:health_workers/dio_services/api_url_constant.dart';
 import 'package:health_workers/main.dart';
 import 'package:health_workers/model/login_model.dart';
+import 'package:health_workers/screens/login/login_screen.dart';
 import 'package:health_workers/widgets/bottom_nav_widget.dart';
 
 class LoginController extends GetxController {
@@ -24,6 +27,17 @@ class LoginController extends GetxController {
 
   void toggleShowPassword() {
       showPassword.value = !showPassword.value;
+  }
+
+  logout() async {
+    pref?.remove('userImage');
+    pref?.remove('userName');
+    pref?.remove('token');
+    pref?.remove('cfToken');
+    pref?.remove('hwId');
+    pref?.remove('isLoggedIn');
+
+    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
   }
 
   Future<void> submitLoginData(Map<String, dynamic> formData) async {
@@ -54,6 +68,7 @@ class LoginController extends GetxController {
         pref?.setString("token", loginToken!);
         pref?.setString("cfToken", cfToken!);
         pref?.setString("hwId", hwId!);
+
 
         Get.snackbar(
           'Yehhh...',
