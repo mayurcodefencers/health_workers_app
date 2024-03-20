@@ -28,6 +28,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    walletDetails();
+  }
+
+  Future<void> walletDetails() async {
     consultingController.getWalletAmount();
   }
 
@@ -55,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         // ),
       ),
       body: Obx(() {
-        if (controller.isLoading.value) {
+        if (consultingController.isLoading.value) {
           return const Center(
             child: CircularProgressIndicator(
               color: AppColor.primaryColor,
@@ -63,7 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
         }
         // else if (consultingController.walletAmountModel == null) {
-        //   return const Center(child: Text('No data available'));
+        //   return const Center(child: Text('No Data Available'));
         // }
         else {
           return Center(

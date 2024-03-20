@@ -284,10 +284,9 @@ class ConsultingController extends GetxController {
     } catch (e) {
       print("ErrorWalletAmount $e");
       isLoading.value = false;
+    } finally {
+      isLoading.value = false;
     }
-    // finally {
-    //   isLoading.value = false;
-    // }
   }
 
   Future<void> appointmentList(Map<String, dynamic> formData) async {
@@ -351,23 +350,28 @@ class ConsultingController extends GetxController {
 
       dio.Dio dioClient = dio.Dio();
       dio.FormData formData = dio.FormData();
-      String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.fromMillisecondsSinceEpoch((selectedDay.value ?? DateTime.now()).millisecondsSinceEpoch));
-
+      String formattedDate = DateFormat('yyyy-MM-dd').format(
+          DateTime.fromMillisecondsSinceEpoch(
+              (selectedDay.value ?? DateTime.now()).millisecondsSinceEpoch));
+      var deptId = int.parse(storeDepartmentId!.value.toString());
+      var doctorId = int.parse(storeDoctorId!.value.toString());
+      var hwIdId = int.parse(hwId!.value.toString(),);
+      var patientId = int.parse(getPatientId!.value.toString());
+      var amount = int.parse(storeDoctorPrice!.value.toString());
       // Add other form data
       formData.fields.addAll({
         for (var entry in {
-          'department':
-              storeDepartmentId!.value.toString(), // Convert to String
-          'doctor': storeDoctorId!.value.toString(), // Convert to String
+          'department': deptId,
+          'doctor': doctorId,
           'date': formattedDate.toString(),
           'time_shift': isShift?.value == 0
               ? timeScheduleModel.value.timeschedule?.morningShift.toString() ??
                   "11"
               : timeScheduleModel.value.timeschedule?.eveningShift.toString() ??
                   "11",
-          'total_amount': storeDoctorPrice!.value.toString(),
-          'hwid': hwId!.value.toString(),
-          'uid': getPatientId!.value.toString()
+          'total_amount': amount,
+          'hwid': hwIdId,
+          'uid': patientId
         }.entries)
           MapEntry(entry.key, entry.value.toString()),
       });
@@ -376,6 +380,7 @@ class ConsultingController extends GetxController {
       print("doctor ${storeDoctorId!.value.toString()}");
       print("date ${formattedDate.toString()}");
       print("upload_file[] $selectedImages");
+      print("total_amount $amount");
 
       if (selectedImages.isNotEmpty) {
         for (int i = 0; i < selectedImages.length; i++) {
@@ -394,8 +399,6 @@ class ConsultingController extends GetxController {
           dio.MultipartFile.fromString('', filename: 'empty_file.txt'),
         ));
       }
-
-
 
       print("wwwwwwww ${formData.fields}");
 
@@ -429,6 +432,7 @@ class ConsultingController extends GetxController {
         storeDoctorPrice?.value = '';
 
         Get.to(() => const SuccessScreen());
+        getWalletAmount();
 
         isLoading.value = false;
       } else {

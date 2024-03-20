@@ -468,7 +468,6 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
                             if (storeDoctorPrice <= walletAmount) {
                               controller
                                   .submitUserData(controller.selectedImages);
-                              controller.getWalletAmount();
                             } else {
                               Get.snackbar(
                                 'OOPS...!!',

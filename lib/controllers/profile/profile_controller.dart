@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_workers/controllers/consulting/consulting_controller.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/dio_services/api_service.dart';
 import 'package:health_workers/dio_services/api_url_constant.dart';
@@ -12,11 +13,17 @@ class ProfileController extends GetxController {
   final RxBool isLoading = false.obs;
   final ApiService _apiService = ApiService();
   TransactionModel? transactionModel;
+  final ConsultingController consultingController = Get.put(ConsultingController());
 
   @override
   void onInit() {
     super.onInit();
+    // walletDetails();
   }
+
+  // Future<void> walletDetails() async {
+  //   consultingController.getWalletAmount();
+  // }
 
   Future<void> getTransactionList() async {
     try {
