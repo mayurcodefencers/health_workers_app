@@ -229,7 +229,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                                         .bookingListModel
                                                         ?.nexttokenlist![
                                                             index]
-                                                        .createdDate ??
+                                                        .date ??
                                                     "",
                                                 style: AppTextStyle.mediumText
                                                     .copyWith(

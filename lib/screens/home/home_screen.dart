@@ -359,7 +359,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     controller
                                             .upcomingModel
                                             ?.upcomingMeetinglist?[index]
-                                            .createdDate ??
+                                            .date ??
                                         "",
                                     style: AppTextStyle.mediumText.copyWith(
                                         color: AppColor.greyColor,

@@ -178,7 +178,7 @@ class _BookingDetailsState extends State<BookingDetailsScreen> {
                     .copyWith(color: AppColor.navyBlueColor, fontSize: 12),
               ),
               Text(
-                  controller.bookingDetailsModel?.appointmentDetails?.first.createdDate ?? "",
+                  controller.bookingDetailsModel?.appointmentDetails?.first.date ?? "",
                 style: AppTextStyle.mediumText
                     .copyWith(color: AppColor.greyColor, fontSize: 12),
               ),

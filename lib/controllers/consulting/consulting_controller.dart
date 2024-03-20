@@ -422,6 +422,7 @@ class ConsultingController extends GetxController {
         selectedContainerIndex.value = -1;
         selectedValueDepartment!.value = "";
         selectedValueDoctor!.value = "";
+        getPatientId!.value = "";
         selectedImages.clear();
         selectedDay.value = null;
         isShift?.value = 0;

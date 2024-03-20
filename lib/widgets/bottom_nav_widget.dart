@@ -37,7 +37,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -69,49 +68,46 @@ class _HomePageState extends State<HomePage> {
                 BottomNavigationBarItem(
                   icon: pageIndex == 0
                       ? SvgPicture.asset(
-                          AppAssets.home,
-                          color: AppColor.whiteColor,
-                        )
+                    AppAssets.home,
+                    color: AppColor.whiteColor,
+                  )
                       : SvgPicture.asset(
-                          AppAssets.home,
-                          color: AppColor.greyColor,
-                        ),
+                    AppAssets.home,
+                    color: AppColor.greyColor,
+                  ),
                   label: home,
                 ),
                 BottomNavigationBarItem(
-                  icon: pageIndex == 1
-                      ? SvgPicture.asset(
-                          AppAssets.booking,
-                          color: AppColor.whiteColor,
-                        )
-                      : SvgPicture.asset(
-                          AppAssets.booking,
-                          color: AppColor.greyColor,
-                        ),
+                  icon: SvgPicture.asset(
+                    AppAssets.booking,
+                    color: pageIndex == 1
+                        ? AppColor.whiteColor
+                        : AppColor.greyColor,
+                  ),
                   label: bookings,
                 ),
                 BottomNavigationBarItem(
                   icon: pageIndex == 2
                       ? SvgPicture.asset(
-                          AppAssets.camera,
-                          color: AppColor.whiteColor,
-                        )
+                    AppAssets.camera,
+                    color: AppColor.whiteColor,
+                  )
                       : SvgPicture.asset(
-                          AppAssets.camera,
-                          color: AppColor.greyColor,
-                        ),
+                    AppAssets.camera,
+                    color: AppColor.greyColor,
+                  ),
                   label: meetings,
                 ),
                 BottomNavigationBarItem(
                   icon: pageIndex == 3
                       ? SvgPicture.asset(
-                          AppAssets.profile,
-                          color: AppColor.whiteColor,
-                        )
+                    AppAssets.profile,
+                    color: AppColor.whiteColor,
+                  )
                       : SvgPicture.asset(
-                          AppAssets.profile,
-                          color: AppColor.greyColor,
-                        ),
+                    AppAssets.profile,
+                    color: AppColor.greyColor,
+                  ),
                   label: profile,
                 ),
               ],
@@ -122,6 +118,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
   Future<bool> showExitPopup() async {
     return await showDialog(
       context: context,
@@ -129,15 +126,11 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppColor.primaryColor,
         title: Text(
           exitApp,
-          style: AppTextStyle.semiBoldText.copyWith(
-              color: AppColor.whiteColor
-          ),
+          style: AppTextStyle.semiBoldText.copyWith(color: AppColor.whiteColor),
         ),
         content: Text(
           exitText,
-          style: AppTextStyle.semiBoldText.copyWith(
-              color: AppColor.whiteColor
-          ),
+          style: AppTextStyle.semiBoldText.copyWith(color: AppColor.whiteColor),
         ),
         actions: [
           ElevatedButton(
@@ -145,9 +138,7 @@ class _HomePageState extends State<HomePage> {
             child: Text(
               'No',
               style: AppTextStyle.semiBoldText.copyWith(
-                  color: AppColor.primaryColor,
-                  fontSize: 12
-              ),
+                  color: AppColor.primaryColor, fontSize: 12),
             ),
           ),
           ElevatedButton(
@@ -156,9 +147,7 @@ class _HomePageState extends State<HomePage> {
             child: Text(
               'Yes',
               style: AppTextStyle.semiBoldText.copyWith(
-                  color: AppColor.primaryColor,
-                  fontSize: 12
-              ),
+                  color: AppColor.primaryColor, fontSize: 12),
             ),
           ),
         ],

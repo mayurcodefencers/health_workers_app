@@ -249,7 +249,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                   homeController
                       .upcomingModel
                       ?.upcomingMeetinglist?[index]
-                      .createdDate ??
+                      .date ??
                       "",
                   style: AppTextStyle.mediumText
                       .copyWith(color: AppColor.greyColor, fontSize: 10),
@@ -420,7 +420,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                       .copyWith(color: AppColor.greyColor, fontSize: 10),
                 ),
                 Text(
-                  controller.completeMeetingModel?.completeMeetinglist?[index].createdDate ?? "",
+                  controller.completeMeetingModel?.completeMeetinglist?[index].date ?? "",
                   style: AppTextStyle.mediumText
                       .copyWith(color: AppColor.greyColor, fontSize: 10),
                 ),
