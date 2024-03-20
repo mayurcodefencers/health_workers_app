@@ -80,55 +80,56 @@ class _BookingScreenState extends State<BookingScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                //   controller.currentTokenModel?.currenttoken?.isNotEmpty == true
-                //       ? Column(
-                //   children: [
-                //     Text(
-                //       currentToken,
-                //       style: AppTextStyle.mediumText.copyWith(
-                //           fontSize: 20, color: AppColor.navyBlueColor),
-                //     ),
-                //     SizedBox(
-                //       height: 1.h,
-                //     ),
-                //     Center(
-                //       child: Container(
-                //         height: 15.h,
-                //         width: 40.w,
-                //         // padding: const EdgeInsets.all(10),
-                //         // margin: const EdgeInsets.all(10),
-                //         decoration: BoxDecoration(
-                //             color: AppColor.lightBlueColor,
-                //             borderRadius: BorderRadius.circular(4)),
-                //         child: Center(
-                //           child: Text(
-                //             controller.currentTokenModel?.currenttoken ?? "",
-                //             style: AppTextStyle.semiBoldText.copyWith(
-                //                 color: AppColor.primaryColor,
-                //                 fontSize: 60),
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ) : const SizedBox(),
-                  controller.bookingListModel?.nexttokenlist?.length != null
+                  controller.bookingListModel?.nexttokenlist != null &&
+                          controller.bookingListModel!.nexttokenlist!.isNotEmpty
                       ? Column(
                           children: [
-                             ListView.builder(
+                            Text(
+                              currentToken,
+                              style: AppTextStyle.mediumText.copyWith(
+                                  fontSize: 20, color: AppColor.navyBlueColor),
+                            ),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            Center(
+                              child: Container(
+                                height: 15.h,
+                                width: 40.w,
+                                // padding: const EdgeInsets.all(10),
+                                // margin: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    color: AppColor.lightBlueColor,
+                                    borderRadius: BorderRadius.circular(4)),
+                                child: Center(
+                                  child: Text(
+                                    controller
+                                            .currentTokenModel?.currenttoken ??
+                                        0.toString(),
+                                    style: AppTextStyle.semiBoldText.copyWith(
+                                        color: AppColor.primaryColor,
+                                        fontSize: 60),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            ListView.builder(
                                 physics: const BouncingScrollPhysics(),
                                 itemCount: controller.bookingListModel
                                         ?.nexttokenlist?.length ??
                                     0,
                                 shrinkWrap: true,
                                 padding: const EdgeInsets.all(00),
-                                itemBuilder:
-                                    (BuildContext context, int index) {
+                                itemBuilder: (BuildContext context, int index) {
                                   return GestureDetector(
                                     onTap: () {
                                       controller.storeAppointmentId?.value =
-                                          controller.bookingListModel!.nexttokenlist![index]
-                                          .id.toString();
+                                          controller.bookingListModel!
+                                              .nexttokenlist![index].id
+                                              .toString();
                                       Get.to(
                                           () => const BookingDetailsScreen());
                                     },
@@ -137,8 +138,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                       margin: const EdgeInsets.all(8),
                                       decoration: BoxDecoration(
                                         color: AppColor.pureWhiteColor,
-                                        borderRadius:
-                                            BorderRadius.circular(12),
+                                        borderRadius: BorderRadius.circular(12),
                                         boxShadow: const [
                                           BoxShadow(
                                             color: Color(0x19101828),
@@ -163,16 +163,14 @@ class _BookingScreenState extends State<BookingScreen> {
                                               child: Text(
                                                 controller
                                                         .bookingListModel
-                                                        ?.nexttokenlist![
-                                                            index]
+                                                        ?.nexttokenlist![index]
                                                         .username![0]
                                                         .toUpperCase() ??
                                                     "",
-                                                style: AppTextStyle
-                                                    .semiBoldText
+                                                style: AppTextStyle.semiBoldText
                                                     .copyWith(
-                                                        color: AppColor
-                                                            .whiteColor,
+                                                        color:
+                                                            AppColor.whiteColor,
                                                         fontSize: 22),
                                               ),
                                             ),
@@ -187,12 +185,10 @@ class _BookingScreenState extends State<BookingScreen> {
                                               Text(
                                                 controller
                                                         .bookingListModel
-                                                        ?.nexttokenlist![
-                                                            index]
+                                                        ?.nexttokenlist![index]
                                                         .doctorname ??
                                                     "Doctor Name",
-                                                style: AppTextStyle
-                                                    .semiBoldText
+                                                style: AppTextStyle.semiBoldText
                                                     .copyWith(
                                                         color: AppColor
                                                             .navyBlueColor,
@@ -201,40 +197,37 @@ class _BookingScreenState extends State<BookingScreen> {
                                               Text(
                                                 controller
                                                         .bookingListModel
-                                                        ?.nexttokenlist![
-                                                            index]
+                                                        ?.nexttokenlist![index]
                                                         .username ??
                                                     "",
                                                 style: AppTextStyle.mediumText
                                                     .copyWith(
-                                                        color: AppColor
-                                                            .greyColor,
+                                                        color:
+                                                            AppColor.greyColor,
                                                         fontSize: 14),
                                               ),
                                               Text(
                                                 controller
                                                         .bookingListModel
-                                                        ?.nexttokenlist![
-                                                            index]
+                                                        ?.nexttokenlist![index]
                                                         .userphoneno ??
                                                     "",
                                                 style: AppTextStyle.mediumText
                                                     .copyWith(
-                                                        color: AppColor
-                                                            .greyColor,
+                                                        color:
+                                                            AppColor.greyColor,
                                                         fontSize: 10),
                                               ),
                                               Text(
                                                 controller
                                                         .bookingListModel
-                                                        ?.nexttokenlist![
-                                                            index]
+                                                        ?.nexttokenlist![index]
                                                         .date ??
                                                     "",
                                                 style: AppTextStyle.mediumText
                                                     .copyWith(
-                                                        color: AppColor
-                                                            .greyColor,
+                                                        color:
+                                                            AppColor.greyColor,
                                                         fontSize: 10),
                                               ),
                                             ],
@@ -242,10 +235,8 @@ class _BookingScreenState extends State<BookingScreen> {
                                           const Spacer(),
                                           Container(
                                             padding: const EdgeInsets.all(18),
-                                            // margin: const EdgeInsets.all(10),
                                             decoration: BoxDecoration(
-                                                color:
-                                                    AppColor.lightBlueColor,
+                                                color: AppColor.lightBlueColor,
                                                 borderRadius:
                                                     BorderRadius.circular(4)),
                                             child: Text(
@@ -256,8 +247,8 @@ class _BookingScreenState extends State<BookingScreen> {
                                                   "",
                                               style: AppTextStyle.semiBoldText
                                                   .copyWith(
-                                                      color: AppColor
-                                                          .primaryColor,
+                                                      color:
+                                                          AppColor.primaryColor,
                                                       fontSize: 23),
                                             ),
                                           )
@@ -267,7 +258,10 @@ class _BookingScreenState extends State<BookingScreen> {
                                   );
                                 }),
                           ],
-                        ) : const Text("No Bookings Available")
+                        )
+                      : const Center(
+                          child: Text("No Bookings Available"),
+                        )
                 ],
               ),
             ),
