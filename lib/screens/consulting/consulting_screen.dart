@@ -638,11 +638,15 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.file(controller.selectedImages[index]),
+                child: Image.file(
+                  controller.selectedImages[index],
+                  height: 12.h,
+                  width: 16.w,
+                ),
               ),
               Positioned(
                 top: 0,
-                right: 10.w,
+                right: 8.w,
                 child: IconButton(
                   icon: const Icon(
                     Icons.close,

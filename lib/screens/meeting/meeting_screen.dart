@@ -27,6 +27,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
   @override
   void initState() {
     // upcomingDetails();
+    controller.isType.value = 0;
     super.initState();
   }
 
