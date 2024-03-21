@@ -25,7 +25,8 @@ class ConsultingScreen extends StatefulWidget {
 
 class _ConsultingScreenState extends State<ConsultingScreen> {
   final ConsultingController controller = Get.put(ConsultingController());
-
+  final formKey1 = GlobalKey<FormState>();
+  final formKey2 = GlobalKey<FormState>();
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
   DateTime _focusedDay = DateTime.now();
   DateTime? _rangeStart;
@@ -450,7 +451,7 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
                         textStyle: AppTextStyle.mediumText
                             .copyWith(color: AppColor.whiteColor),
                         onTap: () async {
-                          // if (formKey.currentState!.validate()) {
+                          if (formKey1.currentState!.validate() && formKey2.currentState!.validate()) {
                           if (controller.storeDoctorPrice!.value != null &&
                               controller.walletAmountModel?.walletAmount
                                       ?.walletAmount !=
@@ -482,7 +483,7 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
                               );
                             }
                           }
-                          // }
+                          }
                         },
                       ),
                     ),
@@ -498,57 +499,60 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
   }
 
   Widget departmentWidgetNew() {
-    return Obx(() => DropdownButtonHideUnderline(
-          child: DropdownButtonFormField(
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.all(16),
-              fillColor: AppColor.skyBlueColor,
-              filled: true,
-              enabledBorder: UnderlineInputBorder(
-                borderSide: const BorderSide(
-                  color: AppColor.skyBlueColor,
+    return Obx(() => Form(
+      key: formKey1,
+      child: DropdownButtonHideUnderline(
+            child: DropdownButtonFormField(
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(16),
+                fillColor: AppColor.skyBlueColor,
+                filled: true,
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: AppColor.skyBlueColor,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: const BorderSide(
-                  color: AppColor.skyBlueColor,
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: AppColor.skyBlueColor,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-                borderRadius: BorderRadius.circular(8.0),
               ),
+              validator: (String? value) {
+                return value == null ? "Choose Department" : null;
+              },
+              items: controller.dropdownValuesDepartment
+                  .map<DropdownMenuItem<String>>((dynamic value) {
+                String departmentValue = value['department'];
+                return DropdownMenuItem<String>(
+                  onTap: () {
+                    controller.storeDepartmentId?.value = value['id'];
+                    controller.getDoctorData(controller.storeDepartmentId!.value);
+                  },
+                  value: departmentValue,
+                  child: Text(departmentValue),
+                );
+              }).toList(),
+              onChanged: controller.onSelectedDepartment,
+              icon: const Icon(
+                Icons.keyboard_arrow_down_outlined,
+                size: 30,
+                color: AppColor.navyBlueColor,
+              ),
+              value: controller.selectedValueDepartment!.value.isNotEmpty
+                  ? controller.selectedValueDepartment!.value
+                  : null,
+              hint: Text(
+                selectDepartment,
+                style: AppTextStyle.mediumText
+                    .copyWith(color: AppColor.navyBlueColor, fontSize: 14),
+              ),
+              isExpanded: false,
             ),
-            validator: (String? value) {
-              return value == null ? "Choose Department" : null;
-            },
-            items: controller.dropdownValuesDepartment
-                .map<DropdownMenuItem<String>>((dynamic value) {
-              String departmentValue = value['department'];
-              return DropdownMenuItem<String>(
-                onTap: () {
-                  controller.storeDepartmentId?.value = value['id'];
-                  controller.getDoctorData(controller.storeDepartmentId!.value);
-                },
-                value: departmentValue,
-                child: Text(departmentValue),
-              );
-            }).toList(),
-            onChanged: controller.onSelectedDepartment,
-            icon: const Icon(
-              Icons.keyboard_arrow_down_outlined,
-              size: 30,
-              color: AppColor.navyBlueColor,
-            ),
-            value: controller.selectedValueDepartment!.value.isNotEmpty
-                ? controller.selectedValueDepartment!.value
-                : null,
-            hint: Text(
-              selectDepartment,
-              style: AppTextStyle.mediumText
-                  .copyWith(color: AppColor.navyBlueColor, fontSize: 14),
-            ),
-            isExpanded: false,
           ),
-        ));
+    ));
   }
 
   Widget doctorWidgetNew() {
@@ -556,55 +560,58 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
       if (controller.dropdownValuesDoctor.isEmpty) {
         return const Text('No doctors available');
       } else {
-        return DropdownButtonHideUnderline(
-          child: DropdownButtonFormField(
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.all(16),
-              fillColor: AppColor.skyBlueColor,
-              filled: true,
-              enabledBorder: UnderlineInputBorder(
-                borderSide: const BorderSide(
-                  color: AppColor.skyBlueColor,
+        return Form(
+          key: formKey2,
+          child: DropdownButtonHideUnderline(
+            child: DropdownButtonFormField(
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(16),
+                fillColor: AppColor.skyBlueColor,
+                filled: true,
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: AppColor.skyBlueColor,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: const BorderSide(
-                  color: AppColor.skyBlueColor,
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: AppColor.skyBlueColor,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-                borderRadius: BorderRadius.circular(8.0),
               ),
+              validator: (String? value) {
+                return value == null ? "Choose Doctor" : null;
+              },
+              items: controller.dropdownValuesDoctor
+                  .map<DropdownMenuItem<String>>((dynamic value) {
+                String doctorValue = value['name'];
+                return DropdownMenuItem<String>(
+                  onTap: () {
+                    controller.storeDoctorPrice!.value = value['price'];
+                    controller.storeDoctorId!.value = value['id'];
+                  },
+                  value: doctorValue,
+                  child: Text(doctorValue),
+                );
+              }).toList(),
+              onChanged: controller.onSelectedDoctor,
+              icon: const Icon(
+                Icons.keyboard_arrow_down_outlined,
+                size: 30,
+                color: AppColor.navyBlueColor,
+              ),
+              value: controller.selectedValueDoctor!.value.isNotEmpty
+                  ? controller.selectedValueDoctor!.value
+                  : null,
+              hint: Text(
+                selectDoctor,
+                style: AppTextStyle.mediumText
+                    .copyWith(color: AppColor.navyBlueColor, fontSize: 14),
+              ),
+              isExpanded: false,
             ),
-            validator: (String? value) {
-              return value == null ? "Choose Doctor" : null;
-            },
-            items: controller.dropdownValuesDoctor
-                .map<DropdownMenuItem<String>>((dynamic value) {
-              String doctorValue = value['name'];
-              return DropdownMenuItem<String>(
-                onTap: () {
-                  controller.storeDoctorPrice!.value = value['price'];
-                  controller.storeDoctorId!.value = value['id'];
-                },
-                value: doctorValue,
-                child: Text(doctorValue),
-              );
-            }).toList(),
-            onChanged: controller.onSelectedDoctor,
-            icon: const Icon(
-              Icons.keyboard_arrow_down_outlined,
-              size: 30,
-              color: AppColor.navyBlueColor,
-            ),
-            value: controller.selectedValueDoctor!.value.isNotEmpty
-                ? controller.selectedValueDoctor!.value
-                : null,
-            hint: Text(
-              selectDoctor,
-              style: AppTextStyle.mediumText
-                  .copyWith(color: AppColor.navyBlueColor, fontSize: 14),
-            ),
-            isExpanded: false,
           ),
         );
       }
