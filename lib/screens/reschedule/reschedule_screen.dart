@@ -123,7 +123,7 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
                           ),
                           rangeEndDay: _rangeEnd,
                           calendarStyle: const CalendarStyle(
-                            isTodayHighlighted: true,
+                            isTodayHighlighted: false,
                             todayDecoration: BoxDecoration(
                               color: AppColor.primaryColor,
                               shape: BoxShape.circle,

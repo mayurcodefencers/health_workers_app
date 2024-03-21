@@ -290,7 +290,7 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
                       ),
                       rangeEndDay: _rangeEnd,
                       calendarStyle: const CalendarStyle(
-                        isTodayHighlighted: true,
+                        isTodayHighlighted: false,
                         todayDecoration: BoxDecoration(
                           color: AppColor.primaryColor,
                           shape: BoxShape.circle,

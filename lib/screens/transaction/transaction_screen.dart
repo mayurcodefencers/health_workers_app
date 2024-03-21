@@ -65,6 +65,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
               Expanded(
                 child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
+                    reverse: true,
                     itemCount: controller
                             .transactionModel?.upcomingMeetinglist?.length ??
                         0,
