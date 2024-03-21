@@ -65,14 +65,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
               Expanded(
                 child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
-                    reverse: true,
+                    // reverse: true,
                     itemCount: controller
                             .transactionModel?.upcomingMeetinglist?.length ??
                         0,
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(00),
                     itemBuilder: (BuildContext context, int index) {
-                      return transactionContainer(index);
+                      int reversedIndex = controller.transactionModel!.upcomingMeetinglist!.length - 1 - index;
+                      return transactionContainer(reversedIndex);
                     }),
               ),
             ],
