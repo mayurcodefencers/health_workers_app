@@ -90,6 +90,16 @@ class AddPatientController extends GetxController {
         addressController.clear();
         selectedValueGender!.value = "";
 
+        Get.snackbar(
+          'Yehhh...!!',
+          jsonMap['message'],
+          backgroundColor: AppColor.primaryColor, // Customize the background color
+          colorText: AppColor.whiteColor, // Customize the text color
+          snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
+          duration: const Duration(
+              seconds: 2),
+        );
+
         isLoading.value = false;
       } else {
         Get.snackbar(
