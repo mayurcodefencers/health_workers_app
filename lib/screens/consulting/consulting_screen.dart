@@ -110,96 +110,161 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
           SizedBox(
             height: 2.h,
           ),
+          // controller.appointmentListModel?.appointmentlist?.length != null &&
+          //         controller.phoneController.text != ''
+          //     ? ListView.builder(
+          //         physics: const BouncingScrollPhysics(),
+          //         itemCount: controller
+          //                 .appointmentListModel?.appointmentlist?.length ??
+          //             0,
+          //         shrinkWrap: true,
+          //         padding: const EdgeInsets.all(00),
+          //         itemBuilder: (BuildContext context, int index) {
+          //           return GestureDetector(
+          //             onTap: () {
+          //               controller.selectedContainerIndex.value = index;
+          //               controller.getPatientId!.value = controller
+          //                       .appointmentListModel
+          //                       ?.appointmentlist?[index]
+          //                       .id ??
+          //                   "";
+          //             },
+          //             child: Container(
+          //               padding: const EdgeInsets.all(12),
+          //               margin: const EdgeInsets.all(14),
+          //               decoration: BoxDecoration(
+          //                   color: AppColor.pureWhiteColor,
+          //                   borderRadius: BorderRadius.circular(12)),
+          //               child: Row(
+          //                 children: [
+          //                   Container(
+          //                     width: 8.h,
+          //                     height: 14.w,
+          //                     decoration: const BoxDecoration(
+          //                       color: AppColor.primaryColor,
+          //                       shape: BoxShape.circle,
+          //                     ),
+          //                     child: Center(
+          //                       child: Text(
+          //                         controller.appointmentListModel
+          //                                 ?.appointmentlist![index].name![0]
+          //                                 .toUpperCase()
+          //                                 .toString() ??
+          //                             "10",
+          //                         style: AppTextStyle.semiBoldText.copyWith(
+          //                             color: AppColor.whiteColor, fontSize: 22),
+          //                       ),
+          //                     ),
+          //                   ),
+          //                   SizedBox(
+          //                     width: 2.w,
+          //                   ),
+          //                   Column(
+          //                     crossAxisAlignment: CrossAxisAlignment.start,
+          //                     children: [
+          //                       Text(
+          //                         controller.appointmentListModel
+          //                                 ?.appointmentlist![index].name
+          //                                 .toString() ??
+          //                             "10",
+          //                         style: AppTextStyle.semiBoldText.copyWith(
+          //                             color: AppColor.navyBlueColor,
+          //                             fontSize: 16),
+          //                       ),
+          //                       SizedBox(
+          //                         height: 1.h,
+          //                       ),
+          //                       Text(
+          //                         controller.appointmentListModel
+          //                                 ?.appointmentlist![index].phoneNo
+          //                                 .toString() ??
+          //                             "10",
+          //                         style: AppTextStyle.mediumText.copyWith(
+          //                             color: AppColor.greyColor, fontSize: 10),
+          //                       ),
+          //                     ],
+          //                   ),
+          //                   const Spacer(),
+          //                   Obx(
+          //                     () => controller.selectedContainerIndex.value ==
+          //                             index
+          //                         ? const Icon(
+          //                             Icons.done,
+          //                             color: AppColor.primaryColor,
+          //                             size: 30,
+          //                           )
+          //                         : const SizedBox(),
+          //                   )
+          //                 ],
+          //               ),
+          //             ),
+          //           );
+          //         })
+          //     : const SizedBox(),
           controller.appointmentListModel?.appointmentlist?.length != null &&
                   controller.phoneController.text != ''
-              ? ListView.builder(
-                  physics: const BouncingScrollPhysics(),
+              ? GridView.builder(
+                  physics: const ScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(00),
                   itemCount: controller
                           .appointmentListModel?.appointmentlist?.length ??
                       0,
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(00),
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
+                  itemBuilder: (ctx, index) {
+                    return Obx(() => GestureDetector(
                       onTap: () {
                         controller.selectedContainerIndex.value = index;
                         controller.getPatientId!.value = controller
-                                .appointmentListModel
-                                ?.appointmentlist?[index]
-                                .id ??
+                            .appointmentListModel
+                            ?.appointmentlist?[index]
+                            .id ??
                             "";
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(12),
-                        margin: const EdgeInsets.all(14),
+                        padding: EdgeInsets.all(2),
                         decoration: BoxDecoration(
-                            color: AppColor.pureWhiteColor,
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 8.h,
-                              height: 14.w,
-                              decoration: const BoxDecoration(
-                                color: AppColor.primaryColor,
-                                shape: BoxShape.circle,
+                            color:
+                            controller.selectedContainerIndex.value == index
+                                ? AppColor.primaryColor
+                                : AppColor.pureWhiteColor,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 4.w, top: 1.h),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                controller.appointmentListModel
+                                    ?.appointmentlist![index].name
+                                    .toString() ??
+                                    "10",
+                                maxLines: 2,
+                                style: AppTextStyle.semiBoldText.copyWith(
+                                    color: controller.selectedContainerIndex.value == index ? AppColor.whiteColor : AppColor.navyBlueColor,
+                                    fontSize: 16),
                               ),
-                              child: Center(
-                                child: Text(
-                                  controller.appointmentListModel
-                                          ?.appointmentlist![index].name![0]
-                                          .toUpperCase()
-                                          .toString() ??
-                                      "10",
-                                  style: AppTextStyle.semiBoldText.copyWith(
-                                      color: AppColor.whiteColor, fontSize: 22),
-                                ),
+                              Text(
+                                controller.appointmentListModel
+                                    ?.appointmentlist![index].phoneNo
+                                    .toString() ??
+                                    "10",
+                                style: AppTextStyle.mediumText.copyWith(
+                                    color: controller.selectedContainerIndex.value == index ? AppColor.whiteColor : AppColor.greyColor, fontSize: 10),
                               ),
-                            ),
-                            SizedBox(
-                              width: 2.w,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  controller.appointmentListModel
-                                          ?.appointmentlist![index].name
-                                          .toString() ??
-                                      "10",
-                                  style: AppTextStyle.semiBoldText.copyWith(
-                                      color: AppColor.navyBlueColor,
-                                      fontSize: 16),
-                                ),
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-                                Text(
-                                  controller.appointmentListModel
-                                          ?.appointmentlist![index].phoneNo
-                                          .toString() ??
-                                      "10",
-                                  style: AppTextStyle.mediumText.copyWith(
-                                      color: AppColor.greyColor, fontSize: 10),
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                            Obx(
-                              () => controller.selectedContainerIndex.value ==
-                                      index
-                                  ? const Icon(
-                                      Icons.done,
-                                      color: AppColor.primaryColor,
-                                      size: 30,
-                                    )
-                                  : const SizedBox(),
-                            )
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    );
-                  })
+                    ));
+                  },
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 8 / 3,
+                      crossAxisSpacing: 15,
+                      mainAxisSpacing: 10,
+                      mainAxisExtent: 80,
+                  ),
+                )
               : const SizedBox(),
           SizedBox(
             height: 2.h,
@@ -450,38 +515,39 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
                         textStyle: AppTextStyle.mediumText
                             .copyWith(color: AppColor.whiteColor),
                         onTap: () async {
-                          if (formKey1.currentState!.validate() && formKey2.currentState!.validate()) {
-                          if (controller.storeDoctorPrice!.value != null &&
-                              controller.walletAmountModel?.walletAmount
-                                      ?.walletAmount !=
-                                  null) {
-                            double storeDoctorPrice = double.tryParse(
-                                    controller.storeDoctorPrice!.value) ??
-                                0;
-                            double walletAmount = double.tryParse(controller
-                                        .walletAmountModel
-                                        ?.walletAmount
-                                        ?.walletAmount ??
-                                    "") ??
-                                0;
+                          if (formKey1.currentState!.validate() &&
+                              formKey2.currentState!.validate()) {
+                            if (controller.storeDoctorPrice!.value != null &&
+                                controller.walletAmountModel?.walletAmount
+                                        ?.walletAmount !=
+                                    null) {
+                              double storeDoctorPrice = double.tryParse(
+                                      controller.storeDoctorPrice!.value) ??
+                                  0;
+                              double walletAmount = double.tryParse(controller
+                                          .walletAmountModel
+                                          ?.walletAmount
+                                          ?.walletAmount ??
+                                      "") ??
+                                  0;
 
-                            if (storeDoctorPrice <= walletAmount) {
-                              controller
-                                  .submitUserData(controller.selectedImages);
-                            } else {
-                              Get.snackbar(
-                                'OOPS...!!',
-                                'Please Add Amount',
-                                backgroundColor: AppColor
-                                    .primaryColor, // Customize the background color
-                                colorText: AppColor
-                                    .whiteColor, // Customize the text color
-                                snackPosition: SnackPosition
-                                    .BOTTOM, // Position of the SnackBar
-                                duration: const Duration(seconds: 2),
-                              );
+                              if (storeDoctorPrice <= walletAmount) {
+                                controller
+                                    .submitUserData(controller.selectedImages);
+                              } else {
+                                Get.snackbar(
+                                  'OOPS...!!',
+                                  'Please Add Amount',
+                                  backgroundColor: AppColor
+                                      .primaryColor, // Customize the background color
+                                  colorText: AppColor
+                                      .whiteColor, // Customize the text color
+                                  snackPosition: SnackPosition
+                                      .BOTTOM, // Position of the SnackBar
+                                  duration: const Duration(seconds: 2),
+                                );
+                              }
                             }
-                          }
                           }
                         },
                       ),
@@ -499,8 +565,8 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
 
   Widget departmentWidgetNew() {
     return Obx(() => Form(
-      key: formKey1,
-      child: DropdownButtonHideUnderline(
+          key: formKey1,
+          child: DropdownButtonHideUnderline(
             child: DropdownButtonFormField(
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(16),
@@ -528,7 +594,8 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
                 return DropdownMenuItem<String>(
                   onTap: () {
                     controller.storeDepartmentId?.value = value['id'];
-                    controller.getDoctorData(controller.storeDepartmentId!.value);
+                    controller
+                        .getDoctorData(controller.storeDepartmentId!.value);
                   },
                   value: departmentValue,
                   child: Text(departmentValue),
@@ -551,7 +618,7 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
               isExpanded: false,
             ),
           ),
-    ));
+        ));
   }
 
   Widget doctorWidgetNew() {
@@ -667,6 +734,7 @@ class _ConsultingScreenState extends State<ConsultingScreen> {
       ),
     );
   }
+
   void _removeImage(int index) {
     setState(() {
       controller.selectedImages.removeAt(index);
