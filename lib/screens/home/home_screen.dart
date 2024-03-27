@@ -184,44 +184,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 2.h,
                 ),
-                Container(
-                  height: 15.h,
-                  width: 40.w,
-                  // padding: EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: AppColor.pureWhiteColor,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x19101828),
-                        blurRadius: 4,
-                        offset: Offset(0, 2),
-                        spreadRadius: -1,
-                      )
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          AppAssets.test,
-                        ),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        Text(
-                          bookTest,
-                          style: AppTextStyle.mediumText.copyWith(
-                              color: AppColor.navyBlueColor, fontSize: 14),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
+                // Container(
+                //   height: 15.h,
+                //   width: 40.w,
+                //   // padding: EdgeInsets.all(14),
+                //   decoration: BoxDecoration(
+                //     color: AppColor.pureWhiteColor,
+                //     borderRadius: BorderRadius.circular(12),
+                //     boxShadow: const [
+                //       BoxShadow(
+                //         color: Color(0x19101828),
+                //         blurRadius: 4,
+                //         offset: Offset(0, 2),
+                //         spreadRadius: -1,
+                //       )
+                //     ],
+                //   ),
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(15.0),
+                //     child: Column(
+                //       children: [
+                //         Image.asset(
+                //           AppAssets.test,
+                //         ),
+                //         SizedBox(
+                //           height: 1.h,
+                //         ),
+                //         Text(
+                //           bookTest,
+                //           style: AppTextStyle.mediumText.copyWith(
+                //               color: AppColor.navyBlueColor, fontSize: 14),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 2.h,
+                // ),
                 // Text(
                 //   currentToken,
                 //   style: AppTextStyle.mediumText.copyWith(
@@ -256,18 +256,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: AppTextStyle.semiBoldText
                           .copyWith(color: AppColor.primaryColor, fontSize: 16),
                     ),
-                    ButtonWidget(
-                      text: viewAll,
-                      width: 25.w,
-                      height: 5.h,
-                      textStyle: AppTextStyle.normalText.copyWith(
-                        color: AppColor.pureWhiteColor,
-                      ),
-                      onTap: () {
-                        Get.to(() => const BookingScreen());
-                      },
-                      borderRadius: 10,
-                    )
+                    // ButtonWidget(
+                    //   text: viewAll,
+                    //   width: 25.w,
+                    //   height: 5.h,
+                    //   textStyle: AppTextStyle.normalText.copyWith(
+                    //     color: AppColor.pureWhiteColor,
+                    //   ),
+                    //   onTap: () {
+                    //     Get.to(() => const BookingScreen());
+                    //   },
+                    //   borderRadius: 10,
+                    // )
                   ],
                 ) : const SizedBox(),
                 SizedBox(

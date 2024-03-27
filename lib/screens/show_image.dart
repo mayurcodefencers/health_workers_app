@@ -46,6 +46,7 @@ class _ShowImageScreenState extends State<ShowImageScreen> {
             color: AppColor.navyBlueColor,
           ),
         ),
+
       ),
       body: WebView(
         initialUrl: controller.bookingDetailsModel?.doctorDoc?.first.file ?? "",
