@@ -10,6 +10,7 @@ class AppAssets {
   static const String reschedule = "assets/svg/reschedule.svg";
   static const String doc = "assets/svg/doc.svg";
   static const String download = "assets/svg/download.svg";
+  static const String view = "assets/svg/view.svg";
   static const String wallet = "assets/svg/wallet.svg";
   static const String credit = "assets/svg/credit.svg";
   static const String debit = "assets/svg/debit.svg";

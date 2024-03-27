@@ -382,18 +382,20 @@ class ConsultingController extends GetxController {
       print("upload_file[] $selectedImages");
       print("total_amount $amount");
 
-      if (selectedImages.isNotEmpty) {
-        for (int i = 0; i < selectedImages.length; i++) {
-          String fileName = 'image_$i.jpg';
-          formData.files.add(MapEntry(
-            'upload_file[]',
-            await dio.MultipartFile.fromFileSync(
-              selectedImages[i].path,
-              filename: fileName,
-            ),
-          ));
-        }
-      } else {
+        if (selectedImages.isNotEmpty) {
+            int userId = int.parse(patientId.toString());
+          for (int i = 0; i < selectedImages.length; i++) {
+            String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
+            String fileName = 'user_$userId-image_$timestamp.jpg';
+            formData.files.add(MapEntry(
+              'upload_file[$i]',
+              await dio.MultipartFile.fromFileSync(
+                selectedImages[i].path,
+                filename: fileName,
+              ),
+            ));
+          }
+        } else {
         formData.files.add(MapEntry(
           'upload_file[]',
           dio.MultipartFile.fromString('', filename: 'empty_file.txt'),

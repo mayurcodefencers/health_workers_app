@@ -10,6 +10,7 @@ import 'package:health_workers/controllers/meeting/meeting_controller.dart';
 import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
+import 'package:health_workers/screens/show_image.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -334,49 +335,48 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   Widget docContainer(int index) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      margin: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: AppColor.pureWhiteColor,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x19101828),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-            spreadRadius: -1,
-          )
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                color: AppColor.lightBlueColor,
-                borderRadius: BorderRadius.circular(4)),
-            child: SvgPicture.asset(AppAssets.doc),
-          ),
-          SizedBox(
-            width: 5.w,
-          ),
-          Text(
-            "Document",
-            style: AppTextStyle.mediumText
-                .copyWith(color: AppColor.navyBlueColor, fontSize: 12),
-          ),
-          const Spacer(),
-          GestureDetector(
-            onTap: () {
-              downloadFile(
-                  "https://saasmeditech.com/public/assets/appointment_doc/");
-            },
-            child: SvgPicture.asset(
-              AppAssets.download,
+    return GestureDetector(
+      onTap: () {
+        Get.to(() => const ShowImageScreen());
+      },
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        margin: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: AppColor.pureWhiteColor,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x19101828),
+              blurRadius: 4,
+              offset: Offset(0, 2),
+              spreadRadius: -1,
+            )
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: AppColor.lightBlueColor,
+                  borderRadius: BorderRadius.circular(4)),
+              child: SvgPicture.asset(AppAssets.doc),
             ),
-          )
-        ],
+            SizedBox(
+              width: 5.w,
+            ),
+            Text(
+              "Document",
+              style: AppTextStyle.mediumText
+                  .copyWith(color: AppColor.navyBlueColor, fontSize: 12),
+            ),
+            const Spacer(),
+            SvgPicture.asset(
+              AppAssets.view,
+            )
+          ],
+        ),
       ),
     );
   }

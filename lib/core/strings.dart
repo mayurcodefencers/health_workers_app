@@ -73,6 +73,7 @@
  const String exitApp = "Exit App";
  const String exitText = "Do you want to exit an App?";
  const String addMember = "Add Member";
+ const String imageDisplay = "Image Display";
  const String bookingDone = "Booking Successfully Done";
  const String bookingDone1 = "Booking for consulting is done.";
 
