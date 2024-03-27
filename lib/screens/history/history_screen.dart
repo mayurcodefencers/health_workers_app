@@ -367,7 +367,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               width: 5.w,
             ),
             Text(
-              "Document",
+              document,
               style: AppTextStyle.mediumText
                   .copyWith(color: AppColor.navyBlueColor, fontSize: 12),
             ),

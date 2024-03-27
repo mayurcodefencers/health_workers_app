@@ -337,6 +337,18 @@ class ConsultingController extends GetxController {
 
   Future<void> submitUserData(List<File> selectedImages) async {
     try {
+      if(getPatientId!.value == "") {
+        Get.snackbar(
+          'OOPS...!!',
+          "Please Select patient",
+          backgroundColor:
+          AppColor.primaryColor, // Customize the background color
+          colorText: AppColor.whiteColor, // Customize the text color
+          snackPosition: SnackPosition.BOTTOM, // Position of the SnackBar
+          duration: const Duration(seconds: 2),
+        );
+        return;
+      }
       print("Submitting user data...");
       isLoading.value = true;
 
@@ -381,6 +393,8 @@ class ConsultingController extends GetxController {
       print("date ${formattedDate.toString()}");
       print("upload_file[] $selectedImages");
       print("total_amount $amount");
+      print("patientIdpatientId $patientId");
+
 
         if (selectedImages.isNotEmpty) {
             int userId = int.parse(patientId.toString());
@@ -410,6 +424,7 @@ class ConsultingController extends GetxController {
         data: formData,
         options: dio.Options(headers: headers),
       );
+
 
       print("Response Status Code: ${response.statusCode}");
 
