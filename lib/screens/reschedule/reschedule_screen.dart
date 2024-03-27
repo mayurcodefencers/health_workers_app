@@ -113,8 +113,7 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
                               color: AppColor.primaryColor,
                             ),
                             rightChevronIcon: const Icon(
-                              Icons.arrow_back_ios_outlined,
-                              // textDirection: TextDirection.rtl,
+                              Icons.arrow_forward_ios,
                               size: 20,
                               color: AppColor.primaryColor,
                             ),

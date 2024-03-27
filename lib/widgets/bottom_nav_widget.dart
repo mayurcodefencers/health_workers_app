@@ -60,20 +60,21 @@ class _HomePageState extends State<HomePage> {
               onTap: _onItemTapped,
               backgroundColor: AppColor.primaryColor,
               unselectedLabelStyle: AppTextStyle.normalText
-                  .copyWith(fontSize: 10, color: AppColor.greyColor),
+                  .copyWith(fontSize: 10, color: AppColor.whiteColor),
               selectedLabelStyle: AppTextStyle.normalText
                   .copyWith(fontSize: 10, color: AppColor.whiteColor),
-              selectedItemColor: AppColor.whiteColor,
+              selectedItemColor: AppColor.pureWhiteColor,
+              unselectedItemColor: AppColor.whiteColor.withOpacity(0.5),
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: pageIndex == 0
                       ? SvgPicture.asset(
                     AppAssets.home,
-                    color: AppColor.whiteColor,
+                    color: AppColor.pureWhiteColor,
                   )
                       : SvgPicture.asset(
                     AppAssets.home,
-                    color: AppColor.greyColor,
+                    color: AppColor.whiteColor.withOpacity(0.5),
                   ),
                   label: home,
                 ),
@@ -81,8 +82,8 @@ class _HomePageState extends State<HomePage> {
                   icon: SvgPicture.asset(
                     AppAssets.booking,
                     color: pageIndex == 1
-                        ? AppColor.whiteColor
-                        : AppColor.greyColor,
+                        ? AppColor.pureWhiteColor
+                        : AppColor.whiteColor.withOpacity(0.5),
                   ),
                   label: bookings,
                 ),
@@ -90,11 +91,11 @@ class _HomePageState extends State<HomePage> {
                   icon: pageIndex == 2
                       ? SvgPicture.asset(
                     AppAssets.camera,
-                    color: AppColor.whiteColor,
+                    color: AppColor.pureWhiteColor,
                   )
                       : SvgPicture.asset(
                     AppAssets.camera,
-                    color: AppColor.greyColor,
+                    color: AppColor.whiteColor.withOpacity(0.5),
                   ),
                   label: meetings,
                 ),
@@ -102,11 +103,11 @@ class _HomePageState extends State<HomePage> {
                   icon: pageIndex == 3
                       ? SvgPicture.asset(
                     AppAssets.profile,
-                    color: AppColor.whiteColor,
+                    color: AppColor.pureWhiteColor,
                   )
                       : SvgPicture.asset(
                     AppAssets.profile,
-                    color: AppColor.greyColor,
+                    color: AppColor.whiteColor.withOpacity(0.5),
                   ),
                   label: profile,
                 ),
