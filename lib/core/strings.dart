@@ -77,6 +77,7 @@
  const String imageDisplay = "Image Display";
  const String bookingDone = "Booking Successfully Done";
  const String bookingDone1 = "Booking for consulting is done.";
+ const String appSign = "f489786f8bd2a6f34ea7c2b3448e84d84d7aa4b189278f73d386db1da7682477";
 
 
 

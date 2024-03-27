@@ -13,6 +13,7 @@ class MeetingController extends GetxController {
   final RxBool isLoading = false.obs;
   RxString? storeAppointmentIdHistory = "".obs;
   RxInt isType = 0.obs;
+  RxString hwId = "".obs;
   final ApiService _apiService = ApiService();
   MissingMeetingModel? missingMeetingModel;
   CompleteMeetingModel? completeMeetingModel;
@@ -24,7 +25,11 @@ class MeetingController extends GetxController {
 
   @override
   void onInit() {
+    initializeSharedPreferences();
     super.onInit();
+  }
+  Future<void> initializeSharedPreferences() async {
+    hwId.value = pref?.getString("hwId") ?? "";
   }
 
   Future<void> getMissingList() async {
