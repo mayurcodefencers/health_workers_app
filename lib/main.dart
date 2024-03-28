@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
                       ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                   useMaterial3: true,
                 ),
-                home: _authController.isLoggedIn.value ? const HomePage() : const LoginScreen(),
+                home: _authController.isLoggedIn.value ? const HomePage() : const IntroSliderScreen(),
               );
             } else {
               return const CircularProgressIndicator();

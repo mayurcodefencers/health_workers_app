@@ -71,7 +71,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     itemCount: controller
-                            .bookingDetailsModel?.appointmentDetails?.length ??
+                            .bookingDetailsModel?.doctorDoc?.length ??
                         0,
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(00),
@@ -364,9 +364,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
               width: 5.w,
             ),
             Text(
-              document,
+              "Document ${index + 1}",
               style: AppTextStyle.mediumText
-                  .copyWith(color: AppColor.navyBlueColor, fontSize: 12),
+                  .copyWith(color: AppColor.navyBlueColor, fontSize: 14),
             ),
             const Spacer(),
             SvgPicture.asset(
