@@ -1,7 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
+// import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_workers/constants/app_const_assets.dart';
@@ -11,7 +9,6 @@ import 'package:health_workers/core/strings.dart';
 import 'package:health_workers/core/theme/app_color.dart';
 import 'package:health_workers/core/theme/app_text_style.dart';
 import 'package:health_workers/screens/show_image.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -383,36 +380,36 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  Future<void> downloadFile(String url) async {
-    try {
-      // Initialize FlutterDownloader
-      await FlutterDownloader.initialize();
-
-      // Get the external storage directory
-      String? dir = (await getExternalStorageDirectory())?.path;
-
-      if (dir != null) {
-        // Create the directory if it doesn't exist
-        Directory directory = Directory('/storage/emulated/0/Download/');
-        if (!await directory.exists()) {
-          directory.create(recursive: true);
-        }
-
-        // Start the download task
-        final taskId = await FlutterDownloader.enqueue(
-          url: url,
-          savedDir: directory.path,
-          showNotification: true,
-          openFileFromNotification: true,
-        );
-
-        print('Download task id: $taskId');
-      } else {
-        print('Failed to get external storage directory.');
-      }
-    } catch (e) {
-      print('Error downloading file: $e');
-    }
-  }
+  // Future<void> downloadFile(String url) async {
+  //   try {
+  //     // Initialize FlutterDownloader
+  //     await FlutterDownloader.initialize();
+  //
+  //     // Get the external storage directory
+  //     String? dir = (await getExternalStorageDirectory())?.path;
+  //
+  //     if (dir != null) {
+  //       // Create the directory if it doesn't exist
+  //       Directory directory = Directory('/storage/emulated/0/Download/');
+  //       if (!await directory.exists()) {
+  //         directory.create(recursive: true);
+  //       }
+  //
+  //       // Start the download task
+  //       final taskId = await FlutterDownloader.enqueue(
+  //         url: url,
+  //         savedDir: directory.path,
+  //         showNotification: true,
+  //         openFileFromNotification: true,
+  //       );
+  //
+  //       print('Download task id: $taskId');
+  //     } else {
+  //       print('Failed to get external storage directory.');
+  //     }
+  //   } catch (e) {
+  //     print('Error downloading file: $e');
+  //   }
+  // }
 
 }

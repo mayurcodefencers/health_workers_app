@@ -20,9 +20,6 @@ dependencies:
   cupertino_icons: ^1.0.6
   table_calendar: ^3.1.0
   image_picker: ^1.0.7
-  http: ^1.2.1
-  flutter_downloader: ^1.11.6
-  path_provider: ^2.1.2
   webview_flutter: ^2.0.13
   zego_uikit_prebuilt_call: ^4.5.1
   printing: ^5.12.0
