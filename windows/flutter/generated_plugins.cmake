@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   audioplayers_windows
   file_selector_windows
   permission_handler_windows
+  printing
   zego_express_engine
   zego_zim
 )

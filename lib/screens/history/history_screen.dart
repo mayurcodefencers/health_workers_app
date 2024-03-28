@@ -374,6 +374,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
             const Spacer(),
             SvgPicture.asset(
               AppAssets.view,
+              height: 4.h,
+              width: 4.w,
             )
           ],
         ),

@@ -398,6 +398,8 @@ class ConsultingController extends GetxController {
 
         if (selectedImages.isNotEmpty) {
             int userId = int.parse(patientId.toString());
+            // formData = dio.FormData();
+            // selectedImages.clear();
           for (int i = 0; i < selectedImages.length; i++) {
             String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
             String fileName = 'user_$userId-image_$timestamp.jpg';
@@ -410,13 +412,14 @@ class ConsultingController extends GetxController {
             ));
           }
         } else {
+          // selectedImages.clear();
         formData.files.add(MapEntry(
           'upload_file[]',
-          dio.MultipartFile.fromString('', filename: 'empty_file.txt'),
+          dio.MultipartFile.fromString('', filename: ''),
         ));
       }
 
-      print("wwwwwwww ${formData.fields}");
+      print("wwwwwwww $selectedImages");
 
       // Send POST request
       final response = await dioClient.post(
